@@ -1,128 +1,142 @@
 <!-- src/app/app.component.html -->
 
-<!-- Container -->
-<div class="min-h-screen flex flex-col bg-white text-gray-800">
-  <!-- Navigation Bar -->
-  <header class="flex items-center justify-between py-4 px-6 md:px-10 shadow">
-    <div class="flex items-center space-x-2">
-      <!-- Logo: Replace with your logo image -->
-      <img src="assets/logo.png" alt="MediDoc logo" class="h-8 w-8" />
-      <span class="text-xl font-bold text-primary">MediDoc</span>
-    </div>
-    <nav class="hidden md:flex items-center space-x-8">
-      <a href="#" class="hover:text-primary font-medium">Accueil</a>
-      <a href="#" class="hover:text-primary font-medium">Nos Fonctionnalités</a>
-      <a
-        href="#"
-        class="inline-block px-5 py-2 bg-primary text-white rounded hover:bg-primary/90 font-medium"
-      >
-        Se Connecter
-      </a>
-    </nav>
-    <!-- Mobile Menu Button (Optional) -->
-    <button class="md:hidden text-gray-600 hover:text-primary">
-      <!-- A simple hamburger icon could go here -->
-      <svg
-        class="w-6 h-6"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        viewBox="0 0 24 24"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-      >
-        <path d="M4 6h16M4 12h16M4 18h16" />
-      </svg>
-    </button>
-  </header>
-
-  <!-- Hero Section -->
-  <section
-    class="flex flex-col-reverse md:grid md:grid-cols-2 items-center px-6 md:px-10 py-12 md:py-20 gap-8 bg-gray-50 flex-grow"
-  >
-    <div class="space-y-6">
-      <h1 class="text-3xl md:text-5xl font-bold leading-tight">
-        Un Outil Moderne<br />Pour Une Gestion Optimale<br />Des Soins De Santé
-      </h1>
-      <p class="text-gray-700 max-w-lg">
-        Accédez rapidement aux dossiers médicaux et assurez une meilleure
-        coordination des soins.
-      </p>
-      <a
-        href="#"
-        class="inline-block px-6 py-3 bg-primary text-white font-medium rounded hover:bg-primary/90"
-      >
-        Se connecter
-      </a>
-    </div>
-    <div class="flex justify-center">
-      <!-- Hero illustration (replace with actual image if available) -->
-      <img
-        src="assets/hero-illustration.png"
-        alt="Dossier Patient"
-        class="max-w-full h-auto"
-      />
-    </div>
-  </section>
-
-  <!-- Features Section -->
-  <section class="px-6 md:px-10 py-12 md:py-20 bg-white">
-    <h2 class="text-3xl md:text-4xl font-semibold text-center mb-6">
-      Nos Fonctionnalités Étonnantes
-    </h2>
-    <p class="text-center text-gray-600 max-w-xl mx-auto mb-12">
-      Fonctionnalités Clés du Système de Gestion du Dossier Patient Informatisé
-    </p>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-      <!-- Feature 1 -->
-      <div class="bg-gray-50 p-8 rounded shadow text-center">
-        <div class="text-primary text-4xl mb-4">👥</div>
-        <h3 class="text-xl font-semibold mb-2">
-          Accessibilité multi-utilisateurs
-        </h3>
-        <p class="text-gray-600">
-          Les professionnels de santé peuvent accéder au dossier en toute
-          sécurité, avec des permissions adaptées à chaque rôle.
-        </p>
-      </div>
-      <!-- Feature 2 -->
-      <div class="bg-gray-50 p-8 rounded shadow text-center">
-        <div class="text-primary text-4xl mb-4">⏱</div>
-        <h3 class="text-xl font-semibold mb-2">
-          Suivi des traitements en temps réel
-        </h3>
-        <p class="text-gray-600">
-          Suivez l’administration des médicaments et la progression des soins
-          pour chaque patient.
-        </p>
-      </div>
-      <!-- Feature 3 -->
-      <div class="bg-gray-50 p-8 rounded shadow text-center">
-        <div class="text-primary text-4xl mb-4">✨</div>
-        <h3 class="text-xl font-semibold mb-2">
-          Interface intuitive et simplifiée
-        </h3>
-        <p class="text-gray-600">
-          Une navigation fluide et claire pour une utilisation quotidienne sans
-          complexité.
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer class="bg-primary text-white py-8 px-6 md:px-10">
-    <div
-      class="max-w-5xl mx-auto flex flex-col md:flex-row md:justify-between items-center space-y-4 md:space-y-0"
+<!-- Outer Grid Container -->
+<div
+  class="min-h-screen grid grid-cols-1 lg:grid-cols-[1fr_minmax(0,5fr)_1fr] bg-white text-gray-800 font-sans"
+>
+  <div class="hidden lg:block"></div>
+  <!-- Empty left column for spacing on large screens -->
+  <div class="flex flex-col">
+    <!-- Navigation Bar (white background) -->
+    <header
+      class="flex items-center justify-between py-4 px-6 md:px-10 bg-white shadow"
     >
       <div class="flex items-center space-x-2">
+        <!-- Logo -->
         <img src="assets/logo.png" alt="MediDoc logo" class="h-8 w-8" />
-        <span class="font-semibold text-xl">MediDoc</span>
+        <span class="text-xl font-bold text-custom-blue">MediDoc</span>
       </div>
-      <div class="text-sm text-center md:text-right">
-        BPM,68 18270, Oued Smar, Alger.<br />
-        Copyright © MEDIDOC 2024
+      <nav class="hidden md:flex items-center space-x-8">
+        <a href="#" class="hover:text-custom-blue font-medium">Accueil</a>
+        <a href="#" class="hover:text-custom-blue font-medium"
+          >Nos Fonctionnalités</a
+        >
+        <a
+          href="#"
+          class="inline-block px-5 py-2 bg-custom-blue text-white rounded hover:bg-opacity-90 font-medium"
+        >
+          Se Connecter
+        </a>
+      </nav>
+      <!-- Mobile Menu Button (Optional) -->
+      <button class="md:hidden text-gray-600 hover:text-custom-blue">
+        <svg
+          class="w-6 h-6"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          viewBox="0 0 24 24"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+    </header>
+
+    <!-- Hero Section -->
+    <section
+      class="flex flex-col-reverse md:grid md:grid-cols-2 items-center px-6 md:px-10 py-12 md:py-20 gap-8 bg-gray-50 flex-grow"
+    >
+      <div class="space-y-6">
+        <h1 class="text-3xl md:text-5xl font-bold leading-tight">
+          Un Outil Moderne<br />
+          Pour Une Gestion Optimale<br />
+          Des Soins De Santé
+        </h1>
+        <p class="text-gray-700 max-w-lg">
+          Accédez rapidement aux dossiers médicaux et assurez une meilleure
+          coordination des soins.
+        </p>
+        <a
+          href="#"
+          class="inline-block px-6 py-3 bg-custom-blue text-white font-medium rounded hover:bg-opacity-90"
+        >
+          Se connecter
+        </a>
       </div>
-    </div>
-  </footer>
+      <div class="flex justify-center">
+        <!-- Hero illustration (replace with actual image if available) -->
+        <img
+          src="../assets/hero.png"
+          alt="Dossier Patient"
+          class="max-w-full h-auto"
+        />
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="px-6 md:px-10 py-12 md:py-20 bg-white">
+      <h2 class="text-3xl md:text-4xl font-semibold text-center mb-6">
+        Nos Fonctionnalités Étonnantes
+      </h2>
+      <p class="text-center text-gray-600 max-w-xl mx-auto mb-12">
+        Fonctionnalités Clés du Système de Gestion du Dossier Patient
+        Informatisé
+      </p>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+        <!-- Feature 1 -->
+        <div class="bg-gray-50 p-8 rounded shadow text-center">
+          <div class="text-custom-blue text-4xl mb-4">👥</div>
+          <h3 class="text-xl font-semibold mb-2">
+            Accessibilité multi-utilisateurs
+          </h3>
+          <p class="text-gray-600">
+            Les professionnels de santé peuvent accéder au dossier en toute
+            sécurité, avec des permissions adaptées à chaque rôle.
+          </p>
+        </div>
+        <!-- Feature 2 -->
+        <div class="bg-gray-50 p-8 rounded shadow text-center">
+          <div class="text-custom-blue text-4xl mb-4">⏱</div>
+          <h3 class="text-xl font-semibold mb-2">
+            Suivi des traitements en temps réel
+          </h3>
+          <p class="text-gray-600">
+            Suivez l’administration des médicaments et la progression des soins
+            pour chaque patient.
+          </p>
+        </div>
+        <!-- Feature 3 -->
+        <div class="bg-gray-50 p-8 rounded shadow text-center">
+          <div class="text-custom-blue text-4xl mb-4">✨</div>
+          <h3 class="text-xl font-semibold mb-2">
+            Interface intuitive et simplifiée
+          </h3>
+          <p class="text-gray-600">
+            Une navigation fluide et claire pour une utilisation quotidienne
+            sans complexité.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer (Primary Color) -->
+    <footer class="bg-custom-blue text-white py-8 px-6 md:px-10">
+      <div
+        class="max-w-5xl mx-auto flex flex-col md:flex-row md:justify-between items-center space-y-4 md:space-y-0"
+      >
+        <div class="flex items-center space-x-2">
+          <img src="../assets/Logo.svg" alt="MediDoc logo" class="h-8 w-8" />
+          <span class="font-semibold text-xl">MediDoc</span>
+        </div>
+        <div class="text-sm text-center md:text-right">
+          BPM,68 18270, Oued Smar, Alger.<br />
+          Copyright © MEDIDOC 2024
+        </div>
+      </div>
+    </footer>
+  </div>
+  <div class="hidden lg:block"></div>
+  <!-- Empty right column for spacing on large screens -->
 </div>
