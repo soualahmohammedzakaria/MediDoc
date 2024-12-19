@@ -3,14 +3,10 @@ import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 
 @Component({
-  selector: 'app-landingpage',
-  standalone: true,
+  selector: 'authentication',
   imports: [CommonModule, MatIconModule],
-  templateUrl: './landingpage.component.html',
-  styleUrls: ['./landingpage.component.css'],
+  templateUrl: './authentication.component.html',
 })
-export class LandingPage {
-  
-}
+export class Authentication {}
 
 

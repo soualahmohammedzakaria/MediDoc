@@ -1,14 +1,14 @@
+// src/app/app.module.ts
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { RouterModule } from '@angular/router';
-import { appRoutes } from './app.routes';
+import { LandingPage } from './features/landingpage/landingpage.component';
 
 @NgModule({
+  declarations: [],
   imports: [
     BrowserModule,
-    RouterModule.forRoot(appRoutes), // Import routes
+    LandingPage
   ],
   providers: [],
-  bootstrap: [], // No direct bootstrap here; routes handle it
 })
 export class AppModule {}

@@ -9,11 +9,11 @@
         <a href="#"><img src="/assets/images/common/logo_named.png" alt="MediDoc" class="h-8" /></a>
       </div>
       <nav class="hidden md:flex items-center space-x-8 font-normal">
-        <a href="#hero"><span class="font-semibold text-custom-blue">Accueil</span></a>
-        <a href="#features"><span class="font-semibold text-custom-blue">Nos Fonctionnalités</span></a>
-        <a href="#" class="px-5 py-2 bg-custom-blue text-white rounded hover:bg-opacity-90 font-medium items-center">
+        <a href="#hero"><span class="font-semibold text-custom-blue hover:opacity-90">Accueil</span></a>
+        <a href="#features"><span class="font-semibold text-custom-blue hover:opacity-90">Nos Fonctionnalités</span></a>
+        <a routerLink="authentication" routerLinkActive="active" class="px-5 py-2 bg-custom-blue text-white rounded-lg hover:bg-opacity-90 font-medium items-center cursor-pointer">
           <span class="flex flex-row gap-1 text-white font-semibold">
-            <mat-icon>local_hospital</mat-icon> Se connecter
+            <mat-icon>health_and_safety</mat-icon> Se connecter
           </span>
         </a>
       </nav>
@@ -30,9 +30,9 @@
         <p class="text-gray-700 max-w-lg mx-auto md:mx-0">
           Accédez rapidement aux dossiers médicaux et assurez une meilleure coordination des soins.
         </p>
-        <a href="#" class="inline-block px-6 py-3 bg-custom-blue rounded hover:bg-opacity-90">
+        <a routerLink="/authentication" routerLinkActive="active" class="inline-block px-6 py-3 bg-custom-blue rounded-lg hover:bg-opacity-90 cursor-pointer">
           <span class="flex flex-row gap-1 text-white font-semibold">
-            Se connecter
+            Accéder à la plateforme
           </span>
         </a>
       </div>
@@ -51,7 +51,7 @@
       </p>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
         <!-- Feature 1 -->
-        <div class="bg-white p-8 rounded text-center" style="box-shadow: 0 4px 6px rgba(11, 143, 172, 0.1), 0 1px 3px rgba(30, 64, 175, 0.08);">
+        <div class="bg-white p-8 rounded-lg text-center" style="box-shadow: 0 4px 6px rgba(11, 143, 172, 0.1), 0 1px 3px rgba(30, 64, 175, 0.08);">
           <div class="text-custom-blue text-4xl mb-4">👥</div>
           <h3 class="text-xl font-semibold mb-2">Accessibilité multi-utilisateurs</h3>
           <p class="text-gray-600">
@@ -59,7 +59,7 @@
           </p>
         </div>
         <!-- Feature 2 -->
-        <div class="bg-white p-8 rounded text-center" style="box-shadow: 0 4px 6px rgba(11, 143, 172, 0.1), 0 1px 3px rgba(30, 64, 175, 0.08);">
+        <div class="bg-white p-8 rounded-lg text-center" style="box-shadow: 0 4px 6px rgba(11, 143, 172, 0.1), 0 1px 3px rgba(30, 64, 175, 0.08);">
           <div class="text-custom-blue text-4xl mb-4">⏱</div>
           <h3 class="text-xl font-semibold mb-2">Suivi des traitements en temps réel</h3>
           <p class="text-gray-600">
@@ -67,7 +67,7 @@
           </p>
         </div>
         <!-- Feature 3 -->
-        <div class="bg-white p-8 rounded text-center" style="box-shadow: 0 4px 6px rgba(11, 143, 172, 0.1), 0 1px 3px rgba(30, 64, 175, 0.08);">
+        <div class="bg-white p-8 rounded-lg text-center" style="box-shadow: 0 4px 6px rgba(11, 143, 172, 0.1), 0 1px 3px rgba(30, 64, 175, 0.08);">
           <div class="text-custom-blue text-4xl mb-4">✨</div>
           <h3 class="text-xl font-semibold mb-2">Interface intuitive et simplifiée</h3>
           <p class="text-gray-600">
@@ -77,8 +77,8 @@
       </div>
     </section>
     <!-- Footer -->
-    <footer class=" text-white mt-10 w-full poppins-font bg-custom-blue rounded">
-      <div class="w-full flex flex-col md:flex-row justify-between items-center px-6 py-4 bg-custom-blue rounded">
+    <footer class=" text-white mt-10 w-full poppins-font bg-custom-blue rounded-lg">
+      <div class="w-full flex flex-col md:flex-row justify-between items-center px-6 py-4 bg-custom-blue rounded-lg">
         <!-- Logo -->
         <div class="mb-4 md:mb-0">
           <img src="/assets/images/common/inverted_logo_named.png" alt="MediDoc" class="h-12">

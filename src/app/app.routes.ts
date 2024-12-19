@@ -1,6 +1,8 @@
 import { Routes } from '@angular/router';
-import { LandingPageComponent } from './features/landingpage/landingpage.component';
+import { Authentication } from './features/authentication/authentication.component';
+import { LandingPage } from './features/landingpage/landingpage.component';
 
-export const appRoutes: Routes = [
-  { path: '', component: LandingPageComponent }, // Default route
+export const routes: Routes = [
+  { path: '', component: LandingPage }, // Default route
+  { path: 'authentication', component: Authentication },
 ];
