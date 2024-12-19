@@ -4,6 +4,7 @@ import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'authentication',
+  standalone: true,
   imports: [CommonModule, MatIconModule],
   templateUrl: './authentication.component.html',
 })

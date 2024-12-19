@@ -11,7 +11,7 @@
       <nav class="hidden md:flex items-center space-x-8 font-normal">
         <a href="#hero"><span class="font-semibold text-custom-blue hover:opacity-90">Accueil</span></a>
         <a href="#features"><span class="font-semibold text-custom-blue hover:opacity-90">Nos Fonctionnalités</span></a>
-        <a routerLink="authentication" routerLinkActive="active" class="px-5 py-2 bg-custom-blue text-white rounded-lg hover:bg-opacity-90 font-medium items-center cursor-pointer">
+        <a routerLink="authentication" class="px-5 py-2 bg-custom-blue text-white rounded-lg hover:bg-opacity-90 font-medium items-center cursor-pointer">
           <span class="flex flex-row gap-1 text-white font-semibold">
             <mat-icon>health_and_safety</mat-icon> Se connecter
           </span>
@@ -30,7 +30,7 @@
         <p class="text-gray-700 max-w-lg mx-auto md:mx-0">
           Accédez rapidement aux dossiers médicaux et assurez une meilleure coordination des soins.
         </p>
-        <a routerLink="/authentication" routerLinkActive="active" class="inline-block px-6 py-3 bg-custom-blue rounded-lg hover:bg-opacity-90 cursor-pointer">
+        <a routerLink="authentication" class="inline-block px-6 py-3 bg-custom-blue rounded-lg hover:bg-opacity-90 cursor-pointer">
           <span class="flex flex-row gap-1 text-white font-semibold">
             Accéder à la plateforme
           </span>
@@ -52,7 +52,13 @@
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
         <!-- Feature 1 -->
         <div class="bg-white p-8 rounded-lg text-center" style="box-shadow: 0 4px 6px rgba(11, 143, 172, 0.1), 0 1px 3px rgba(30, 64, 175, 0.08);">
-          <div class="text-custom-blue text-4xl mb-4">👥</div>
+          <div class="h-16 p-4 bg-[#129820]/20 rounded-[20px] justify-start items-start gap-2.5 inline-flex mb-3">
+            <img
+              src="/assets/images/landingpage/heart.svg"
+              alt="Heart"
+              class="h-full w-full"
+            />
+          </div>
           <h3 class="text-xl font-semibold mb-2">Accessibilité multi-utilisateurs</h3>
           <p class="text-gray-600">
             Les professionnels de santé peuvent accéder au dossier en toute sécurité, avec des permissions adaptées à chaque rôle.
@@ -60,18 +66,30 @@
         </div>
         <!-- Feature 2 -->
         <div class="bg-white p-8 rounded-lg text-center" style="box-shadow: 0 4px 6px rgba(11, 143, 172, 0.1), 0 1px 3px rgba(30, 64, 175, 0.08);">
-          <div class="text-custom-blue text-4xl mb-4">⏱</div>
+          <div class="h-16 p-4 bg-[#f79503]/20 rounded-[20px] justify-start items-start gap-2.5 inline-flex mb-3">
+            <img
+              src="/assets/images/landingpage/medecin.svg"
+              alt="Icon 1"
+              class="h-full w-full"
+            />
+          </div>
           <h3 class="text-xl font-semibold mb-2">Suivi des traitements en temps réel</h3>
           <p class="text-gray-600">
-            Suivez l’administration des médicaments et la progression des soins pour chaque patient.
+            Suivie du dossier du patient, l’administration des médicaments et la progression des soins pour chaque patient.
           </p>
         </div>
         <!-- Feature 3 -->
         <div class="bg-white p-8 rounded-lg text-center" style="box-shadow: 0 4px 6px rgba(11, 143, 172, 0.1), 0 1px 3px rgba(30, 64, 175, 0.08);">
-          <div class="text-custom-blue text-4xl mb-4">✨</div>
+          <div class="h-16 p-4 bg-[#4880ff]/20 rounded-[20px] justify-start items-start gap-2.5 inline-flex mb-3">
+            <img
+              src="/assets/images/landingpage/simple_ui.svg"
+              alt="Heart"
+              class="h-full w-full"
+            />
+          </div>
           <h3 class="text-xl font-semibold mb-2">Interface intuitive et simplifiée</h3>
           <p class="text-gray-600">
-            Une navigation fluide et claire pour une utilisation quotidienne sans complexité.
+            Une navigation fluide et claire pour un accès rapide aux différents éléments et une utilisation quotidienne sans complexité.
           </p>
         </div>
       </div>
@@ -87,7 +105,7 @@
         <!-- Copyright & Location -->
         <div class="text-center md:text-right">
           <p class="text-base font-semibold text-white mb-2">Copyright © MediDoc 2024</p>
-          <p class="text-base font-semibold text-white">BPM68 16270, Oued Smar, Alger.</p>
+          <p class="text-base font-semibold text-white">BPM68 16270, Oued Smar, Alger</p>
         </div>
       </div>
     </footer>
