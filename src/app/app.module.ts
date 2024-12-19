@@ -1,14 +1,14 @@
-// src/app/app.module.ts
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { AppComponent } from './app.component';
+import { RouterModule } from '@angular/router';
+import { appRoutes } from './app.routes';
 
 @NgModule({
-  declarations: [],
   imports: [
     BrowserModule,
-    AppComponent
+    RouterModule.forRoot(appRoutes), // Import routes
   ],
   providers: [],
+  bootstrap: [], // No direct bootstrap here; routes handle it
 })
 export class AppModule {}
