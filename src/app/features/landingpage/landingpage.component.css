@@ -1,0 +1,46 @@
+/* src/app/app.component.css */
+
+header {
+  background-color: white;
+  padding: 20px;
+  text-align: center;
+}
+
+nav ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+nav li {
+  display: inline;
+  margin: 0 15px;
+}
+
+nav a {
+  color: black;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.hero {
+  background-size: cover;
+  color: #fff;
+  padding: 100px 20px;
+  text-align: center;
+}
+
+.hero button {
+  background-color: #f44336;
+  border: none;
+  color: white;
+  padding: 15px 30px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+footer {
+  background-color: var(--primary-color);
+  color: white;
+  text-align: center;
+  padding: 10px;
+}
