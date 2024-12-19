@@ -1,95 +1,197 @@
-<!-- Outer Grid Container -->
-<div class="min-h-screen grid grid-cols-1 lg:grid-cols-[1fr_minmax(0,5fr)_1fr] bg-white poppins-font">
-  <div class="hidden lg:block"></div> <!-- Empty left column for spacing on large screens -->
+<!-- Main Page Container: Uses a responsive grid layout -->
+<div
+  class="min-h-screen grid grid-cols-1 lg:grid-cols-[1fr_minmax(0,8fr)_1fr] bg-white poppins-font"
+>
+  <!-- Left spacer on large screens -->
+  <div class="hidden lg:block"></div>
 
+  <!-- Main Content Column -->
   <div class="flex flex-col">
-    <header class="flex items-center justify-between py-4 px-6 md:px-10 bg-white">
-      <div class="flex items-center space-x-2">
-        <!-- Logo -->
-        <a href="#"><img src="/assets/images/common/logo_named.png" alt="MediDoc" class="h-8" /></a>
-      </div>
-      <nav class="hidden md:flex items-center space-x-8 font-normal">
-        <a href="#hero"><span class="font-semibold text-custom-blue hover:opacity-90">Accueil</span></a>
-        <a href="#features"><span class="font-semibold text-custom-blue hover:opacity-90">Nos Fonctionnalités</span></a>
-        <a routerLink="authentication" routerLinkActive="active" class="px-5 py-2 bg-custom-blue text-white rounded-lg hover:bg-opacity-90 font-medium items-center cursor-pointer">
-          <span class="flex flex-row gap-1 text-white font-semibold">
+    <!-- Header with logo and navigation -->
+    <header
+      class="flex items-center justify-between py-4 px-6 md:px-8 bg-white"
+    >
+      <!-- Logo -->
+      <a href="#"
+        ><img
+          src="/assets/images/common/logo_named.png"
+          alt="MediDoc"
+          class="h-8"
+      /></a>
+      <!-- Hamburger Menu Button (visible on small screens) -->
+      <button class="sm:hidden relative" (click)="menuOpen = !menuOpen">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <!-- Navigation Links (hidden on small screens) -->
+      <div class="hidden sm:flex items-center space-x-10">
+        <a href="#hero" class="text-gray-700 hover:text-gray-900">Accueil</a>
+        <a href="#features" class="text-gray-700 hover:text-gray-900"
+          >Nos Fonctionnalités</a
+        >
+        <a
+          routerLink="authentication"
+          routerLinkActive="active"
+          class="px-5 py-2 bg-custom-blue text-white rounded-lg hover:bg-opacity-90 font-medium"
+        >
+          <span class="flex flex-row gap-1">
             <mat-icon>health_and_safety</mat-icon> Se connecter
           </span>
         </a>
-      </nav>
+      </div>
+      <!-- Mobile Menu (visible when menuOpen is true) -->
+      <div
+        *ngIf="menuOpen"
+        class="absolute top-12 right-0 w-48 bg-white shadow-lg rounded-lg z-50"
+      >
+        <div class="flex flex-col space-y-2 p-4 text-sm">
+          <a href="#hero" class="text-gray-700 hover:text-gray-900">Accueil</a>
+          <a href="#features" class="text-gray-700 hover:text-gray-900"
+            >Nos Fonctionnalités</a
+          >
+          <a
+            routerLink="authentication"
+            routerLinkActive="active"
+            class="px-5 py-2 bg-custom-blue text-white rounded-lg hover:bg-opacity-90 font-medium whitespace-nowrap"
+          >
+            <span class="flex items-center justify-center gap-1">
+              <mat-icon>health_and_safety</mat-icon> Se connecter
+            </span>
+          </a>
+        </div>
+      </div>
     </header>
+    <!-- End Header -->
 
-    <!-- Hero Section -->
-    <section id="hero" class="flex flex-col-reverse md:grid md:grid-cols-2 items-center justify-center px-6 md:px-10 py-12 md:py-20 gap-8 bg-white flex-grow">
+    <!-- Hero Section: Headline, description, and call-to-action -->
+    <section
+      id="hero"
+      class="flex flex-col-reverse md:grid md:grid-cols-2 items-center justify-center px-6 md:px-8 py-12 md:py-20 gap-8 bg-white flex-grow"
+    >
+      <!-- Text Content -->
       <div class="space-y-6 text-center md:text-left">
-        <h1 class="text-3xl md:text-5xl font-bold leading-tight">
-          <span class="text-custom-blue">Un Outil Moderne</span><br />
-          Pour Une Gestion Optimale<br />
-          Des Soins De Santé
+        <h1>
+          <span class="text-custom-blue text-6xl font-semibold font-['Red Hat Display'] capitalize leading-[72px]">Un Outil Moderne</span><span class="text-[#2b2b2b] text-6xl font-semibold font-['Red Hat Display'] capitalize leading-[72px]"> <br/>Pour Une gestion optimale des soins de santé</span>
         </h1>
-        <p class="text-gray-700 max-w-lg mx-auto md:mx-0">
-          Accédez rapidement aux dossiers médicaux et assurez une meilleure coordination des soins.
+        <p class="text-gray-700 text-xl font-normal font-['Red Hat Text'] max-w-lg mx-auto md:mx-0">
+          Accédez rapidement aux dossiers médicaux et assurez une meilleure
+          coordination des soins.
         </p>
-        <a routerLink="/authentication" routerLinkActive="active" class="inline-block px-6 py-3 bg-custom-blue rounded-lg hover:bg-opacity-90 cursor-pointer">
+        <a
+          routerLink="/authentication"
+          routerLinkActive="active"
+          class="inline-block px-6 py-3 bg-custom-blue rounded-lg hover:bg-opacity-90 cursor-pointer text-white font-semibold"
+        >
           <span class="flex flex-row gap-1 text-white font-semibold">
             Accéder à la plateforme
           </span>
         </a>
       </div>
-      <div class="flex justify-center mt-6 md:mt-0">
-        <img src="/assets/images/landingpage/hero.png" alt="Dossier Patient" class="max-w-full h-auto" />
-      </div>
-    </section>    
 
-    <!-- Features Section -->
-    <section class="px-6 md:px-10 py-12 md:py-20 bg-white" id="features">
-      <h2 class="text-3xl md:text-4xl font-bold text-center text-custom-blue mb-6">
-        Nos Fonctionnalités Étonnantes
-      </h2>
-      <p class="text-center text-gray-600 max-w-xl mx-auto mb-12">
-        Fonctionnalités Clés du Système de Gestion du Dossier Patient Informatisé
-      </p>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-        <!-- Feature 1 -->
-        <div class="bg-white p-8 rounded-lg text-center" style="box-shadow: 0 4px 6px rgba(11, 143, 172, 0.1), 0 1px 3px rgba(30, 64, 175, 0.08);">
-          <div class="text-custom-blue text-4xl mb-4">👥</div>
-          <h3 class="text-xl font-semibold mb-2">Accessibilité multi-utilisateurs</h3>
-          <p class="text-gray-600">
-            Les professionnels de santé peuvent accéder au dossier en toute sécurité, avec des permissions adaptées à chaque rôle.
-          </p>
-        </div>
-        <!-- Feature 2 -->
-        <div class="bg-white p-8 rounded-lg text-center" style="box-shadow: 0 4px 6px rgba(11, 143, 172, 0.1), 0 1px 3px rgba(30, 64, 175, 0.08);">
-          <div class="text-custom-blue text-4xl mb-4">⏱</div>
-          <h3 class="text-xl font-semibold mb-2">Suivi des traitements en temps réel</h3>
-          <p class="text-gray-600">
-            Suivez l’administration des médicaments et la progression des soins pour chaque patient.
-          </p>
-        </div>
-        <!-- Feature 3 -->
-        <div class="bg-white p-8 rounded-lg text-center" style="box-shadow: 0 4px 6px rgba(11, 143, 172, 0.1), 0 1px 3px rgba(30, 64, 175, 0.08);">
-          <div class="text-custom-blue text-4xl mb-4">✨</div>
-          <h3 class="text-xl font-semibold mb-2">Interface intuitive et simplifiée</h3>
-          <p class="text-gray-600">
-            Une navigation fluide et claire pour une utilisation quotidienne sans complexité.
-          </p>
-        </div>
+      <!-- Hero Image -->
+      <div class="flex justify-center mt-6 md:mt-0">
+        <img
+          src="/assets/images/landingpage/side_illustration.svg"
+          alt="Illustration Dossier Patient"
+          class="max-w-full h-auto"
+        />
       </div>
     </section>
-    <!-- Footer -->
-    <footer class=" text-white mt-10 w-full poppins-font bg-custom-blue rounded-lg">
-      <div class="w-full flex flex-col md:flex-row justify-between items-center px-6 py-4 bg-custom-blue rounded-lg">
-        <!-- Logo -->
-        <div class="mb-4 md:mb-0">
-          <img src="/assets/images/common/inverted_logo_named.png" alt="MediDoc" class="h-12">
+    <!-- End Hero Section -->
+
+    <!-- Features Section: Highlights key functionalities -->
+    <section id="features" class="px-6 md:px-10 py-12 md:py-20 bg-white">
+      <div class="text-[#13375b] text-[50px] font-semibold font-['Red Hat Display'] capitalize leading-[80px]">nos fonctionnalités étonnantes</div>
+      <div class="text-[#636161] text-xl font-normal font-['Red Hat Text'] leading-[30px] pb-10">Fonctionnalités Clés du Système de Gestion du Dossier Patient Informatisé</div>
+
+      <!-- Feature Cards -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-20 mx-auto">
+        <!-- Feature 1 -->
+        <div
+          class="bg-white p-10 rounded-lg text-center shadow-[0_10px_20px_rgba(11,143,172,0.1)] flex-col justify-start items-center gap-[30px] inline-flex"
+        >
+        <div
+        class="h-[76.33px] p-5 bg-[#129820]/20 rounded-[20px] justify-start items-start gap-2.5 inline-flex"
+      >
+        <img
+          src="/assets/images/landingpage/Icon_heart.svg"
+          alt="Icon 1"
+          class="h-full w-full"
+        />
+      </div>
+          <h3 class="text-[28px] font-semibold mb-4">
+            Accessibilité multi-utilisateurs
+          </h3>
+          <p class="text-gray-600">
+            Accès sécurisé pour les professionnels de santé, avec des
+            permissions adaptées à chaque rôle.
+          </p>
         </div>
 
-        <!-- Copyright & Location -->
-        <div class="text-center md:text-right">
-          <p class="text-base font-semibold text-white mb-2">Copyright © MediDoc 2024</p>
-          <p class="text-base font-semibold text-white">BPM68 16270, Oued Smar, Alger.</p>
+        <!-- Feature 2 -->
+        <div
+          class="bg-white p-10 rounded-lg text-center shadow-[0_10px_20px_rgba(11,143,172,0.1)] flex-col justify-start items-center gap-[30px] inline-flex"
+        >
+          <div
+            class="h-[76.33px] p-5 bg-[#f79503]/20 rounded-[20px] justify-start items-start gap-2.5 inline-flex"
+          >
+            <img
+              src="/assets/images/landingpage/Icon_medecin.svg"
+              alt="Icon 1"
+              class="h-full w-full"
+            />
+          </div>
+          <h3 class="text-[28px] font-semibold mb-4">
+            Suivi des traitements en temps réel
+          </h3>
+          <p class="text-gray-600">
+            Surveillez l’administration des médicaments et l’évolution des soins
+            pour chaque patient.
+          </p>
+        </div>
+
+        <!-- Feature 3 -->
+        <div
+          class="bg-white p-10 rounded-lg text-center shadow-[0_10px_20px_rgba(11,143,172,0.1)] flex-col justify-start items-center gap-[30px] inline-flex"
+        >
+        <div
+        class="h-[76.33px] p-5 bg-[#4880ff]/20 rounded-[20px] justify-start items-start gap-2.5 inline-flex"
+      >
+        <img
+          src="/assets/images/landingpage/Icon_simple.svg"
+          alt="Icon 1"
+          class="h-full w-full"
+        />
+      </div>
+          <h3 class="text-[28px] font-semibold mb-4">Interface intuitive</h3>
+          <p class="text-gray-600">
+            Une expérience fluide et claire, conçue pour une utilisation sans
+            difficulté.
+          </p>
         </div>
       </div>
-    </footer>
+      <!-- End Feature Cards -->
+    </section>
+    <!-- End Features Section -->
   </div>
 </div>
+<!-- Footer: Logo, Copyright & Location -->
+<footer class="text-white mt-10 w-full poppins-font bg-custom-blue">
+  <div
+    class="w-full flex flex-col md:flex-row justify-between items-center px-6 py-4 bg-custom-blue"
+  >
+    <div class="mb-4 md:mb-0">
+      <img
+        src="/assets/images/common/inverted_logo_named.png"
+        alt="MediDoc Inverted Logo"
+        class="h-12"
+      />
+    </div>
+    <div class="text-center md:text-right">
+      <p class="text-base font-semibold text-white mb-2">© MediDoc 2024</p>
+      <p class="text-base font-semibold text-white">
+        BPM68 16270, Oued Smar, Alger.
+      </p>
+    </div>
+  </div>
+</footer>
+<!-- End Footer -->

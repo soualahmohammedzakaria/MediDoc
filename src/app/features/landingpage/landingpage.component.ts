@@ -10,7 +10,7 @@ import { MatIconModule } from '@angular/material/icon';
   styleUrls: ['./landingpage.component.css'],
 })
 export class LandingPage {
-  
+  menuOpen = false;
 }
 
 
