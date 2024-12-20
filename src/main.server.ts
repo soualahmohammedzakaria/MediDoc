@@ -1,7 +1,7 @@
 import { bootstrapApplication } from '@angular/platform-browser';
 import { config } from './app/app.config.server';
-import { LandingPage } from './app/features/landingpage/landingpage.component';
+import { AppComponent } from './app/app.component';
 
-const bootstrap = () => bootstrapApplication(LandingPage, config);
+const bootstrap = () => bootstrapApplication(AppComponent, config);
 
 export default bootstrap;

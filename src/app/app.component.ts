@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { RouterOutlet } from '@angular/router';
 
 @Component({
@@ -9,4 +9,10 @@ import { RouterOutlet } from '@angular/router';
   imports: [RouterOutlet, CommonModule, RouterModule],
   templateUrl: './app.component.html',
 })
-export class AppComponent {}
+export class AppComponent {
+  constructor(private router: Router) {}
+
+  ngOnInit() {
+    this.router.navigateByUrl('landingpage');
+  }
+}
