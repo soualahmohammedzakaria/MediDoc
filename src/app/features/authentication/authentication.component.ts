@@ -45,7 +45,7 @@ export class Authentication {
       (res: any) => {
         this.isLoading = false;
         if(res.user.role === 'administratif') {
-          this.router.navigate(['/administratif/creerdpi']);
+          this.router.navigate(['/administratif/creerdpi'], { queryParams: { data: btoa(JSON.stringify(res)) } });
         } else if (res.user.role === 'patient') {
           this.router.navigate(['/landingpage']);
         } else if (res.user.role === 'medecin') {
@@ -59,7 +59,7 @@ export class Authentication {
         } else {
           this.router.navigate(['/landingpage']);
         }
-        this.toastr.success(`Rebonjour, ${res.user.nom}`, 'Connexion réussie!');
+        this.toastr.success(`Rebonjour, ${res.user.nom || "utilisateur"}`, 'Connexion réussie!');
       },
       (error) => {
         this.isLoading = false;

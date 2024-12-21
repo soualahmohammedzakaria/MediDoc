@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import {
   FormBuilder,
   Validators,
@@ -12,7 +12,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
-import { RouterModule } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'creedpi',
@@ -34,7 +34,17 @@ import { RouterModule } from '@angular/router';
   templateUrl: './creerdpi.component.html',
   styleUrls: ['./creerdpi.component.css'],
 })
-export class Creerdpi {
+export class Creerdpi implements OnInit {
+  data: any;
+
+  constructor(private route: ActivatedRoute) {}
+
+  ngOnInit() {
+    this.route.queryParams.subscribe((params) => {
+      this.data = JSON.parse(atob(params['data']));
+    });
+  }
+
   private _formBuilder = inject(FormBuilder);
 
   firstFormGroup = this._formBuilder.group({
