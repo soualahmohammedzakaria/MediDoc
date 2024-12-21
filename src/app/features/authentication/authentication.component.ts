@@ -5,6 +5,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'authentication',
@@ -19,7 +20,7 @@ export class Authentication {
   buttonText: string = 'Connectez-vous en tant que patient';
   isLoading: boolean = false;
 
-  constructor(private toastr: ToastrService) {}
+  constructor(private toastr: ToastrService, private router: Router) {}
 
   http = inject(HttpClient);
 
@@ -43,6 +44,21 @@ export class Authentication {
     this.http.post(`${environment.apiUrl}/accounts/login/`, formData).subscribe(
       (res: any) => {
         this.isLoading = false;
+        if(res.user.role === 'administratif') {
+          this.router.navigate(['/administratif/creerdpi']);
+        } else if (res.user.role === 'patient') {
+          this.router.navigate(['/landingpage']);
+        } else if (res.user.role === 'medecin') {
+          this.router.navigate(['/landingpage']);
+        } else if (res.user.role === 'infirmier') {
+          this.router.navigate(['/landingpage']);
+        } else if (res.user.role === 'laborantin') {
+          this.router.navigate(['/landingpage']);
+        } else if (res.user.role === 'radiologue') {
+          this.router.navigate(['/landingpage']);
+        } else {
+          this.router.navigate(['/landingpage']);
+        }
         this.toastr.success(`Rebonjour, ${res.user.nom}`, 'Connexion réussie!');
       },
       (error) => {
