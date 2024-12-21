@@ -19,7 +19,7 @@
       /></a>
       <!-- Hamburger Menu Button (visible on small screens) -->
       <button class="sm:hidden relative" (click)="menuOpen = !menuOpen">
-        <mat-icon>menu</mat-icon>
+        <span class="text-custom-blue"><mat-icon>menu</mat-icon></span>
       </button>
       <!-- Navigation Links (hidden on small screens) -->
       <div class="hidden sm:flex items-center space-x-10">
@@ -106,7 +106,7 @@
     <!-- Features Section -->
     <section class="px-6 md:px-10 py-12 md:py-20 bg-white" id="features">
       <h2
-        class="text-center font-['Red Hat Text'] text-3xl md:text-4xl font-semibold text-[#13375b] mb-6"
+        class="text-center text-3xl md:text-4xl font-semibold text-custom-blue mb-6"
       >
         Nos Fonctionnalités Étonnantes
       </h2>
@@ -186,8 +186,7 @@
             Interface intuitive et simplifiée
           </h3>
           <p class="text-gray-600">
-            Une navigation fluide et claire pour un accès rapide aux différents
-            éléments et une utilisation quotidienne sans complexité.
+            Une navigation fluide et claire pour un accès rapide et une utilisation quotidienne sans complexité.
           </p>
         </div>
       </div>
