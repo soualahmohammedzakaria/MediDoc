@@ -1,247 +1,261 @@
-<div class="flex w-full h-full"> 
+<div class="flex w-full h-full poppins-font">
 
-    <!-- side bar -->
-<div class=" w-[6%] h-[100%] flex-col justify-center border-x-[#E0E0E0] border-2 ">
- <div class ="w-[100%] h-[10%] flex items-center justify-center">
-    <img src="/assets/images/creedpi/logo.svg" alt="MediDoc" class="w-[40%] " />
- </div>
- <div class ="h-[7%]">
-    
- </div>
-   
-   <div class ="w-[100%] h-[10%] flex ">
-    <div class="h-full w-[5%] bg-[#0B8FAC]" > </div>
-    <div class=" flex justify-center items-center w-full h-full" > <img src="/assets/images/creedpi/file.svg" alt="MediDoc" class="w-[30%] " /></div>
-    
- </div>
- <div class ="h-[50%]">
-    
- </div>
- <div class ="w-[100%] h-[10%] flex items-center justify-center">
-    <img src="/assets/images/creedpi/logout.svg" alt="MediDoc" class="w-[40%] " />
+  <div class="w-[100%] h-[100%]">
+    <!-- nav bar -->
+    <div class="bg-custom-light-teal w-full h-[10%] flex justify-between items-center p-4">
+      <img
+        src="/assets/images/creedpi/logo.svg"
+        alt="MediDoc"
+        class="w-10 h-auto"
+      />
+      <div class="w-auto flex items-center space-x-4">
+        <a
+          class="flex items-center justify-center cursor-pointer hover:opacity-90"
+          routerLink="/landingpage"
+        >
+          <img src="/assets/images/creedpi/logout.svg" alt="Logout" />
+        </a>
+        <div class="text-center">
+          <div class="font-semibold text-sm md:text-md">SOUALAH MOHAMMED Zakaria</div>
+          <div class="font-medium text-xs md:text-sm">Administratif</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Form -->
+    <div class="bg-[#F5F6FA] w-full h-[90%] flex justify-center">
+      <div class="w-[90%] md:w-[72%] h-full">
+        <div
+          class="w-full h-[10%] flex justify-center md:justify-start items-center text-xl lg:text-2xl font-bold"
+        >
+          Créer un dossier patient
+        </div>
+        <div class="w-full bg-white border border-[#B9B9B9] rounded-2xl md:p-4">
+          <!-- Stepper -->
+          <mat-stepper [linear]="isLinear" #stepper>
+            <!-- Step 1 -->
+            <mat-step [stepControl]="firstFormGroup">
+              <form [formGroup]="firstFormGroup">
+                <ng-template matStepLabel>Informations de base</ng-template>
+                <div class="mt-5 w-full flex justify-center items-center">
+                  <div class="w-[90%] flex flex-wrap md:flex-nowrap gap-4">
+                    <mat-form-field class="w-full md:w-1/2">
+                      <mat-label>Nom</mat-label>
+                      <input
+                        matInput
+                        placeholder="Entrez le nom du patient"
+                        formControlName="firstCtrl"
+                        required
+                      />
+                    </mat-form-field>
+                    <mat-form-field class="w-full md:w-1/2">
+                      <mat-label>Prénom</mat-label>
+                      <input
+                        matInput
+                        placeholder="Entrez le prénom du patient"
+                        formControlName="firstCtrl"
+                        required
+                      />
+                    </mat-form-field>
+                  </div>
+                </div>
+
+                <div class="mt-5 w-full flex justify-center items-center">
+                  <div class="w-[90%] flex flex-wrap md:flex-nowrap gap-4">
+                    <mat-form-field class="w-full md:w-1/2">
+                      <mat-label>Numéro de sécurité sociale</mat-label>
+                      <input
+                        type="number"
+                        matInput
+                        placeholder="Entrez le NSS du patient"
+                        formControlName="firstCtrl"
+                        required
+                      />
+                    </mat-form-field>
+                    <mat-form-field class="w-full md:w-1/2">
+                      <mat-label>Médecin traitant</mat-label>
+                      <input
+                        matInput
+                        placeholder="Entrez le nom du médecin traitant"
+                        formControlName="firstCtrl"
+                        required
+                      />
+                    </mat-form-field>
+                  </div>
+                </div>
+
+                <div class="mt-5 w-full flex justify-center items-center">
+                  <div class="w-[90%] flex flex-wrap md:flex-nowrap gap-4">
+                    <mat-form-field class="w-full md:w-1/2">
+                      <mat-label>Date de naissance</mat-label>
+                      <input
+                        matInput
+                        type="date"
+                        placeholder="Entrez la date de naissance"
+                        formControlName="firstCtrl"
+                        required
+                      />
+                    </mat-form-field>
+                    <mat-form-field class="w-full md:w-1/2">
+                      <mat-label>Sexe</mat-label>
+                      <mat-select formControlName="firstCtrl" required>
+                        <mat-option value="Homme">Homme</mat-option>
+                        <mat-option value="Femme">Femme</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                </div>
+
+                <div class="mt-8 w-full flex justify-center">
+                  <div class="w-full md:w-4/5 flex flex-wrap justify-between gap-4">
+                    <button
+                      disabled
+                      class="appearance-none text-[#0B8FAC] opacity-35 border-[#0B8FAC] border-2 bg-white w-full md:w-[30%] py-3 rounded-[6px]"
+                      matStepperNext
+                    >
+                      Précédent
+                    </button>
+                    <button
+                      class="appearance-none text-white bg-[#0B8FAC] w-full md:w-[30%] py-3 rounded-[6px]"
+                      matStepperNext
+                    >
+                      Suivant
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </mat-step>
+
+            <!-- Step 2 -->
+            <mat-step [stepControl]="secondFormGroup" label="Informations supplémentaires">
+              <form [formGroup]="secondFormGroup">
+                <ng-template matStepLabel>Informations supplémentaires</ng-template>
+                <div class="mt-5 w-full flex justify-center items-center">
+                  <div class="w-[90%] flex flex-wrap md:flex-nowrap gap-4">
+                    <mat-form-field class="w-full md:w-1/2">
+                      <mat-label>Numéro téléphone</mat-label>
+                      <input
+                        matInput
+                        placeholder="Entrez le numéro téléphone"
+                        formControlName="secondCtrl"
+                        required
+                      />
+                    </mat-form-field>
+                    <mat-form-field class="w-full md:w-1/2">
+                      <mat-label>Personne à contacter</mat-label>
+                      <input
+                        matInput
+                        placeholder="Entrez la personne à contacter"
+                        formControlName="secondCtrl"
+                        required
+                      />
+                    </mat-form-field>
+                  </div>
+                </div>
+
+                <div class="mt-5 w-full flex justify-center items-center">
+                  <div class="w-[90%] flex flex-wrap md:flex-nowrap gap-4">
+                    <mat-form-field class="w-full md:w-1/2">
+                      <mat-label>Adresse</mat-label>
+                      <input
+                        matInput
+                        placeholder="Entrez l’adresse complète"
+                        formControlName="secondCtrl"
+                        required
+                      />
+                    </mat-form-field>
+                    <mat-form-field class="w-full md:w-1/2">
+                      <mat-label>Mutuelle</mat-label>
+                      <input
+                        matInput
+                        placeholder="Entrez la mutuelle du patient"
+                        formControlName="secondCtrl"
+                        required
+                      />
+                    </mat-form-field>
+                  </div>
+                </div>
+
+                <div class="mt-8 w-full flex justify-center">
+                  <div class="w-full md:w-4/5 flex flex-wrap justify-between gap-4">
+                    <button
+                      class="appearance-none text-[#0B8FAC] border-[#0B8FAC] border-2 bg-white w-full md:w-[30%] py-3 rounded-[6px]"
+                      matStepperPrevious
+                    >
+                      Précédent
+                    </button>
+                    <button
+                      class="appearance-none text-white bg-[#0B8FAC] w-full md:w-[30%] py-3 rounded-[6px]"
+                      matStepperNext
+                    >
+                      Suivant
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </mat-step>
+
+            <!-- Step 3 -->
+            <mat-step [stepControl]="thirdFormGroup">
+              <form [formGroup]="thirdFormGroup">
+                <ng-template matStepLabel>Informations de connexion</ng-template>
+                <div class="mt-5 w-full flex justify-center items-center">
+                  <div class="w-[90%] flex flex-wrap gap-4">
+                    <mat-form-field class="w-full">
+                      <mat-label>Email</mat-label>
+                      <input
+                        type="email"
+                        matInput
+                        placeholder="Entrez l’email du patient"
+                        formControlName="thirdCtrl"
+                        required
+                      />
+                    </mat-form-field>
+                    <mat-form-field class="w-full">
+                      <mat-label>Mot de passe</mat-label>
+                      <input
+                        type="password"
+                        matInput
+                        placeholder="Entrez le mot de passe du patient"
+                        formControlName="thirdCtrl"
+                        required
+                      />
+                    </mat-form-field>
+                    <mat-form-field class="w-full">
+                      <mat-label>Confirmez le mot de passe</mat-label>
+                      <input
+                        type="password"
+                        matInput
+                        placeholder="Confirmez le mot de passe du patient"
+                        formControlName="thirdCtrl"
+                        required
+                      />
+                    </mat-form-field>
+                  </div>
+                </div>
+
+                <div class="mt-8 w-full flex justify-center">
+                  <div class="w-full md:w-4/5 flex flex-wrap justify-between gap-4">
+                    <button
+                      class="appearance-none text-[#0B8FAC] border-[#0B8FAC] border-2 bg-white w-full md:w-[30%] py-3 rounded-[6px]"
+                      matStepperPrevious
+                    >
+                      Précédent
+                    </button>
+                    <button
+                      class="appearance-none text-white bg-[#0B8FAC] w-full md:w-[30%] py-3 rounded-[6px]"
+                      matStepperNext
+                    >
+                      Suivant
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </mat-step>
+          </mat-stepper>
+          <!-- Stepper -->
+        </div>
+      </div>
+    </div>
   </div>
-
 </div>
-
-
- <!-- nav bar -->
-<div class=" w-[94%] h-[100%]">
-     <!-- nav bar -->
-<div class="bg-[#D2EBE799] w-full h-[10%] flex justify-end items-center" >
-    <div class=" w-[20%] h-[70%] flex" >
-     <div class="rounded-full bg-[#D8D8D8] h-[100%] w-[20%] flex items-center justify-center overflow-hidden">
-        <img src="/assets/images/creedpi/photo.svg" alt="MediDoc" class=" " />
-    </div> 
-    <div class="w-[5%]"></div>
-    <div class="h-[100%] w-[80%]">
-       <div class="font-semibold text-[1.2vw]">zaky l mo7aki</div>
-       <div>Administratif</div>
-       
-    </div>
-    </div>
-</div>
-
- <!-- formulare -->
-<div class="bg-[#F5F6FA] w-full h-[90%] flex justify-center" >
-    <div class="w-[72%]  h-full "> 
-        
-      <div  class="w-[100%]  h-[10%] justify-start flex items-center text-2xl font-bold font-nunito"> 
-        Crée un Dossier Patient
-    </div>
-     <div class="w-full bg-white h-[82%] border-[#B9B9B9] border-[0.3px] rounded-[14px]  ">
-     <!-- stepper --> 
-<!-- stepper --> 
- <!-- stepper --> 
-
-
-      <button mat-raised-button (click)="isLinear = !isLinear" id="toggle-linear">
-  {{!isLinear ? 'Enable linear mode' : 'Disable linear mode'}}
-</button>
-<mat-stepper   [linear]="isLinear" #stepper >
-  <mat-step [stepControl]="firstFormGroup">
-    <form [formGroup]="firstFormGroup">
-      <ng-template  matStepLabel>Informations de base</ng-template>
-
-      
-      <div class="mt-5 w-full flex justify-center items-center">
-        <div class=" w-[80%] flex">
-          <mat-form-field class="w-full ">
-        <mat-label>Nom</mat-label>
-        <input matInput placeholder="Entrez le nom du patient" formControlName="firstCtrl" required>
-      </mat-form-field>
-       <div class="w-[10%]"></div>
-      <mat-form-field class="w-full">
-        <mat-label>Prénom</mat-label>
-        <input matInput placeholder="Entrez le prénom du patient" formControlName="firstCtrl" required>
-      </mat-form-field>
-</div>
-</div>
-
-
-
-
-
-<div class="w-full flex justify-center items-center">
-        <div class=" w-[80%] flex"><mat-form-field class="w-full  ">
-        <mat-label>Numéro de sécurité sociale</mat-label>
-        <input  matInput placeholder="Entrez le NSS du patient" formControlName="firstCtrl" required>
-      </mat-form-field>
-       <div class="w-[10%]"></div>
-      <mat-form-field class="w-full">
-        <mat-label>Médecin traitant</mat-label>
-        <input matInput placeholder="Entrez le nom de médcin traitant du patient" formControlName="firstCtrl" required>
-      </mat-form-field>
-</div></div>
-
-
-
-<div class="w-full flex justify-center items-center">
-        <div class=" w-[80%] flex"><mat-form-field class="w-full ">
-        <mat-label>Date de naissance</mat-label>
-        <input matInput placeholder="Entrez la date de naissance du patient" formControlName="firstCtrl" required>
-      </mat-form-field>
-       <div class="w-[10%]"></div>
-      <mat-form-field class="w-full">
-        <mat-label>Gender</mat-label>
-        <input matInput placeholder="Male" formControlName="firstCtrl" required>
-      </mat-form-field>
-</div></div>
-      
-      
-
-   <div class="w-full  flex justify-center  ">
-         <div class="w-4/5 flex justify-between">
-         <button disabled class="appearance-none  text-[#0B8FAC] opacity-35  border-[#0B8FAC] border-2 bg-[white] w-[30%] py-3 rounded-[6px] " matStepperNext>Précédent</button>
-         <div class="w-[20%]"> </div>
-        <button class="appearance-none  text-[white]  bg-[#0B8FAC] px-12 py-3 w-[30%] rounded-[6px] " matStepperNext>Suivant</button>
-        </div>
-      </div>
-    </form>
-  </mat-step>
-   <!-- second --> <!-- second --> <!-- second --> <!-- second --> <!-- second -->
-  <mat-step [stepControl]="secondFormGroup" label="Fill out your address">
-    <form [formGroup]="secondFormGroup">
-     <ng-template  matStepLabel>Informations de base</ng-template>
-      
-
-    <div class="mt-5 w-full flex justify-center items-center">
-        <div class=" w-[80%] flex">
-          <mat-form-field class="w-full ">
-        <mat-label>Numéro téléphone</mat-label>
-        <input matInput placeholder="Entrez le numero téléphone du patient" formControlName="secondCtrl" required>
-      </mat-form-field>
-       <div class="w-[10%]"></div>
-      <mat-form-field class="w-full">
-        <mat-label>Personne à contacter</mat-label>
-        <input matInput placeholder="Entrez le numéro de la personne à contacter" formControlName="secondetCtrl" required>
-      </mat-form-field>
-</div>
-</div>
-
-
-<div class="mt-5 w-full flex justify-center items-center">
-        <div class=" w-[80%] flex">
-          <mat-form-field class="w-full ">
-        <mat-label>Adresse</mat-label>
-        <input matInput placeholder="Entrez l’adresse complet du patient" formControlName="secondCtrl" required>
-      </mat-form-field>
-       <div class="w-[10%]"></div>
-      <mat-form-field class="w-full">
-        <mat-label>Mutuelle</mat-label>
-        <input matInput placeholder="Entrez le mutuelle du patient" formControlName="secondCtrl" required>
-      </mat-form-field>
-</div>
-</div>
-<div class="w-full mt-[5%]  flex justify-center  ">
-         <div class="w-4/5 flex justify-between">
-         <button  class="appearance-none  text-[#0B8FAC]   border-[#0B8FAC] border-2 bg-[white] w-[30%] py-3 rounded-[6px] " matStepperPrevious>Précédent</button>
-         <div class="w-[20%]"> </div>
-        <button class="appearance-none  text-[white]  bg-[#0B8FAC] px-12 py-3 w-[30%] rounded-[6px] " matStepperNext>Suivant</button>
-        </div>
-      </div>
-
-
-
-     
-    </form>
-  </mat-step>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  <mat-step [stepControl]="thirdFormGroup" label="Fill out your address">
-    <form [formGroup]="thirdFormGroup">
-     <ng-template  matStepLabel>Informations de connexion</ng-template>
-      
-   
-    <div class="mt-5 w-full flex justify-center items-center">
-        <div class=" w-[80%] flex justify-center   ">
-           <div class=" w-[50%]  ">
-          <mat-form-field class="w-full  ">
-        <mat-label>Email</mat-label>
-        <input matInput placeholder="Entrez l’email du patient" formControlName="thirdCtrl" required>
-      </mat-form-field>
-
-       <mat-form-field class="w-full ">
-        <mat-label>Mot de passe</mat-label>
-        <input matInput placeholder="Entrez le mot de passe du patient" formControlName="thirdCtrl" required>
-      </mat-form-field>
-
-       <mat-form-field class="w-full ">
-        <mat-label>Confirmez le mot de passe</mat-label>
-        <input matInput placeholder="Confirmez le mot de passe du patient" formControlName="thirdCtrl" required>
-      </mat-form-field>
-      </div>
-      
-     
-</div>
-</div>
-
-
-
-<div class="w-full mt-[3%]  flex justify-center  ">
-         <div class="w-4/5 flex justify-between">
-         <button  class="appearance-none  text-[#0B8FAC]   border-[#0B8FAC] border-2 bg-[white] w-[30%] py-3 rounded-[6px] " matStepperPrevious>Précédent</button>
-         <div class="w-[20%]"> </div>
-        <button class="appearance-none  text-[white]  bg-[#0B8FAC] px-12 py-3 w-[30%] rounded-[6px] " matStepperNext>Suivant</button>
-        </div>
-      </div>
-
-
-
-     
-    </form>
-  </mat-step>
-  
-
-
-
-
-
-
-</mat-stepper>
-       <!-- stepper --> 
-     </div>
-       
-    </div>
-    
-
-
-</div>
-</div>
-<!-- side   bar --> 

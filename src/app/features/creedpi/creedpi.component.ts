@@ -1,27 +1,41 @@
-
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
-import {Component, inject} from '@angular/core';
-import {FormBuilder, Validators, FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {MatInputModule} from '@angular/material/input';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatStepperModule} from '@angular/material/stepper';
-import {MatButtonModule} from '@angular/material/button';
+import { Component, inject } from '@angular/core';
+import {
+  FormBuilder,
+  Validators,
+  FormsModule,
+  ReactiveFormsModule,
+} from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatSelectModule } from '@angular/material/select';
+import { MatButtonModule } from '@angular/material/button';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'creedpi',
-  
+
   standalone: true,
-  imports: [CommonModule, MatIconModule, MatButtonModule,
+  imports: [
+    CommonModule,
+    MatIconModule,
+    MatButtonModule,
     MatStepperModule,
     FormsModule,
+    RouterModule,
     ReactiveFormsModule,
     MatFormFieldModule,
-    MatInputModule,],
+    MatInputModule,
+    MatSelectModule,
+    MatFormFieldModule,
+  ],
   templateUrl: './creedpi.component.html',
-  styleUrls: ['./creedpi.component.css','./creedpi.component.scss'],
+  styleUrls: ['./creedpi.component.css', './creedpi.component.scss'],
 })
-export class Creedpi {  private _formBuilder = inject(FormBuilder);
+export class Creedpi {
+  private _formBuilder = inject(FormBuilder);
 
   firstFormGroup = this._formBuilder.group({
     firstCtrl: ['', Validators.required],
@@ -33,5 +47,4 @@ export class Creedpi {  private _formBuilder = inject(FormBuilder);
     thirdCtrl: ['', Validators.required],
   });
   isLinear = false;
-} 
-
+}
