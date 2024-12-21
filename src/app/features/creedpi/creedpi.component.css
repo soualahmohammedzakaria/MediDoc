@@ -1,0 +1,30 @@
+.mat-stepper-horizontal {
+  margin-top: 8px;
+}
+
+.mat-mdc-form-field {
+  margin-top: 16px;
+}
+
+::ng-deep   .mat-step-icon {
+  background: #0B8FAC !important;
+}
+
+::ng-deep   .mat-step-header {
+  display: flex;
+  flex-direction: column;
+}
+::ng-deep   .mat-stepper-horizontal-line {
+ padding-bottom: 40px;
+ 
+}
+::ng-deep  .mat-horizontal-stepper-wrapper {
+background-color: white;
+ 
+}
+::ng-deep .mat-mdc-form-field   {
+border: none;
+outline: none;
+background-color: white !important;
+ 
+}
