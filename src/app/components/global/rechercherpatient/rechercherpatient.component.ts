@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
 import { FormsModule } from '@angular/forms';
 import { environment } from '../../../../environments/environment';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'rechercher-patient',
@@ -21,7 +22,7 @@ export class RechercherPatientComponent {
 
   @ViewChild('nssInput') nssInputRef!: ElementRef<HTMLInputElement>;
 
-  constructor(private http: HttpClient, private toastr: ToastrService) {}
+  constructor(private http: HttpClient, private toastr: ToastrService, private router: Router) {}
 
   ngAfterViewInit(): void {
     this.setFocus();
@@ -37,6 +38,15 @@ export class RechercherPatientComponent {
   }
 
   searchByNSS(): void {
+    console.log(this.data);
+    /* This part needs to be moved to when the dossier patient is found */
+    if (this.data.user.role === 'infirmier') {
+      this.router.navigate(['/infirmier/soins'], { queryParams: { data: btoa(JSON.stringify({id: this.data.user.id, nom: this.data.user.nom, access: this.data.access, patient_nss: 1234, patient_nom: "MARAF Mohammed Islam"})) } }); // Replace 1234 with the actual NSS and "MARAF Mohammed Islam" with the actual name
+    } else if (this.data.user.role === 'medecin') {
+      this.router.navigate(['/medecin']);
+    }
+    return;
+    /* ---------------------------------------------------------------- */
     if (!this.nss) {
       this.toastr.error('Veuillez entrer un NSS valide', 'NSS invalide!');
       return;
@@ -52,7 +62,6 @@ export class RechercherPatientComponent {
           'Le dossier du patient a été trouvé avec succès',
           'Dossier trouvé!'
         );
-        console.log(res);
       },
       (error) => {
         if (error.status === 301) {

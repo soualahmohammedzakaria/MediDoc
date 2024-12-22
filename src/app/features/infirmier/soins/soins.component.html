@@ -1,0 +1,87 @@
+<div class="flex flex-col w-full h-full poppins-font bg-[#F5F6FA]">
+  <!-- nav bar -->
+  <div
+    class="bg-custom-light-teal w-full h-[10%] flex justify-between items-center p-4"
+  >
+    <img
+      src="/assets/images/common/logo.svg"
+      alt="MediDoc"
+      class="w-10 h-auto"
+    />
+    <div class="w-auto flex items-center space-x-4">
+      <a
+        class="flex items-center justify-center cursor-pointer hover:opacity-90"
+        routerLink="/landingpage"
+      >
+        <img src="/assets/images/common/logout.svg" alt="Logout" />
+      </a>
+      <div class="text-center">
+        <div class="font-semibold text-sm md:text-md">
+          {{ data?.nom }}
+        </div>
+        <div class="font-medium text-xs md:text-sm">
+          Infirmier
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- main content -->
+  <div class="bg-[#F5F6FA] w-full h-auto md:h-[88%] flex flex-col justify-center items-center">
+    <h1 class="text-2xl font-bold my-4 text-center md:text-left">
+      Ajouter des soins infirmiers
+    </h1>
+    <div class="bg-white w-[90%] md:w-[70%] rounded-2xl shadow-md p-6">
+      <div class="flex items-center justify-between mb-1 max-md:flex-col max-md:items-start max-md:justify-start">
+        <div class="text-2xl text-custom-dark-blue font-semibold">{{ data?.patient_nom }}</div>
+        <div class="text-sm text-gray-600">NSS: {{ data?.patient_nss }}</div>
+      </div>
+
+      <div class="bg-custom-light-teal rounded-2xl h-[1px] w-full mb-4"></div>
+  
+      <form [formGroup]="soinsForm" (ngSubmit)="submitForm()">
+        <div class="mb-4">
+          <div class="text-lg font-semibold mb-1">Soins</div>
+          <div class="bg-custom-blue rounded-2xl h-[3px] w-[20%] md:w-[10%]"></div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label for="soins" class="block text-sm font-medium text-custom-dark-blue mb-2">
+              Soins et médicaments
+            </label>
+            <textarea
+              id="soins"
+              rows="8"
+              formControlName="soins"
+              class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-custom-light-teal bg-[#F0FAF4]"
+              placeholder="Saisissez les informations concernant les soins prodigués au patient comme l'administration des médicaments et les soins infirmiers."
+            ></textarea>
+          </div>
+
+          <div>
+            <label for="observations" class="block text-sm font-medium text-custom-dark-blue mb-2">
+              Observations sur l'état du patient
+            </label>
+            <textarea
+              id="observations"
+              rows="8"
+              formControlName="observations"
+              class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-custom-light-teal bg-[#F0FAF4]"
+              placeholder="Saisissez les observations sur l'état du patient, les symptômes, les signes cliniques, les réactions aux soins prodigués."
+            ></textarea>
+          </div>
+        </div>
+
+        <div class="flex justify-end items-center mt-4">
+          <button
+            type="submit"
+            class="bg-custom-blue text-white font-semibold py-3 px-7 rounded-lg hover:opacity-90"
+          >
+            Terminer
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
