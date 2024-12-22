@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, ViewEncapsulation } from '@angular/core';
+import { Component, ElementRef, Input, ViewChild, ViewEncapsulation } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
 import { FormsModule } from '@angular/forms';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'rechercher-patient',
@@ -16,46 +17,62 @@ import { FormsModule } from '@angular/forms';
 })
 export class RechercherPatientComponent {
   @Input() data: any;
-  nss: string = ''; // Holds the NSS entered by the user
-  loading: boolean = false; // To handle loading state
+  nss: string = '';
+
+  @ViewChild('nssInput') nssInputRef!: ElementRef<HTMLInputElement>;
 
   constructor(private http: HttpClient, private toastr: ToastrService) {}
 
-  // Method to search for a patient by NSS
-  searchByNSS(): void {
-    console.log('NSS:', this.nss);
-    if (!this.nss) {
-      this.toastr.error('Veuillez entrer un NSS valide.', 'Erreur');
-      return;
-    }
+  ngAfterViewInit(): void {
+    this.setFocus();
+  }
 
-    this.loading = true;
-
-    // API call to fetch patient data
-    this.http.get(`https://your-api-url.com/patients/${this.nss}`).subscribe({
-      next: (response) => {
-        console.log('Patient Data:', response);
-        this.toastr.success('Patient trouvé avec succès.', 'Succès');
-        this.loading = false;
-        // Handle the response (e.g., show patient data in the UI)
-      },
-      error: (error) => {
-        console.error('Error fetching patient data:', error);
-        this.toastr.error('Aucun patient trouvé avec ce NSS.', 'Erreur');
-        this.loading = false;
-      },
+  // Method to ensure input remains focused
+  setFocus(): void {
+    setTimeout(() => {
+      if (this.nssInputRef && this.nssInputRef.nativeElement) {
+        this.nssInputRef.nativeElement.focus();
+      }
     });
   }
 
-  // Method to handle QR code scanning (mocked for now)
-  searchByQRCode(qrData: string): void {
-    console.log('NSS:', this.nss);
-    if (!qrData) {
-      this.toastr.error('Aucun QR code détecté.', 'Erreur');
+  searchByNSS(): void {
+    if (!this.nss) {
+      this.toastr.error('Veuillez entrer un NSS valide', 'NSS invalide!');
       return;
     }
 
-    this.nss = qrData; // Assuming the QR code contains the NSS
-    this.searchByNSS(); // Reuse the NSS search logic
+    this.http.get(`${environment.apiUrl}/dpi/rechercher/${this.nss}`, {
+      headers: {
+        Authorization: `Bearer ${this.data.access}`,
+      }
+    }).subscribe(
+      (res: any) => {
+        this.toastr.success(
+          'Le dossier du patient a été trouvé avec succès',
+          'Dossier trouvé!'
+        );
+        console.log(res);
+      },
+      (error) => {
+        if (error.status === 301) {
+          this.toastr.success(
+            'Le dossier du patient a été trouvé avec succès',
+            'Dossier trouvé!'
+          );
+        } else if (error.status === 404) {
+          this.toastr.error(
+            'Un patient avec ce NSS n\'a pas été trouvé',
+            'NSS non trouvé!'
+          );
+        } else {
+          console.log(error);
+          this.toastr.error(
+            'Désole, une erreur s\'est produite',
+            'Erreur!'
+          );
+        }
+      }
+    );
   }
 }
