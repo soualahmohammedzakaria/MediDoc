@@ -6,7 +6,6 @@ import {
   Validators,
   FormsModule,
   ReactiveFormsModule,
-  FormGroup,
 } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -15,7 +14,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { HttpClient } from '@angular/common/http';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
 
 @Component({
@@ -33,6 +32,7 @@ import { environment } from '../../../../environments/environment';
     MatInputModule,
     MatSelectModule,
     MatFormFieldModule,
+    HttpClientModule,
   ],
   templateUrl: './creerdpi.component.html',
   styleUrls: ['./creerdpi.component.css'],
@@ -44,7 +44,7 @@ export class Creerdpi implements OnInit {
   private _formBuilder = inject(FormBuilder);
 
   // Inject HttpClient service
-  //http = inject(HttpClient);
+  http = inject(HttpClient);
 
   // Define FormGroups
   firstFormGroup = this._formBuilder.group({
@@ -118,11 +118,14 @@ export class Creerdpi implements OnInit {
         medecin_traitant: this.firstFormGroup.value.medecin_traitant,
       };
 
-      /*this.http
-        .post(`${environment.apiUrl}/dpi/creer/`, formData)
+      this.http
+        .post(`${environment.apiUrl}/dpi/creer/`, formData, {
+          headers: {
+            Authorization: `Bearer ${this.data.access}`,
+          }
+        })
         .subscribe(
           (res: any) => {
-            // success here
             this.toastr.success(
               'Le dossier du patient a été créé avec succès',
               'Dossier patient créé!'
@@ -132,9 +135,24 @@ export class Creerdpi implements OnInit {
             this.thirdFormGroup.reset();
           },
           (error) => {
-            this.toastr.error('Désole, une erreur s\'est produite', 'Erreur!');
+            if (error.status === 400) {
+              this.toastr.error(
+                'Le numéro de sécurité sociale ou l\'email est déjà utilisé',
+                'Dossier patient existant!'
+              );
+            } if (error.status === 404) {
+              this.toastr.error(
+                'Veuillez vérifier le nom du médecin traitant',
+                'Medecin non trouvé!'
+              );
+            } else {
+              this.toastr.error(
+                'Désole, une erreur s\'est produite',
+                'Erreur!'
+              );
+            }
           }
-        );*/
+        );
     } else {
       this.toastr.error(
         'Veuillez remplir tous les champs du formulaire correctement',
