@@ -74,12 +74,11 @@
                       </mat-form-field>
                       <mat-form-field class="w-full md:w-1/2">
                         <mat-label>Médecin traitant</mat-label>
-                        <input
-                          matInput
-                          placeholder="Entrez le nom du médecin traitant"
-                          formControlName="medecin_traitant"
-                          required
-                        />
+                        <mat-select formControlName="sexe" required>
+                          @for (medecin of medecins; track $index) {
+                            <mat-option value="{{ medecin.id }}">{{ medecin.nom }} ({{ medecin.specialite }})</mat-option>
+                          }
+                        </mat-select>
                       </mat-form-field>
                     </div>
                   </div>

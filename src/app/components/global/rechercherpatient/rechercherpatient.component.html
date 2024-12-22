@@ -1,0 +1,47 @@
+<div class="bg-[#F5F6FA] w-full h-[90%] flex justify-center">
+    <div class="w-[90%] md:w-[72%] h-full">
+      <div class="w-full h-[10%] flex justify-center md:justify-start items-center text-xl lg:text-2xl font-bold">
+        Rechercher un dossier patient
+      </div>
+  
+      <!-- NSS Search Input -->
+      <div class="bg-[white] border-[#B9B9B9] border-2 rounded-[14px] w-full h-[10%] flex justify-start items-center text-xl lg:text-2xl font-bold">
+        <input
+          id="nss"
+          name="nss"
+          [(ngModel)]="nss"
+          placeholder="Entrer le NSS du patient"
+          class="w-[94%] pl-5 bg-[white] text-base font-normal appearance-none outline-none border-none"
+          required
+        />
+        <label for="nss" (click)="searchByNSS()">
+          <img
+            src="/assets/images/common/search.svg"
+            alt="search"
+            class="h-8 w-8 cursor-pointer max-md:mr-3 hover:opacity-90"
+          />
+        </label>
+      </div>
+  
+      <!-- QR Code Search Button -->
+      <div class="flex flex-col xs:flex-col sm:flex-col md:flex-row">
+        <button
+          class="xs:w-full mt-[2%] bg-[#0B8FAC] rounded-[14px] md:px-12 py-4 text-white flex justify-center items-center hover:opacity-90"
+          (click)="searchByQRCode('mock-qr-data')"
+        >
+          <div class="text-base">Rechercher&nbsp;par&nbsp;QR&nbsp;Code</div>
+          <div class="w-[20%]">&nbsp;&nbsp;</div>
+          <img
+            src="/assets/images/common/qr.svg"
+            alt="search"
+            class="h-4 w-4 cursor-pointer"
+          />
+        </button>
+      </div>
+  
+      <!-- Loading State -->
+      <div *ngIf="loading" class="text-center mt-4 text-gray-600">
+        Chargement...
+      </div>
+    </div>
+  </div>  
