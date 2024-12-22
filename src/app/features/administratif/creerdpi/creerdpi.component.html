@@ -44,7 +44,7 @@
                         <input
                           matInput
                           placeholder="Entrez le nom du patient"
-                          formControlName="firstCtrl"
+                          formControlName="patient_nom"
                           required
                         />
                       </mat-form-field>
@@ -53,7 +53,7 @@
                         <input
                           matInput
                           placeholder="Entrez le prénom du patient"
-                          formControlName="firstCtrl"
+                          formControlName="prenom"
                           required
                         />
                       </mat-form-field>
@@ -68,7 +68,7 @@
                           type="number"
                           matInput
                           placeholder="Entrez le NSS du patient"
-                          formControlName="firstCtrl"
+                          formControlName="nss"
                           required
                         />
                       </mat-form-field>
@@ -77,7 +77,7 @@
                         <input
                           matInput
                           placeholder="Entrez le nom du médecin traitant"
-                          formControlName="firstCtrl"
+                          formControlName="medecin_traitant"
                           required
                         />
                       </mat-form-field>
@@ -92,13 +92,13 @@
                           matInput
                           type="date"
                           placeholder="Entrez la date de naissance"
-                          formControlName="firstCtrl"
+                          formControlName="date_naissance"
                           required
                         />
                       </mat-form-field>
                       <mat-form-field class="w-full md:w-1/2">
                         <mat-label>Sexe</mat-label>
-                        <mat-select formControlName="firstCtrl" required>
+                        <mat-select formControlName="sexe" required>
                           <mat-option value="Homme">Homme</mat-option>
                           <mat-option value="Femme">Femme</mat-option>
                         </mat-select>
@@ -110,13 +110,13 @@
                     <div class="w-full md:w-4/5 flex flex-wrap justify-between gap-4">
                       <button
                         disabled
-                        class="appearance-none text-[#0B8FAC] opacity-35 border-[#0B8FAC] border-2 bg-white w-full md:w-[30%] py-3 rounded-[6px]"
+                        class="appearance-none text-[#0B8FAC] opacity-35 border-[#0B8FAC] border-2 bg-white w-full md:w-[30%] py-3 rounded-2xl"
                         matStepperNext
                       >
                         Précédent
                       </button>
                       <button
-                        class="appearance-none text-white bg-[#0B8FAC] w-full md:w-[30%] py-3 rounded-[6px]"
+                        class="appearance-none text-white bg-[#0B8FAC] w-full md:w-[30%] py-3 rounded-2xl"
                         matStepperNext
                       >
                         Suivant
@@ -127,17 +127,18 @@
               </mat-step>
   
               <!-- Step 2 -->
-              <mat-step [stepControl]="secondFormGroup" label="Informations supplémentaires">
+              <mat-step [stepControl]="secondFormGroup" label="Informations de contact">
                 <form [formGroup]="secondFormGroup">
-                  <ng-template matStepLabel>Informations supplémentaires</ng-template>
+                  <ng-template matStepLabel>Informations de contact</ng-template>
                   <div class="mt-5 w-full flex justify-center items-center">
                     <div class="w-[90%] flex flex-wrap md:flex-nowrap gap-4">
                       <mat-form-field class="w-full md:w-1/2">
                         <mat-label>Numéro téléphone</mat-label>
                         <input
+                          type="number"
                           matInput
                           placeholder="Entrez le numéro téléphone"
-                          formControlName="secondCtrl"
+                          formControlName="telephone"
                           required
                         />
                       </mat-form-field>
@@ -146,7 +147,7 @@
                         <input
                           matInput
                           placeholder="Entrez la personne à contacter"
-                          formControlName="secondCtrl"
+                          formControlName="personne_contact"
                           required
                         />
                       </mat-form-field>
@@ -160,7 +161,7 @@
                         <input
                           matInput
                           placeholder="Entrez l’adresse complète"
-                          formControlName="secondCtrl"
+                          formControlName="adresse"
                           required
                         />
                       </mat-form-field>
@@ -169,7 +170,7 @@
                         <input
                           matInput
                           placeholder="Entrez la mutuelle du patient"
-                          formControlName="secondCtrl"
+                          formControlName="mutuelle"
                           required
                         />
                       </mat-form-field>
@@ -179,13 +180,13 @@
                   <div class="mt-8 w-full flex justify-center">
                     <div class="w-full md:w-4/5 flex flex-wrap justify-between gap-4">
                       <button
-                        class="appearance-none text-[#0B8FAC] border-[#0B8FAC] border-2 bg-white w-full md:w-[30%] py-3 rounded-[6px]"
+                        class="appearance-none text-[#0B8FAC] border-[#0B8FAC] border-2 bg-white w-full md:w-[30%] py-3 rounded-2xl"
                         matStepperPrevious
                       >
                         Précédent
                       </button>
                       <button
-                        class="appearance-none text-white bg-[#0B8FAC] w-full md:w-[30%] py-3 rounded-[6px]"
+                        class="appearance-none text-white bg-[#0B8FAC] w-full md:w-[30%] py-3 rounded-2xl"
                         matStepperNext
                       >
                         Suivant
@@ -207,7 +208,7 @@
                           type="email"
                           matInput
                           placeholder="Entrez l’email du patient"
-                          formControlName="thirdCtrl"
+                          formControlName="patient_email"
                           required
                         />
                       </mat-form-field>
@@ -217,7 +218,7 @@
                           type="password"
                           matInput
                           placeholder="Entrez le mot de passe du patient"
-                          formControlName="thirdCtrl"
+                          formControlName="patient_password"
                           required
                         />
                       </mat-form-field>
@@ -227,7 +228,7 @@
                           type="password"
                           matInput
                           placeholder="Confirmez le mot de passe du patient"
-                          formControlName="thirdCtrl"
+                          formControlName="confirmPassword"
                           required
                         />
                       </mat-form-field>
@@ -237,16 +238,16 @@
                   <div class="mt-8 w-full flex justify-center">
                     <div class="w-full md:w-4/5 flex flex-wrap justify-between gap-4">
                       <button
-                        class="appearance-none text-[#0B8FAC] border-[#0B8FAC] border-2 bg-white w-full md:w-[30%] py-3 rounded-[6px]"
+                        class="appearance-none text-[#0B8FAC] border-[#0B8FAC] border-2 bg-white w-full md:w-[30%] py-3 rounded-2xl"
                         matStepperPrevious
                       >
                         Précédent
                       </button>
                       <button
-                        class="appearance-none text-white bg-[#0B8FAC] w-full md:w-[30%] py-3 rounded-[6px]"
-                        matStepperNext
+                        class="appearance-none text-white bg-[#0B8FAC] w-full md:w-[30%] py-3 rounded-2xl"
+                        (click)="submitForm()"
                       >
-                        Suivant
+                        Créer dossier
                       </button>
                     </div>
                   </div>
