@@ -1,0 +1,99 @@
+<div class="flex flex-col w-full h-full poppins-font">
+  <!-- nav bar -->
+  <div
+    class="bg-custom-light-teal w-full h-[10%] flex justify-between items-center p-4"
+  >
+    <img
+      src="/assets/images/common/logo.svg"
+      alt="MediDoc"
+      class="w-10 h-auto"
+    />
+    <div class="w-auto flex items-center space-x-4">
+      <a
+        class="flex items-center justify-center cursor-pointer hover:opacity-90"
+        routerLink="/landingpage"
+      >
+        <img src="/assets/images/common/logout.svg" alt="Logout" />
+      </a>
+      <div class="text-center">
+        <div class="font-semibold text-sm md:text-md">
+          {{ "BOUAB Samy" }}
+        </div>
+        <div class="font-medium text-xs md:text-sm">
+          {{ "Pédiatre" }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- main content -->
+  <div class="bg-[#F5F6FA] w-full h-[90%] flex justify-center">
+    <div class="w-[80%] md:w-[72%] h-full">
+      <div
+        class="w-full h-[10%] flex justify-center md:justify-start items-center text-xl lg:text-3xl font-bold mt-2"
+      >
+        Dossier Pateint
+      </div>
+      <div
+        class="bg-[white] border-[#B9B9B9] border-2 rounded-[14px] w-full lg:h-[46%] flex flex-col justify-center p-6"
+      >
+        <div class="flex items-center justify-between mb-4 max-md:flex-col max-md:items-start max-md:justify-start border-b-2 border-custom-light-teal pb-1">
+          <div class="text-2xl text-custom-dark-blue font-semibold">{{ "BOUAB Samy" }}</div>
+          <div class="text-md font-semibold text-gray-600">NSS: {{ "123456789" }}</div>
+        </div>
+        <div
+          class="w-[94%] h-[86%] flex flex-col-reverse items-center lg:flex-row xs:flex-col md:flex-col-reverse sm:flex-col-reverse lg:justify-between sm:items-center xs:justify-center xs:items-center md:justify-center md:items-center justify-between"
+        >
+          <div class="w-[60%] xs:w-[60%] md:w-[60%] lg:w-[30%] flex flex-col">
+            <button
+              routerLink="/administratif/creerdpi"
+              class="lg:ml-[2%] mt-[4%] bg-white border-custom-blue border-2 rounded-[14px] text-custom-blue py-4 px-4 flex justify-between items-center hover:opacity-90"
+            >
+              <span class="text-base text-center break-words leading-tight">
+                Consulter Dossier Patient
+              </span>
+              <img
+                src="/assets/images/common/file.svg"
+                alt="search"
+                class="h-5 w-5 ml-2"
+              />
+            </button>
+            <button
+              routerLink="/administratif/creerdpi"
+              class="lg:ml-[2%] mt-[4%] bg-white border-custom-blue border-2 rounded-[14px] text-custom-blue py-4 px-4 flex justify-between items-center hover:opacity-90"
+            >
+              <span class="text-base text-center break-words leading-tight">
+                Ajouter Une Consultation
+              </span>
+              <img
+                src="/assets/images/common/file_add.svg"
+                alt="search"
+                class="h-5 w-5 ml-2"
+              />
+            </button>
+            <button
+              routerLink="/administratif/creerdpi"
+              class="xs:w-full md:w-auto lg:w-auto lg:ml-[2%] mt-[4%] bg-white border-custom-blue border-2 rounded-[14px] text-custom-blue py-4 px-4 flex justify-between items-center hover:opacity-90"
+            >
+              <span class="text-base text-center break-words leading-tight">
+                Délivrer Certificat Médical
+              </span>
+              <img
+                src="/assets/images/common/document.svg"
+                alt="search"
+                class="h-5 w-5 ml-2"
+              />
+            </button>
+          </div>        
+          <div class="w-full md:w-[25%] h-auto flex md:justify-end justify-center">
+            <img
+              src="/assets/images/common/image_qr_code.png"
+              alt="search"
+              class="h-auto w-auto cursor-pointer"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
