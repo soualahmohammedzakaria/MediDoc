@@ -47,11 +47,11 @@ export class Authentication {
         if(res.user.role === 'administratif') {
           this.router.navigate(['/administratif/creerdpi'], { queryParams: { data: btoa(JSON.stringify(res)) } });
         } else if (res.user.role === 'patient') {
-          this.router.navigate(['/landingpage']);
+          this.router.navigate(['/patient/dpi'], { queryParams: { data: btoa(JSON.stringify(res)) } });
         } else if (res.user.role === 'medecin') {
-          this.router.navigate(['/landingpage']);
+          this.router.navigate(['/medecin/rechercher'], { queryParams: { data: btoa(JSON.stringify(res)) } });
         } else if (res.user.role === 'infirmier') {
-          this.router.navigate(['/landingpage']);
+          this.router.navigate(['/infirmier/rechercher'], { queryParams: { data: btoa(JSON.stringify(res)) } });
         } else if (res.user.role === 'laborantin') {
           this.router.navigate(['/landingpage']);
         } else if (res.user.role === 'radiologue') {

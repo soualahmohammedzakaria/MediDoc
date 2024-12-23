@@ -1,0 +1,45 @@
+<div class="bg-[#F5F6FA] w-full h-[90%] flex justify-center">
+    <div class="w-[90%] md:w-[72%] h-full">
+      <div class="w-full h-[10%] flex justify-center items-center text-xl lg:text-2xl font-bold">
+        Rechercher un dossier patient
+      </div>
+  
+      <!-- NSS Search Input -->
+      <div class="bg-[white] border-[#B9B9B9] border-2 rounded-[14px] w-full h-[10%] flex justify-start items-center text-xl lg:text-2xl font-bold">
+        <input
+          id="nss"
+          name="nss"
+          #nssInput
+          [(ngModel)]="nss"
+          placeholder="Entrer le NSS du patient"
+          class="w-[94%] pl-5 bg-[white] text-base font-normal appearance-none outline-none border-none"
+          required
+          (blur)="setFocus()"
+          (keydown.enter)="searchByNSS()"
+        />
+        <label for="nss" (click)="searchByNSS()">
+          <img
+            src="/assets/images/common/search.svg"
+            alt="search"
+            class="h-8 w-8 cursor-pointer max-md:mr-3 hover:opacity-90"
+          />
+        </label>
+      </div>
+      <div class="flex flex-row items-center justify-center mt-6 text-black gap-2">
+        <div class="h-0.5 bg-[#B9B9B9] w-full rounded-2xl"></div>
+        <span class="text-md">Ou</span>
+        <div class="h-0.5 bg-[#B9B9B9] w-full rounded-2xl"></div>
+      </div>
+      <div>
+        <div class="w-full h-[10%] flex justify-center items-center text-xl lg:text-2xl font-bold mt-4">
+          Scanner le code QR du patient
+        </div>
+        <div class="h-[50vh] justify-center items-center">
+          <img
+            src="/assets/images/common/qr_code.png"
+            alt="QR Code"
+            class="max-h-[100%] h-auto w-auto mx-auto mt-6 rounded-2xl"
+          />
+        </div>
+    </div>
+  </div>

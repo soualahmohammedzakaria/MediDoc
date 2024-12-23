@@ -12,7 +12,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
@@ -39,6 +39,8 @@ import { environment } from '../../../../environments/environment';
 })
 export class Creerdpi implements OnInit {
   data: any;
+  medecins: any;
+
 
   // Inject FormBuilder service
   private _formBuilder = inject(FormBuilder);
@@ -75,14 +77,32 @@ export class Creerdpi implements OnInit {
 
   isLinear = false; // Linear navigation
 
-  constructor(private toastr: ToastrService, private route: ActivatedRoute) {}
+  constructor(private toastr: ToastrService, private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit() {
     // Decode data passed via query parameters
     this.route.queryParams.subscribe((params) => {
       this.data = params['data'] ? JSON.parse(atob(params['data'])) : null;
-      console.log('Data:', this.data);
+      if (!this.data) {
+        this.router.navigate(['/landingpage']);
+      }
     });
+
+    // Get list of medecins
+    this.http.get(`${environment.apiUrl}/accounts/medecins/`, {
+      headers: {
+        Authorization: `Bearer ${this.data.access}`,
+      }
+    }).subscribe(
+      (res: any) => {
+        this.medecins = res;
+        console.log(this.medecins);
+      },
+      (error) => {
+        this.router.navigate(['/landingpage']);
+        this.toastr.error('Désole, une erreur s\'est produite', 'Erreur!');
+      }
+    );
   }
 
   // Final form submission
