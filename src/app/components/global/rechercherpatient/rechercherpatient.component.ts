@@ -38,38 +38,29 @@ export class RechercherPatientComponent {
   }
 
   searchByNSS(): void {
-    console.log(this.data);
-    /* This part needs to be moved to when the dossier patient is found */
-    if (this.data.user.role === 'infirmier') {
-      this.router.navigate(['/infirmier/soins'], { queryParams: { data: btoa(JSON.stringify({id: this.data.user.id, nom: this.data.user.nom, access: this.data.access, patient_nss: 1234, patient_nom: "MARAF Mohammed Islam"})) } }); // Replace 1234 with the actual NSS and "MARAF Mohammed Islam" with the actual name
-    } else if (this.data.user.role === 'medecin') {
-      this.router.navigate(['/medecin']);
-    }
-    return;
-    /* ---------------------------------------------------------------- */
     if (!this.nss) {
       this.toastr.error('Veuillez entrer un NSS valide', 'NSS invalide!');
       return;
     }
 
-    this.http.get(`${environment.apiUrl}/dpi/rechercher/${this.nss}`, {
+    this.http.get(`${environment.apiUrl}/dpi/rechercher/${this.nss}/`, {
       headers: {
         Authorization: `Bearer ${this.data.access}`,
       }
     }).subscribe(
       (res: any) => {
+        if (this.data.user.role === 'infirmier') {
+          this.router.navigate(['/infirmier/soins'], { queryParams: { data: btoa(JSON.stringify({ nom: this.data.user.nom, access: this.data.access, patient_nss: this.nss, patient_nom: (res.nom || "Nom du patient")})) } });
+        } else if (this.data.user.role === 'medecin') {
+          this.router.navigate(['/medecin'], { queryParams: { data: btoa(JSON.stringify({ nom: this.data.user.nom, access: this.data.access, specialite: this.data.user.specialite, patient_nss: this.nss, patient_nom: (res.nom || "Nom du patient")})) } });
+        }
         this.toastr.success(
           'Le dossier du patient a été trouvé avec succès',
           'Dossier trouvé!'
         );
       },
       (error) => {
-        if (error.status === 301) {
-          this.toastr.success(
-            'Le dossier du patient a été trouvé avec succès',
-            'Dossier trouvé!'
-          );
-        } else if (error.status === 404) {
+        if (error.status === 404) {
           this.toastr.error(
             'Un patient avec ce NSS n\'a pas été trouvé',
             'NSS non trouvé!'

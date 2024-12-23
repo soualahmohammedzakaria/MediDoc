@@ -17,10 +17,10 @@
       </a>
       <div class="text-center">
         <div class="font-semibold text-sm md:text-md">
-          {{ "BOUAB Samy" }}
+          {{ data.nom }}
         </div>
         <div class="font-medium text-xs md:text-sm">
-          {{ "Pédiatre" }}
+          {{ data.specialite }}
         </div>
       </div>
     </div>
@@ -32,21 +32,21 @@
       <div
         class="w-full h-[10%] flex justify-center md:justify-start items-center text-xl lg:text-3xl font-bold mt-2"
       >
-        Dossier Pateint
+        Dossier Patient
       </div>
       <div
         class="bg-[white] border-[#B9B9B9] border-2 rounded-[14px] w-full lg:h-[46%] flex flex-col justify-center p-6"
       >
         <div class="flex items-center justify-between mb-4 max-md:flex-col max-md:items-start max-md:justify-start border-b-2 border-custom-light-teal pb-1">
-          <div class="text-2xl text-custom-dark-blue font-semibold">{{ "BOUAB Samy" }}</div>
-          <div class="text-md font-semibold text-gray-600">NSS: {{ "123456789" }}</div>
+          <div class="text-2xl text-custom-dark-blue font-semibold">{{ data.patient_nom }}</div>
+          <div class="text-md font-semibold text-gray-600">NSS: {{ data.patient_nss }}</div>
         </div>
         <div
           class="w-[94%] h-[86%] flex flex-col-reverse items-center lg:flex-row xs:flex-col md:flex-col-reverse sm:flex-col-reverse lg:justify-between sm:items-center xs:justify-center xs:items-center md:justify-center md:items-center justify-between"
         >
           <div class="w-[60%] xs:w-[60%] md:w-[60%] lg:w-[30%] flex flex-col">
             <button
-              routerLink="/administratif/creerdpi"
+              (click)="handleClick('Consulter Dossier Patient')"
               class="lg:ml-[2%] mt-[4%] bg-white border-custom-blue border-2 rounded-[14px] text-custom-blue py-4 px-4 flex justify-between items-center hover:opacity-90"
             >
               <span class="text-base text-center break-words leading-tight">
@@ -59,7 +59,7 @@
               />
             </button>
             <button
-              routerLink="/administratif/creerdpi"
+              (click)="handleClick('Ajouter Une Consultation')"
               class="lg:ml-[2%] mt-[4%] bg-white border-custom-blue border-2 rounded-[14px] text-custom-blue py-4 px-4 flex justify-between items-center hover:opacity-90"
             >
               <span class="text-base text-center break-words leading-tight">
@@ -72,7 +72,7 @@
               />
             </button>
             <button
-              routerLink="/administratif/creerdpi"
+              (click)="handleClick('Délivrer Certificat Médical')"
               class="xs:w-full md:w-auto lg:w-auto lg:ml-[2%] mt-[4%] bg-white border-custom-blue border-2 rounded-[14px] text-custom-blue py-4 px-4 flex justify-between items-center hover:opacity-90"
             >
               <span class="text-base text-center break-words leading-tight">

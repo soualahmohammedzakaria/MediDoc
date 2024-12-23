@@ -44,6 +44,7 @@ export class SoinsComponent implements OnInit {
       if (!this.data) {
         this.router.navigate(['/landingpage']);
       }
+      console.log(this.data);
     });
   }
 
@@ -55,15 +56,14 @@ export class SoinsComponent implements OnInit {
     }
 
     const formData = {
-      dpi: this.data.patient_id,
+      dpi: this.data.patient_nss,
       soins: this.soinsForm.value.soins,
       observations: this.soinsForm.value.observations,
-      id_infirmier: this.data.id,
     };
 
     console.log(formData);
 
-    this.http.post(`${environment.apiUrl}/api/soins/ajouter`, formData, {
+    this.http.post(`${environment.apiUrl}/soins/ajouter/`, formData, {
       headers: {
         Authorization: `Bearer ${this.data.access}`,
       }
@@ -73,15 +73,16 @@ export class SoinsComponent implements OnInit {
           'Les soins ont été ajoutés avec succès',
           'Soins ajoutés!'
         );
+        // Empty the form fields
+        this.soinsForm.reset();
       },
       (error) => {
         if (error.status === 404) {
           this.toastr.error(
-            'Un patient avec ce NSS ou infirmier avec cet identifiant n\'a pas été trouvé',
+            'Un patient avec ce NSS n\'a pas été trouvé',
             'NSS ou infirmier non trouvé!'
           );
         } else {
-          console.log(error);
           this.toastr.error(
             'Désole, une erreur s\'est produite',
             'Erreur!'
