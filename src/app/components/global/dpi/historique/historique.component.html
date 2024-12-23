@@ -1,0 +1,77 @@
+<div class="w-full font-nunito">
+  <div
+    class="flex flex-col bg-white p-4 rounded-lg border border-custom-gray-light/25 transition-all duration-200"
+  >
+    <div
+      (click)="isOpen = !isOpen"
+      class="flex px-4 bg-white py-4 justify-between rounded-lg cursor-pointer items-center transition-all duration-200"
+    >
+      <span class="text-custom-dark-blue font-semibold text-xl"
+        >Historique Médical</span
+      >
+      <svg
+        [ngClass]="{ 'rotate-180': isOpen }"
+        class="w-5 h-5 text-custom-dark-blue transition-transform duration-200"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M19 9l-7 7-7-7"
+        />
+      </svg>
+    </div>
+    <div [@toggleContent]="isOpen ? 'open' : 'closed'">
+      <div
+        class="bg-white text-custom-gray-medium rounded-lg border-t transition-all duration-200 py-4 px-4"
+      >
+        <!-- Filter Buttons -->
+        <div class="flex w-full justify-between mx-auto md:flex-row flex-col">
+          <div class="flex gap-4 mb-4">
+            <button
+              *ngFor="let button of filterButtons"
+              (click)="selectFilter(button.type)"
+              [ngClass]="{
+                'bg-custom-blue text-white': activeFilter === button.type,
+                'bg-white text-custom-dark-blue': activeFilter !== button.type
+              }"
+              class="px-4 py-1 min-w-32 rounded-full border transition-all duration-200"
+            >
+              {{ button.label }}
+            </button>
+          </div>
+          <!-- Time Buttons -->
+          <div class="flex border border-custom-gray-light gap-4 mb-4">
+            <button
+              *ngFor="let timeButton of timeButtons"
+              (click)="selectTimeFilter(timeButton.type)"
+              [ngClass]="{
+                'bg-custom-blue text-white':
+                  activeTimeFilter === timeButton.type,
+                'bg-white text-custom-dark-blue':
+                  activeTimeFilter !== timeButton.type
+              }"
+              class="px-4 py-1 rounded-full border transition-all duration-200"
+            >
+              {{ timeButton.label }}
+            </button>
+          </div>
+        </div>
+        <!-- Medical History List -->
+        <div
+          *ngFor="let item of filteredHistory"
+          class="flex items-center mb-4"
+        >
+          <div class="flex-1">
+            <p class="font-semibold">{{ item.title }}</p>
+            <p class="text-sm text-gray-500">{{ item.date }}</p>
+          </div>
+          <a class="text-custom-teal text-sm cursor-pointer">Voir détails</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
