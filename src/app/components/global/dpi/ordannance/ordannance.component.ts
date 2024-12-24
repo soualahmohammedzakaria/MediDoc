@@ -70,4 +70,16 @@ export class OrdannanceComponent {
       status: 'Non Valider',
     },
   ];
+  timeButtons = [
+    { label: "Aujourd'hui", type: 'today' },
+    { label: 'Semaine', type: 'week' },
+    { label: 'Mois', type: 'month' },
+    { label: 'Année', type: 'year' },
+  ];
+  activeTimeFilter = 'year';
+    // Time Filter Selection
+    selectTimeFilter(timeType: string) {
+      this.activeTimeFilter = timeType;
+      // Logic for time filtering can be added here
+    }
 }

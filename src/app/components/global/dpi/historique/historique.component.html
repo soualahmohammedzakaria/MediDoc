@@ -44,17 +44,21 @@
             </button>
           </div>
           <!-- Time Buttons -->
-          <div class="flex border border-custom-gray-light gap-4 mb-4">
+          <div
+            class="flex border rounded-xl border-custom-gray-light/20 gap-0 mb-4"
+          >
             <button
-              *ngFor="let timeButton of timeButtons"
+              *ngFor="let timeButton of timeButtons; let i = index"
               (click)="selectTimeFilter(timeButton.type)"
               [ngClass]="{
                 'bg-custom-blue text-white':
                   activeTimeFilter === timeButton.type,
                 'bg-white text-custom-dark-blue':
-                  activeTimeFilter !== timeButton.type
+                  activeTimeFilter !== timeButton.type,
+                'rounded-l-xl': i === 0,
+                'rounded-r-xl': i === timeButtons.length - 1
               }"
-              class="px-4 py-1 rounded-full border transition-all duration-200"
+              class="px-4 py-1 flex items-center justify-center w-36 transition-all duration-200"
             >
               {{ timeButton.label }}
             </button>
