@@ -30,7 +30,7 @@ import { Component } from '@angular/core';
   ],
 })
 export class ResultatExamComponent {
-  title: string = 'Informations Personnelles';
+  title: string = 'Résultats des Examens';
   isOpen: boolean = false;
   prescriptions = [
     {

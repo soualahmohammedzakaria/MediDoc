@@ -30,7 +30,7 @@ import { Component } from '@angular/core';
   ],
 })
 export class OrdannanceComponent {
-  title: string = 'Informations Personnelles';
+  title: string = 'Ordonnances';
   isOpen: boolean = false;
   prescriptions = [
     {

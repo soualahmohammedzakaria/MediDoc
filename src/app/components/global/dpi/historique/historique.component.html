@@ -38,7 +38,7 @@
                 'bg-custom-blue text-white': activeFilter === button.type,
                 'bg-white text-custom-dark-blue': activeFilter !== button.type
               }"
-              class="px-4 py-1 min-w-32 rounded-full border transition-all duration-200"
+              class="px-4 py-1  md:min-w-32 rounded-full border transition-all duration-200"
             >
               {{ button.label }}
             </button>
@@ -58,7 +58,7 @@
                 'rounded-l-xl': i === 0,
                 'rounded-r-xl': i === timeButtons.length - 1
               }"
-              class="px-4 py-1 flex items-center justify-center w-36 transition-all duration-200"
+              class="px-4 py-1 flex items-center justify-center w-24 md:w-36 transition-all duration-200"
             >
               {{ timeButton.label }}
             </button>

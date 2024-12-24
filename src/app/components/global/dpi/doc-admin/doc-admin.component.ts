@@ -30,7 +30,7 @@ import { Component } from '@angular/core';
 })
 export class DocAdminComponent {
   isOpen: boolean = false;
-  title: string = 'Informations Personnelles';
+  title: string = 'Documents Administratifs';
 
   documents = [
     {

@@ -15,10 +15,21 @@ import { DocAdminComponent } from './doc-admin/doc-admin.component';
     HistoriqueComponent,
     OrdannanceComponent,
     ResultatExamComponent,
-    DocAdminComponent
+    DocAdminComponent,
   ],
   templateUrl: './dpi.component.html',
 })
 export class DpiComponent {
+  isPopupVisible: boolean = false;
 
+ 
+  showPopup() {
+    this.isPopupVisible = true;
+    console.log('showPopup triggered:', this.isPopupVisible);
+  }
+
+  hidePopup() {
+    this.isPopupVisible = false;
+    console.log('hidePopup triggered:', this.isPopupVisible);
+  }
 }
