@@ -81,4 +81,58 @@ export class HistoriqueComponent {
       );
     }
   }
+  isPopupVisible = false; // Toggle for showing/hiding the popup
+
+  // Data object for the popup
+  consultation = {
+    title: 'Consultation Médicale',
+    date: '13/09/2023 5:23pm',
+    tools: 'Stéthoscope, Tensiomètre, Thermomètre.',
+    tests: 'Analyse sanguine - Glycémie, Cholestérol',
+    prescription: 'Ord_id_here',
+    summary: `Douleurs abdominales aiguës, suspicion d’appendicite\n\nTraitement/Intervention:\n• Examens initiaux (prise de sang, échographie)\n• Chirurgie de l’appendice (appendicectomie)\n\nAppendicite confirmée, intervention chirurgicale réussie. Le patient récupère normalement.\n\nLe patient a été libéré avec une ordonnance d’antalgiques et une recommandation de repos à domicile.`,
+  };
+  showPopup(id: number) {
+    // check the type the id is for the consultation or care
+    let historyItem = this.medicalHistory.find((item) => item.id === id);
+    let type = historyItem ? historyItem.type : null;
+    if (type === 'consultation') {
+      this.isPopupVisible = true;
+    } else if (type === 'care') {
+      this.soinsPopupVisible = true;
+    }
+    // Logic to fetch data for the popup can be added here
+  }
+  // Close the popup
+  closePopup() {
+    this.isPopupVisible = false;
+  }
+
+  // Prevent click propagation to the backdrop
+  stopPropagation(event: Event) {
+    event.stopPropagation();
+  }
+  soinsPopupVisible = false; // Toggle for showing/hiding the soins popup
+  closeSoinsPopup() {
+    this.soinsPopupVisible = false;
+  }
+  soinsData = {
+    title: 'Soins',
+    date: '13/09/2023 5:23pm',
+    administrationMedicaments: 'Stéthoscope, Tensiomètre, Thermomètre.',
+    soinsInfirmiers: 'Analyse sanguine - Glycémie, Cholestérol',
+    personnelMedical: {
+      doctor: 'Dr. Pierre Martin (Chirurgien)',
+      nurse: 'Infirmière Sophie Laurent'
+    },
+    observations: 'Douleurs abdominales aiguës, suspicion d\'appendicite',
+    traitement: [
+      'Examens initiaux (prise de sang, échographie)',
+      'Chirurgie de l\'appendice (appendicectomie)'
+    ],
+    conclusion: 'Appendicite confirmée, intervention chirurgicale réussie. Le patient récupère normalement.',
+    liberation: 'Le patient a été libéré avec une ordonnance d\'antalgiques et une recommandation de repos à domicile....'
+  };
+
 }
+

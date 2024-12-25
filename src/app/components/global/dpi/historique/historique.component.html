@@ -38,7 +38,7 @@
                 'bg-custom-blue text-white': activeFilter === button.type,
                 'bg-white text-custom-dark-blue': activeFilter !== button.type
               }"
-              class="px-4 py-1  md:min-w-32 rounded-full border transition-all duration-200"
+              class="px-4 py-1 md:min-w-32 rounded-full border transition-all duration-200"
             >
               {{ button.label }}
             </button>
@@ -73,7 +73,167 @@
             <p class="font-semibold">{{ item.title }}</p>
             <p class="text-sm text-gray-500">{{ item.date }}</p>
           </div>
-          <a class="text-custom-teal text-sm cursor-pointer">Voir détails</a>
+          <div
+            (click)="showPopup(item.id)"
+            class="text-custom-teal text-sm cursor-pointer"
+          >
+            Voir détails
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center"
+      *ngIf="isPopupVisible"
+      (click)="closePopup()"
+    >
+      <div
+        class="bg-white rounded-lg shadow-lg w-3/4 p-6 relative"
+        (click)="stopPropagation($event)"
+      >
+        <!-- Close Button -->
+        <button
+          class="absolute top-2 right-2 text-gray-500 font-bold text-xl hover:text-gray-800"
+          (click)="closePopup()"
+        >
+          &times;
+        </button>
+
+        <!-- Title -->
+        <h2 class="text-xl font-bold text-gray-800 mb-4">
+          {{ consultation.title }}
+        </h2>
+
+        <!-- Date -->
+        <div class="text-sm text-gray-600 mb-4">
+          {{ consultation.date }}
+        </div>
+
+        <!-- Details -->
+        <div>
+          <p class="font-semibold text-gray-700">Outils Utilisés:</p>
+          <p class="text-gray-600">{{ consultation.tools }}</p>
+        </div>
+
+        <div class="mt-4">
+          <p class="font-semibold text-gray-700">Tests Demandés:</p>
+          <p class="text-gray-600">{{ consultation.tests }}</p>
+        </div>
+
+        <div class="mt-4">
+          <p class="font-semibold text-gray-700">Ordonnance Émise:</p>
+          <p class="text-gray-600">
+            Ordonnance:
+            <a href="#" class="text-blue-500">{{
+              consultation.prescription
+            }}</a>
+          </p>
+        </div>
+
+        <div class="mt-4">
+          <p class="font-semibold text-gray-700">Résumé:</p>
+          <p class="text-gray-600 whitespace-pre-line">
+            {{ consultation.summary }}
+          </p>
+        </div>
+
+        <!-- Footer Button -->
+        <div class="mt-6 flex justify-center">
+          <button
+            class="w-36 flex justify-center items-center py-3 text-white font-bold bg-custom-blue rounded hover:bg-custom-sky focus:outline-none"
+            (click)="closePopup()"
+          >
+            Retour
+          </button>
+        </div>
+      </div>
+    </div>
+    <div
+      class="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center"
+      *ngIf="soinsPopupVisible"
+      (click)="closeSoinsPopup()"
+    >
+      <div
+        class="bg-white rounded-lg shadow-lg w-3/4 max-w-2xl p-6 relative"
+        (click)="$event.stopPropagation()"
+      >
+        <!-- Close Button -->
+        <button
+          class="absolute top-2 right-2 text-gray-500 hover:text-gray-800"
+          (click)="closeSoinsPopup()"
+        >
+          &times;
+        </button>
+
+        <!-- Title -->
+        <h2 class="text-2xl font-bold text-gray-800 mb-2">
+          {{ soinsData.title }}
+        </h2>
+
+        <!-- Date -->
+        <div class="text-sm text-gray-600 mb-4">
+          {{ soinsData.date }}
+        </div>
+
+        <!-- Administration Des Médicaments -->
+        <div class="mb-4">
+          <p class="font-semibold text-gray-700">
+            Administration Des Médicaments:
+          </p>
+          <p class="text-gray-600">{{ soinsData.administrationMedicaments }}</p>
+        </div>
+
+        <!-- Les Soins Infirmiers -->
+        <div class="mb-4">
+          <p class="font-semibold text-gray-700">Les Soins Infirmiers:</p>
+          <p class="text-gray-600">{{ soinsData.soinsInfirmiers }}</p>
+        </div>
+
+        <!-- Personnel Médical -->
+        <div class="mb-4">
+          <p class="font-semibold text-gray-700">Personnel Médical:</p>
+          <ul class="text-gray-600 list-disc pl-5">
+            <li>{{ soinsData.personnelMedical.doctor }}</li>
+            <li>{{ soinsData.personnelMedical.nurse }}</li>
+          </ul>
+        </div>
+
+        <!-- Observations -->
+        <div class="mb-4">
+          <p class="font-semibold text-gray-700">
+            Observations Sur L'état Du Patient:
+          </p>
+          <p class="text-gray-600">{{ soinsData.observations }}</p>
+        </div>
+
+        <!-- Traitement/Intervention -->
+        <div class="mb-4">
+          <p class="font-semibold text-gray-700">Traitement/Intervention:</p>
+          <ul class="text-gray-600 list-disc pl-5">
+            <ng-container *ngFor="let item of soinsData.traitement">
+              <li>{{ item }}</li>
+            </ng-container>
+          </ul>
+        </div>
+
+        <!-- Conclusion -->
+        <div class="mb-4">
+          <p class="text-gray-600">{{ soinsData.conclusion }}</p>
+        </div>
+
+        <!-- Liberation -->
+        <div class="mb-4">
+          <p class="text-gray-600">{{ soinsData.liberation }}</p>
+        </div>
+
+        <!-- Footer Button -->
+        <div class="mt-6 flex justify-center">
+          <button
+            class="w-36 flex justify-center items-center py-3 text-white font-bold bg-custom-blue rounded hover:bg-custom-sky focus:outline-none"
+            (click)="closeSoinsPopup()"
+          >
+            Retour
+          </button>
         </div>
       </div>
     </div>

@@ -77,9 +77,41 @@ export class OrdannanceComponent {
     { label: 'Année', type: 'year' },
   ];
   activeTimeFilter = 'year';
-    // Time Filter Selection
-    selectTimeFilter(timeType: string) {
-      this.activeTimeFilter = timeType;
-      // Logic for time filtering can be added here
-    }
+  // Time Filter Selection
+  selectTimeFilter(timeType: string) {
+    this.activeTimeFilter = timeType;
+    // Logic for time filtering can be added here
+  }
+  isVisible = false;
+
+  prescription = {
+    id: '00003',
+    date: '13/09/2023',
+    medicines: [
+      {
+        name: 'Paracétamol',
+        dosage: '500 mg',
+        duration: '5 jours',
+        frequency: '3 fois/jour',
+        instructions: 'À prendre après les repas',
+      },
+      {
+        name: 'Ibuprofène',
+        dosage: '200 mg',
+        duration: '5 jours',
+        frequency: '3 fois/jour',
+        instructions: 'Ne pas dépasser 3 fois par jour',
+      },
+      // Add more medicines as needed
+    ],
+  };
+  showPopup(id: string) {
+    // get the data of the prescription from teh backend 
+    this.isVisible = true;
+    // this.prescription = this.prescription
+  }
+  // Open/Close Popup
+  togglePopup() {
+    this.isVisible = false;
+  }
 }

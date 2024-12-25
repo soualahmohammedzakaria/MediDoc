@@ -105,4 +105,12 @@ export class ResultatExamComponent {
     this.activeTypeFilter = type;
     // Logic for time filtering can be added here
   }
+  isVisible = false;
+  showPopup() {
+    this.isVisible = true;
+    // this.prescription = prescription;
+  }
+  closeErrorPopup() {
+    this.isVisible = false;
+  }
 }

@@ -21,15 +21,11 @@
     (click)="hidePopup()"
   >
     <div
-      class="bg-white rounded-lg shadow-lg p-6 w-96 relative"
+      class="bg-white rounded-lg shadow-lg p-6 w-96 relative flex flex-col items-center"
       (click)="$event.stopPropagation()"
     >
       <h2 class="text-xl font-semibold text-center mb-4">Code QR</h2>
-      <img
-        src="/assets/images/common/qr.svg"
-        alt="QR Code"
-        class="w-48 h-48 mx-auto"
-      />
+      <qrcode [qrdata]="qrCodeValue"  [width]="250"></qrcode>
       <p class="text-center mt-4">
         <span class="font-bold">Bouab Sami</span><br />
       </p>

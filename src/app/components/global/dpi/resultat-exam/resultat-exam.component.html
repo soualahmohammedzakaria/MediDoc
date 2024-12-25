@@ -93,9 +93,13 @@
                   {{ prescription.examType }}
                 </td>
                 <td class="px-4 py-2 text-center">
-                  <a href="#" class="text-blue-500">{{
-                    prescription.results
-                  }}</a>
+                  <div
+                    (click)="showPopup()"
+                    href="#"
+                    class="text-blue-500 cursor-pointer"
+                  >
+                    {{ prescription.results }}
+                  </div>
                 </td>
                 <td class="text-center">
                   <span
@@ -112,6 +116,29 @@
             </tbody>
           </table>
         </div>
+      </div>
+    </div>
+    <div
+      class="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center"
+      *ngIf="isVisible"
+      (click)="closeErrorPopup()"
+    >
+      <div
+        class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 py-4 gap-4 bg-white rounded-lg shadow-lg w-[90%] md:w-96 flex flex-col z-50 overflow-hidden px-4"
+        *ngIf="isVisible"
+        (click)="$event.stopPropagation()"
+      >
+        <h2 class="text-xl font-bold text-custom-dark-blue">Alerte</h2>
+        <p class="text-lg text-custom-dark-blue">
+          Cet examen n'est pas encore terminé. Vous pouvez voir les résultats
+          une fois terminé
+        </p>
+        <button
+          class="w-36 ml-auto flex justify-center items-center justify-self-end py-3 text-white font-bold bg-custom-blue rounded hover:bg-custom-sky focus:outline-none"
+          (click)="closeErrorPopup()"
+        >
+          Retour
+        </button>
       </div>
     </div>
   </div>
