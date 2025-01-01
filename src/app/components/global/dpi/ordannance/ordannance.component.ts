@@ -1,13 +1,14 @@
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'OrdannanceDpi',
-  standalone: true, // If this is a standalone component
-  imports: [CommonModule],
+  standalone: true,
+  imports: [CommonModule,FormsModule],
   templateUrl: './ordannance.component.html',
-  styleUrl: './ordannance.component.css',
+  styleUrls: ['./ordannance.component.css'],
   animations: [
     trigger('toggleContent', [
       state(
@@ -32,85 +33,96 @@ import { Component } from '@angular/core';
 export class OrdannanceComponent {
   title: string = 'Ordonnances';
   isOpen: boolean = false;
-  prescriptions = [
+  isVisible: boolean = false;
+  activeTimeFilter: string = 'all';
+  idFilter: string = '';
+  @Input() filteredHistory: any;
+  @Input() prescriptions = [
     {
-      id: '00001',
+      id_ordonnance: '100',
       date: '14 Feb 2019',
-      doctor: 'Darrell Caldwell',
-      status: 'Valider',
-    },
-    {
-      id: '00002',
-      date: '14 Feb 2019',
-      doctor: 'Darrell Caldwell',
-      status: 'Non Valider',
-    },
-    {
-      id: '00003',
-      date: '14 Feb 2019',
-      doctor: 'Darrell Caldwell',
-      status: 'Non Valider',
-    },
-    {
-      id: '00004',
-      date: '14 Feb 2019',
-      doctor: 'Darrell Caldwell',
-      status: 'Valider',
-    },
-    {
-      id: '00005',
-      date: '14 Feb 2019',
-      doctor: 'Darrell Caldwell',
-      status: 'Non Valider',
-    },
-    {
-      id: '00006',
-      date: '14 Feb 2019',
-      doctor: 'Darrell Caldwell',
-      status: 'Non Valider',
+      nom_medecin: 'Darrell Caldwell',
+      status: 'valide',
+      medicaments: [
+        {
+          nom: 'Ibuprofen',
+          dose: '200mg',
+          frequence: '1',
+          duree: '1 week',
+        },
+      ],
     },
   ];
+  prescription = {
+    id_ordonnance: '00001',
+    date: '14 Feb 2019',
+    nom_medecin: 'Darrell Caldwell',
+    status: 'valide',
+    medicaments: [
+      {
+        nom: 'Ibuprofen',
+        dose: '200mg',
+        frequence: '1',
+        duree: '1 week',
+      },
+    ],
+  };
   timeButtons = [
     { label: "Aujourd'hui", type: 'today' },
     { label: 'Semaine', type: 'week' },
     { label: 'Mois', type: 'month' },
-    { label: 'Année', type: 'year' },
+    { label: 'Tous', type: 'all' },
   ];
-  activeTimeFilter = 'year';
+
   // Time Filter Selection
   selectTimeFilter(timeType: string) {
     this.activeTimeFilter = timeType;
-    // Logic for time filtering can be added here
+    this.filterPrescriptions();
   }
-  isVisible = false;
 
-  prescription = {
-    id: '00003',
-    date: '13/09/2023',
-    medicines: [
-      {
-        name: 'Paracétamol',
-        dosage: '500 mg',
-        duration: '5 jours',
-        frequency: '3 fois/jour',
-        instructions: 'À prendre après les repas',
-      },
-      {
-        name: 'Ibuprofène',
-        dosage: '200 mg',
-        duration: '5 jours',
-        frequency: '3 fois/jour',
-        instructions: 'Ne pas dépasser 3 fois par jour',
-      },
-      // Add more medicines as needed
-    ],
-  };
-  showPopup(id: string) {
-    // get the data of the prescription from teh backend 
-    this.isVisible = true;
-    // this.prescription = this.prescription
+  // Filtering Logic
+  filterPrescriptions() {
+    // Step 1: Filter by time
+    const now = new Date();
+    const filteredByTime = this.prescriptions.filter((prescription) => {
+      const prescriptionDate = new Date(prescription.date);
+      switch (this.activeTimeFilter) {
+        case 'today':
+          return prescriptionDate.toDateString() === now.toDateString();
+        case 'week':
+          const oneWeekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+          return prescriptionDate >= oneWeekAgo && prescriptionDate <= now;
+        case 'month':
+          const oneMonthAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+          return prescriptionDate >= oneMonthAgo && prescriptionDate <= now;
+        default:
+          return true;
+      }
+    });
+
+    // Step 2: Filter by ID (partial match)
+    const filteredById = this.idFilter.trim()
+      ? filteredByTime.filter((prescription) =>
+        prescription.id_ordonnance.toString().includes(this.idFilter.trim())
+      )
+      : filteredByTime;
+
+    this.filteredHistory = filteredById;
+    console.log('Filtered Prescriptions:', this.filteredHistory);
   }
-  // Open/Close Popup
+
+  // Show Popup
+  showPopup(id: string) {
+    const foundPrescription = this.prescriptions.find(
+      (prescription) => prescription.id_ordonnance === id
+    );
+    if (foundPrescription) {
+      this.prescription = { ...foundPrescription };
+    }
+    this.isVisible = true;
+  }
+
+  // Toggle Popup Visibility
   togglePopup() {
     this.isVisible = false;
   }

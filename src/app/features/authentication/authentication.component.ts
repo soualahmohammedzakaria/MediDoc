@@ -52,7 +52,7 @@ export class Authentication {
         if (res.user.role === 'administratif') {
           this.router.navigate(['/administratif/creerdpi'], { queryParams: { data: btoa(JSON.stringify(res)) } });
         } else if (res.user.role === 'patient') {
-          this.router.navigate(['/patient/dpi'], { queryParams: { data: btoa(JSON.stringify(res)) } });
+          this.router.navigate(['/patient/dpi']);
         } else if (res.user.role === 'medecin') {
           this.router.navigate(['/medecin/rechercher'], { queryParams: { data: btoa(JSON.stringify(res)) } });
         } else if (res.user.role === 'infirmier') {

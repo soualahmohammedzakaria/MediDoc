@@ -49,10 +49,12 @@
             />
           </svg>
           <input
-            type="text"
-            placeholder="Rechercher une ordonnance par identifiant"
-            class="ml-3 bg-transparent text-gray-700 placeholder-gray-500 focus:outline-none w-full"
-          />
+          type="text"
+          placeholder="Rechercher une ordonnance par identifiant"
+          [(ngModel)]="idFilter"
+          (ngModelChange)="filterPrescriptions()"
+          class="ml-3 bg-transparent text-gray-700 placeholder-gray-500 focus:outline-none w-full"
+        />
         </div>
         <div class="flex border rounded-xl border-custom-gray-light/20 gap-0">
           <button
@@ -87,21 +89,21 @@
             </thead>
             <tbody>
               <tr
-                *ngFor="let prescription of prescriptions"
+                *ngFor="let prescription of filteredHistory"
                 class="border-b border-b-custom-gray-light/30 text-lg"
               >
                 <td class="py-8 text-left">
-                  {{ prescription.id }}
+                  {{ prescription.id_ordonnance }}
                 </td>
                 <td class="px-4 py-2 text-left">
                   {{ prescription.date }}
                 </td>
                 <td class="px-4 py-2 text-left">
-                  {{ prescription.doctor }}
+                  {{ prescription.nom_medecin }}
                 </td>
                 <td class="px-4 py-2 text-left">
                   <div
-                    (click)="showPopup(prescription.id)"
+                    (click)="showPopup(prescription.id_ordonnance)"
                     class="text-blue-500 cursor-pointer"
                   >
                     Afficher Médicaments
@@ -137,7 +139,7 @@
       <div
         class="flex items-center justify-between bg-white w-full text-custom-dark-blue px-4 py-6"
       >
-        <h2 class="text-lg font-bold">Ordonnance {{ prescription.id }}</h2>
+        <h2 class="text-lg font-bold">Ordonnance {{ prescription.id_ordonnance }}</h2>
         <span class="text-sm">{{ prescription.date }}</span>
         <button
           class="text-custom-dark-blue font-bold text-2xl focus:outline-none"
@@ -153,20 +155,26 @@
             <th class="px-4 rounded-l-lg py-4">Médicament</th>
             <th class="px-4 py-4">Dosage</th>
             <th class="px-4 py-4">Durée</th>
-            <th class="px-4 py-4">Fréquence</th>
-            <th class="px-4 py-4 rounded-r-lg">Instructions</th>
+            <th class="px-4 py-4 rounded-r-lg">Fréquence</th>
           </tr>
         </thead>
         <tbody>
           <tr
-            *ngFor="let medic of prescription.medicines"
+            *ngFor="let medic of prescription.medicaments; let last = last"
             class="border-t border-t-custom-teal/30"
           >
-            <td class="px-4 py-6">{{ medic.name }}</td>
-            <td class="px-4 py-6">{{ medic.dosage }}</td>
-            <td class="px-4 py-6">{{ medic.duration }}</td>
-            <td class="px-4 py-6">{{ medic.frequency }}</td>
-            <td class="px-4 py-6">{{ medic.instructions }}</td>
+            <td class="px-4 py-6">{{ medic.nom }}</td>
+            <td class="px-4 py-6">{{ medic.dose }}</td>
+            <td class="px-4 py-6">{{ medic.duree }} jours</td>
+            <td class="px-4 py-6">{{ medic.frequence }}</td>
+          </tr>
+          <tr *ngIf="prescription.medicaments.length === 0">
+            <td
+              colspan="4"
+              class="text-center text-gray-500 py-6"
+            >
+              Aucun médicament trouvé pour cette ordonnance.
+            </td>
           </tr>
         </tbody>
       </table>

@@ -31,8 +31,8 @@
         <!-- Header -->
         <div class="flex justify-between items-start">
           <div>
-            <h1 class="text-2xl font-bold">{{ patientData.name }}</h1>
-            <p class="text-sm text-blue-500">{{ patientData.email }}</p>
+            <h1 class="text-2xl font-bold">{{ patientData.nom }}</h1>
+            <p class="text-sm text-blue-500">{{ patientData.telephone }}</p>
           </div>
         </div>
 
@@ -40,77 +40,30 @@
         <div class="grid grid-cols-2 gap-8 mt-6">
           <div>
             <p class="text-sm">
-              <span class="font-semibold">Sexe:</span> {{ patientData.gender }}
+              <span class="font-semibold">Sexe:</span> {{ patientData.sexe }}
             </p>
             <p class="text-sm mt-2">
               <span class="font-semibold">Date de naissance:</span>
-              {{ patientData.date_of_birth.date }}
-              <span>(Âge: {{ patientData.date_of_birth.age }} ans)</span>
+              {{ patientData.date_naissance }}
             </p>
             <p class="text-sm mt-2">
-              <span class="font-semibold"
-                >Numéro de Sécurité Sociale (NSS):</span
-              >
-              {{ patientData.social_security_number }}
-            </p>
-            <p class="text-sm mt-2">
-              <span class="font-semibold">Téléphone:</span>
-              {{ patientData.phone }}
+              <span class="font-semibold">Numéro de Sécurité Sociale (NSS):</span>
+              {{ patientData.nss }}
             </p>
           </div>
           <div>
             <p class="text-sm">
               <span class="font-semibold">Adresse:</span>
-              {{ patientData.address }}
+              {{ patientData.adresse }}
             </p>
             <p class="text-sm mt-2">
               <span class="font-semibold">Contact d'urgence:</span>
-              {{ patientData.emergency_contact.phone }} ({{
-                patientData.emergency_contact.name
-              }})
+              {{ patientData.personne_contact }}
             </p>
             <p class="text-sm mt-2">
               <span class="font-semibold">Mutuelle:</span>
-              {{ patientData.insurance }}
+              {{ patientData.mutuelle }}
             </p>
-          </div>
-        </div>
-
-        <!-- Blood Group & Primary Physician -->
-        <div class="mt-6">
-          <p class="text-sm">
-            <span class="font-semibold">Groupage:</span>
-            {{ patientData.blood_type }}
-          </p>
-          <p class="text-sm mt-2">
-            <span class="font-semibold">Médecin Traitant:</span>
-            {{ patientData.primary_physician }}
-          </p>
-        </div>
-
-        <!-- Allergies -->
-        <div class="mt-6">
-          <p class="text-sm font-semibold">Allergies Connues:</p>
-          <div class="flex flex-wrap gap-2 mt-2">
-            <span
-              *ngFor="let allergy of patientData.known_allergies"
-              class="bg-blue-100 text-blue-600 text-sm px-3 py-1 rounded"
-            >
-              {{ allergy }}
-            </span>
-          </div>
-        </div>
-
-        <!-- Chronic Conditions -->
-        <div class="mt-6">
-          <p class="text-sm font-semibold">Pathologies Chroniques:</p>
-          <div class="flex flex-wrap gap-2 mt-2">
-            <span
-              *ngFor="let condition of patientData.chronic_conditions"
-              class="bg-orange-100 text-orange-600 text-sm px-3 py-1 rounded"
-            >
-              {{ condition }}
-            </span>
           </div>
         </div>
       </div>

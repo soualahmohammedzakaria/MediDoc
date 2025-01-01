@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { InfoComponent } from './info/info.component';
 import { HistoriqueComponent } from './historique/historique.component';
 import { OrdannanceComponent } from './ordannance/ordannance.component';
@@ -20,9 +20,9 @@ import { QRCodeComponent } from 'angularx-qrcode';
   ],
   templateUrl: './dpi.component.html',
 })
-export class DpiComponent {
+export class DpiComponent implements OnInit {
   isPopupVisible: boolean = false;
-  qrCodeValue: string = '1234567890';
+
 
   showPopup() {
     this.isPopupVisible = true;
@@ -32,5 +32,12 @@ export class DpiComponent {
   hidePopup() {
     this.isPopupVisible = false;
     console.log('hidePopup triggered:', this.isPopupVisible);
+  }
+  @Input() patientData: any = {};
+  @Input() qrCodeValue: string = '1234567890';
+  @Input() HistoriqueMedical: any;
+  @Input() prescriptions: any = [];
+  ngOnInit() {
+    console.log('DPI component initialized:', this.HistoriqueMedical);
   }
 }

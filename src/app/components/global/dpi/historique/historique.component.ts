@@ -1,6 +1,6 @@
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'HistoriqueDpi',
@@ -45,20 +45,13 @@ export class HistoriqueComponent {
     { label: "Aujourd'hui", type: 'today' },
     { label: 'Semaine', type: 'week' },
     { label: 'Mois', type: 'month' },
-    { label: 'Année', type: 'year' },
+    { label: 'Tous', type: 'year' },
   ];
   activeTimeFilter = 'year';
 
   // Medical History Data
-  medicalHistory = [
-    { id: 1, title: "Admission à l'hôpital", date: '13/09/2023 5:23pm', type: 'care' },
-    { id: 2, title: 'Consultation Médicale', date: '13/09/2023 5:23pm', type: 'consultation' },
-    { id: 3, title: 'Consultation Médicale', date: '13/09/2023 5:23pm', type: 'consultation' },
-    { id: 4, title: 'Soins', date: '13/09/2023 5:23pm', type: 'care' },
-    { id: 5, title: "Sortie de l'hôpital", date: '13/09/2023 5:23pm', type: 'care' },
-  ];
-  filteredHistory = [...this.medicalHistory];
-
+  @Input() medicalHistory: any = [];
+  @Input() filteredHistory: any = [];
   // Filter Selection
   selectFilter(filterType: string) {
     this.activeFilter = filterType;
@@ -68,19 +61,35 @@ export class HistoriqueComponent {
   // Time Filter Selection
   selectTimeFilter(timeType: string) {
     this.activeTimeFilter = timeType;
-    // Logic for time filtering can be added here
+    this.filterHistory();
   }
 
   // Filter Logic
   filterHistory() {
-    if (this.activeFilter === 'all') {
-      this.filteredHistory = [...this.medicalHistory];
-    } else {
-      this.filteredHistory = this.medicalHistory.filter(
-        (item) => item.type === this.activeFilter
-      );
-    }
+    let filteredByType = this.activeFilter === 'all' ? [...this.medicalHistory] : this.medicalHistory.filter(
+      (item: any) => item.type === this.activeFilter
+    );
+    console.log(filteredByType)
+    const now = new Date();
+    let filteredByTime = filteredByType.filter((item: any) => {
+      const itemDate = new Date(item.date);
+      console.log('Item Date:', itemDate);
+      switch (this.activeTimeFilter) {
+        case 'today':
+          return itemDate.toDateString() === now.toDateString();
+        case 'week':
+          const oneWeekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+          return itemDate >= oneWeekAgo && itemDate <= now;
+        case 'month':
+          const oneMonthAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+          return itemDate >= oneMonthAgo && itemDate <= now;
+        default:
+          return true;
+      }
+    });
+    this.filteredHistory = filteredByTime;
   }
+
   isPopupVisible = false; // Toggle for showing/hiding the popup
 
   // Data object for the popup
@@ -90,15 +99,20 @@ export class HistoriqueComponent {
     tools: 'Stéthoscope, Tensiomètre, Thermomètre.',
     tests: 'Analyse sanguine - Glycémie, Cholestérol',
     prescription: 'Ord_id_here',
-    summary: `Douleurs abdominales aiguës, suspicion d’appendicite\n\nTraitement/Intervention:\n• Examens initiaux (prise de sang, échographie)\n• Chirurgie de l’appendice (appendicectomie)\n\nAppendicite confirmée, intervention chirurgicale réussie. Le patient récupère normalement.\n\nLe patient a été libéré avec une ordonnance d’antalgiques et une recommandation de repos à domicile.`,
+    summary: `Douleurs ervention:\n• Examens initiaux (prise de sang, échographie)\n• Chirurgie de l’appendice (appendicectomie)\n\nAppendicite confirmée, intervention chirurgicale réussie. Le patient récupère normalement.\n\nLe patient a été libéré avec une ordonnance d’antalgiques et une recommandation de repos à domicile.`,
+    medecin: ""
   };
   showPopup(id: number) {
     // check the type the id is for the consultation or care
-    let historyItem = this.medicalHistory.find((item) => item.id === id);
+    let historyItem = this.medicalHistory.find((item: any) => item.id === id);
     let type = historyItem ? historyItem.type : null;
     if (type === 'consultation') {
+      console.log('Consultation', historyItem);
+      this.consultation = historyItem;
       this.isPopupVisible = true;
     } else if (type === 'care') {
+      console.log('Soins', historyItem);
+      this.soinsData = historyItem;
       this.soinsPopupVisible = true;
     }
     // Logic to fetch data for the popup can be added here
@@ -131,7 +145,8 @@ export class HistoriqueComponent {
       'Chirurgie de l\'appendice (appendicectomie)'
     ],
     conclusion: 'Appendicite confirmée, intervention chirurgicale réussie. Le patient récupère normalement.',
-    liberation: 'Le patient a été libéré avec une ordonnance d\'antalgiques et une recommandation de repos à domicile....'
+    liberation: 'Le patient a été libéré avec une ordonnance d\'antalgiques et une recommandation de repos à domicile....',
+    nurse: ""
   };
 
 }

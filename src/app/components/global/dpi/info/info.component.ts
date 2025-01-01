@@ -1,6 +1,8 @@
-import { Component, Input, input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common'; // Import CommonModule
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { animate, state, style, transition, trigger } from '@angular/animations';
+import { environment } from "../../../../../environments/environment" // Import the environment file
 
 @Component({
   selector: 'InfoPersonal',
@@ -29,9 +31,10 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
     ]),
   ],
 })
-export class InfoComponent {
+export class InfoComponent{
   title: string = 'Informations Personnelles';
   isOpen: boolean = false;
+
   @Input() patientData: any = {
     name: "Bouab Sami",
     email: "patient.dpi@gmail.com",
@@ -52,5 +55,7 @@ export class InfoComponent {
     insurance: "Harmonie Mutuelle",
     known_allergies: ["Allergie aux arachides", "Intolérant au lactose", "Allergie aux chats"],
     chronic_conditions: ["Hypertension", "Asthme", "Diabète"]
-  }
+  };
+
+  constructor(private http: HttpClient) { }
 }
