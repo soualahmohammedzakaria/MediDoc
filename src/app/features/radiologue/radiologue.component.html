@@ -198,8 +198,8 @@
         class="flex flex-col md:flex-row justify-between px-6 py-4 items-center"
       >
         <div>
-          <h2>Compte rendu</h2>
-          <p class="text-lg text-custom-dark-blue">
+          <h2 class="text-custom-dark-blue">Compte rendu</h2>
+          <p class="text-lg">
             {{ selectedExam?.report }}
           </p>
         </div>
@@ -207,7 +207,7 @@
           *ngIf="selectedExam?.url"
           [src]="selectedExam.url"
           alt="Imagerie Médicale"
-          class="rounded-lg w-64 h-64 bg-custom-gray-light/40 mt-4"
+          class="rounded-lg max-w-80 object-cover mt-4"
         />
       </div>
       <button
@@ -217,7 +217,107 @@
         Fermer
       </button>
     </div>
-    
+  </div>
+  <div
+    class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50"
+    *ngIf="showfillPopup"
+    (click)="closeAllPopups()"
+  >
+    <div
+      (click)="$event.stopPropagation()"
+      class="bg-white w-full max-w-lg p-6 rounded-lg shadow-lg"
+    >
+      <h2 class="text-xl font-semibold text-gray-800 mb-4">
+        Remplir Bilan Radiologique
+      </h2>
+
+      <div class="mb-4">
+        <label class="block text-sm font-medium text-gray-600">
+          Type d’Examen:
+        </label>
+        <p class="font-semibold text-gray-800">
+          {{ currentBillanModif.typeExamen }}
+        </p>
+      </div>
+
+      <div class="mb-4">
+        <label for="report" class="block text-sm font-medium text-gray-600">
+          Compte Rendu
+        </label>
+        <textarea
+          id="report"
+          [(ngModel)]="report"
+          placeholder="Rédiger le compte rendu"
+          class="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:ring focus:ring-blue-200 focus:outline-none"
+          rows="4"
+        ></textarea>
+      </div>
+
+      <div class="mb-4">
+        <label
+          for="file-upload"
+          class="block text-sm font-medium text-gray-600"
+        >
+          Radio
+        </label>
+        <div
+          class="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center mt-1"
+        >
+          <input
+            type="file"
+            id="file-upload"
+            (change)="uploadImage($event)"
+            class="hidden"
+          />
+          <label
+            for="file-upload"
+            class="cursor-pointer text-blue-600 hover:text-blue-800"
+          >
+            Choisir un fichier
+          </label>
+
+          <div *ngIf="uploading" class="mt-4 text-sm text-gray-600">
+            <div class="flex items-center justify-center space-x-2">
+              <svg
+                class="animate-spin h-5 w-5 text-blue-600"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  class="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  stroke-width="4"
+                ></circle>
+                <path
+                  class="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8v8z"
+                ></path>
+              </svg>
+              <span>Uploading...</span>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="url.length !== 0" class="mt-4">
+          <a [href]="url" target="_blank" class="text-gray-800">{{
+            uploadedFileName
+          }}</a>
+        </div>
+      </div>
+
+      <div class="flex justify-end">
+        <button
+          (click)="submitForm()"
+          class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring focus:ring-blue-200"
+        >
+          Terminer
+        </button>
+      </div>
+    </div>
   </div>
 </div>
 <style>

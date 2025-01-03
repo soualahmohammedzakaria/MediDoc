@@ -58,7 +58,7 @@ export class Authentication {
         } else if (res.user.role === 'infirmier') {
           this.router.navigate(['/landingpage']);
         } else if (res.user.role === 'laborantin') {
-          this.router.navigate(['/laborantin'], { queryParams: { data: btoa(JSON.stringify(res)) } });
+          this.router.navigate(['/laborantin']);
         } else if (res.user.role === 'radiologue') {
           this.router.navigate(['/radiologue']);
         } else {

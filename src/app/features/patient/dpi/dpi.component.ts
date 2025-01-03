@@ -36,11 +36,11 @@ export class PatientDpiComponent implements OnInit {
       return;
     }
     this.data = userCookie;
-    let apiUrl ;
-    if(this.nss){
+    let apiUrl;
+    if (this.nss) {
       apiUrl = `${environment.apiUrl}/dpi/consulter/${this.nss}/`;
-    }else{
-      apiUrl=`${environment.apiUrl}/dpi/consulterPatient/`;
+    } else {
+      apiUrl = `${environment.apiUrl}/dpi/consulterPatient/`;
     }
     let headers = new HttpHeaders({
       'Authorization': `Bearer ${userCookie.access}`,
@@ -97,6 +97,7 @@ export class PatientDpiComponent implements OnInit {
           (error) => {
             console.log('Error loading patient consultation:', error.message);
             console.log(error);
+            this.loading = false;
             this.toastr.error('Failed to load patient consultation.');
           }
         );
@@ -122,7 +123,7 @@ export class PatientDpiComponent implements OnInit {
                 const transformedData = [
                   ...data.map((item: any) => ({
                     id: `0000${item.id_image_radiologique}`,
-                    date: '14 Feb 2019', // Update with actual date if available
+                    date: item.date, // Update with actual date if available
                     category: 'Examens d’Imagerie Médicale',
                     examType: item.type,
                     results: {
@@ -133,14 +134,14 @@ export class PatientDpiComponent implements OnInit {
                   })),
                   ...data2.map((item: any) => ({
                     id: `0000${item.id_analyse_biologique}`,
-                    date: '14 Feb 2019', // Update with actual date if available
+                    date: item.date, // Update with actual date if available
                     category: 'Analyses Biologiques',
                     examType: item.type,
                     results: item.parametres,
                     status: item.statut === 'terminé' ? 'Terminé' : 'Pas terminé',
                   })),
                 ];
-        
+
                 this.bilans = transformedData;
                 console.log('Patient bilans loaded successfully:', transformedData);
               },
@@ -156,7 +157,7 @@ export class PatientDpiComponent implements OnInit {
             this.toastr.error('Failed to load patient ordonnances.');
           }
         );
-        
+
       },
       (error) => {
         console.log('Error loading patient data:', error.message);

@@ -6,9 +6,7 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { environment } from '../../../environments/environment';
 import { FormsModule } from '@angular/forms';
-// import { AngularFireModule } from '@angular/fire/compat';
-// import { AngularFireStorage } from '@angular/fire/compat/storage';
-import { finalize } from 'rxjs/operators';
+import { Storage, ref, uploadBytesResumable, getDownloadURL } from '@angular/fire/storage';
 
 @Component({
   selector: 'app-radiologue',
@@ -17,7 +15,6 @@ import { finalize } from 'rxjs/operators';
     CommonModule,
     RouterModule,
     FormsModule,
-    // AngularFireModule,
     HttpClientModule,
   ],
   templateUrl: './radiologue.component.html',
@@ -26,8 +23,9 @@ export class RadiologueComponent implements OnInit {
   data: any;
   http = inject(HttpClient);
   isLoading: boolean = true;
-
-  constructor(private toastr: ToastrService, private router: Router) { }
+  storage = inject(Storage);
+  constructor(private toastr: ToastrService, private router: Router) {
+  }
 
   ngOnInit() {
     const userCookie = this.getUserCookie();
@@ -56,10 +54,11 @@ export class RadiologueComponent implements OnInit {
               url: item.url,
               report: item.compte_rendu,
             },
-            status: item.statut === 'terminé' ? 'Terminé' : 'Pas terminé',
+            status: item.statut === 'terminé' ? 'Terminé' : 'Pas Terminé',
           })),
         ];
         this.bilans = transformedData;
+        console.log('Patient bilans:', this.bilans);
         this.isLoading = false;
       },
       (error) => {
@@ -90,6 +89,8 @@ export class RadiologueComponent implements OnInit {
   showImagePopup: boolean = false;
   showfillPopup: boolean = false;
   selectedExam: any = null;
+  url: string = '';
+  uploadedFileName = '';
   bilans = [
     {
       date: '2024-12-27',
@@ -142,7 +143,6 @@ export class RadiologueComponent implements OnInit {
         startDate = null;
         break;
     }
-
     return this.bilans.filter(bilan => {
       const bilanDate = new Date(bilan.date);
       const matchesTime = startDate ? bilanDate >= startDate : true;
@@ -160,7 +160,7 @@ export class RadiologueComponent implements OnInit {
 
   fillBilan(bilan: any) {
     this.showfillPopup = true;
-    this.currentBillanModif = bilan.nssPatient;
+    this.currentBillanModif = bilan;
   }
   showPopup(prescription: any) {
     this.selectedExam = prescription.results;
@@ -174,31 +174,58 @@ export class RadiologueComponent implements OnInit {
   report: string = '';
   uploading: boolean = false;
 
-
-  // uploadImage(event: any) {
-  //   const file = event.target.files[0];
-  //   if (file) {
-  //     const filePath = `radiology/${new Date().getTime()}_${file.name}`;
-  //     const fileRef = this.storage.ref(filePath);
-  //     const task = this.storage.upload(filePath, file);
-
-  //     this.uploading = true;
-  //     task
-  //       .snapshotChanges()
-  //       .pipe(
-  //         finalize(() => {
-  //           this.uploading = false;
-  //           fileRef.getDownloadURL().subscribe((url) => {
-  //             console.log('Uploaded File URL:', url);
-  //           });
-  //         })
-  //       )
-  //       .subscribe();
-  //   }
-  // }
-
+  uploadImage(event: any) {
+    const file = event.target.files[0];
+    if (file) {
+      const filePath = `radiology/${new Date().getTime()}_${file.name}`;
+      const storageRef = ref(this.storage, filePath);
+      const uploadTask = uploadBytesResumable(storageRef, file);
+      this.uploadedFileName = file.name;
+      console.log(this.uploadedFileName)
+      this.uploading = true;
+      uploadTask.on('state_changed',
+        (snapshot) => {
+          // You can handle progress here if needed
+          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          console.log('Upload is ' + progress + '% done');
+        },
+        (error) => {
+          console.error('Upload failed:', error);
+          // Handle error appropriately
+        },
+        () => {
+          this.uploading = false;
+          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+            this.url = downloadURL;
+            console.log('File available at', downloadURL, this.url);
+            this.uploading = false;
+            // Handle successful upload, e.g., save URL to your backend
+          });
+        }
+      );
+    }
+  }
   submitForm() {
-    console.log('Report:', this.report);
-    alert('Bilan Radiologique soumis avec succès!');
+    let headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.data.access}`,
+      'Content-Type': 'application/json',
+    });
+    const apiUrl = `${environment.apiUrl}/bilans/remplir-image-radiologique/`;
+    this.http.put(apiUrl, {
+      id_image_radiologique: this.currentBillanModif.id,
+      url: this.url,
+      compte_rendu: this.report,
+    }, { headers }).subscribe(
+      (data: any) => {
+        console.log('Bilan Radiologique soumis avec succès:', data);
+        this.toastr.success('Bilan Radiologique soumis avec succès!');
+        this.showfillPopup = false;
+        this.ngOnInit();
+      },
+      (error) => {
+        console.error('Error submitting Radiology report:', error);
+        this.toastr.error('Échec de la soumission du Bilan Radiologique.');
+      }
+    );
   }
 }
