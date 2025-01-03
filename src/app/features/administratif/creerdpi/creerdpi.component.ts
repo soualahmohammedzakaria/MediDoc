@@ -96,7 +96,6 @@ export class Creerdpi implements OnInit {
     }).subscribe(
       (res: any) => {
         this.medecins = res;
-        console.log(this.medecins);
       },
       (error) => {
         this.router.navigate(['/landingpage']);

@@ -1,0 +1,42 @@
+<div class="p-6 poppins-font">
+  <h2 class="text-2xl font-bold text-custom-dark-blue">Certificat Medical</h2>
+  <form #certificatForm="ngForm" (ngSubmit)="generatePdf(certificatForm.value)">
+    <div class="mb-2">
+      <label class="font-semibold text-custom-dark-blue">Durée</label>
+      <input
+        class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-custom-light-teal bg-[#F0FAF4]"
+        type="text"
+        name="duree"
+        ngModel
+        required
+        placeholder="Durée de la prise en charge"
+      />
+    </div>
+    <div class="mb-2">
+      <label class="font-semibold text-custom-dark-blue">Date de Début</label>
+      <input
+        class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-custom-light-teal bg-[#F0FAF4]"
+        type="date"
+        name="dateDebut"
+        ngModel
+        required
+      />
+    </div>
+    <div class="mb-2">
+      <label class="font-semibold text-custom-dark-blue">Remarques</label>
+      <textarea
+        name="remarques"
+        ngModel
+        class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-custom-light-teal bg-[#F0FAF4]"
+        maxlength="500"
+        placeholder="Rédiger les remarques"
+      ></textarea>
+    </div>
+    <button
+      type="submit"
+      class="bg-custom-blue text-white font-semibold py-3 px-7 rounded-lg hover:opacity-90"
+    >
+      Délivrer
+    </button>
+  </form>
+</div>
