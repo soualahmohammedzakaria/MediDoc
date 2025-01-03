@@ -13,8 +13,13 @@
       [medicalHistory]="HistoriqueMedical"
       [filteredHistory]="HistoriqueMedical"
     ></HistoriqueDpi>
-    <OrdannanceDpi [prescriptions]="prescriptions" [filteredHistory]="prescriptions"></OrdannanceDpi>
-    <ResultatExamDpi></ResultatExamDpi>
+    <OrdannanceDpi
+      [prescriptions]="prescriptions"
+      [filteredHistory]="prescriptions"
+    ></OrdannanceDpi>
+    <ResultatExamDpi
+      [prescriptions]="bilans"
+    ></ResultatExamDpi>
     <AdministrationDoc></AdministrationDoc>
   </div>
   <!-- Pass props to the QrPopUpDpi component -->

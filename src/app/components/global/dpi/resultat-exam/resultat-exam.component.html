@@ -29,42 +29,6 @@
     <!-- Table Content -->
     <div [@toggleContent]="isOpen ? 'open' : 'closed'">
       <div
-        class="flex px-4 w-full items-center justify-between gap-4 flex-col md:flex-row py-8 border-t-custom-light-teal border-t"
-      >
-        <div class="flex border rounded-xl border-custom-gray-light/20 gap-0">
-          <button
-            *ngFor="let typeButton of typeButtons; let i = index"
-            (click)="selectTypeFilter(typeButton.type)"
-            [ngClass]="{
-              'bg-custom-blue text-white': activeTypeFilter === typeButton.type,
-              'bg-white text-custom-dark-blue':
-                activeTypeFilter !== typeButton.type,
-              'rounded-l-xl': i === 0,
-              'rounded-r-xl': i === typeButtons.length - 1
-            }"
-            class="px-4 py-1 flex items-center justify-center w-24 md:w-36 transition-all duration-200"
-          >
-            {{ typeButton.label }}
-          </button>
-        </div>
-        <div class="flex border rounded-xl border-custom-gray-light/20 gap-0">
-          <button
-            *ngFor="let timeButton of timeButtons; let i = index"
-            (click)="selectTimeFilter(timeButton.type)"
-            [ngClass]="{
-              'bg-custom-blue text-white': activeTimeFilter === timeButton.type,
-              'bg-white text-custom-dark-blue':
-                activeTimeFilter !== timeButton.type,
-              'rounded-l-xl': i === 0,
-              'rounded-r-xl': i === timeButtons.length - 1
-            }"
-            class="px-4 py-1 flex items-center justify-center w-24 md:w-36 transition-all duration-200"
-          >
-            {{ timeButton.label }}
-          </button>
-        </div>
-      </div>
-      <div
         class="bg-white text-custom-gray-medium rounded-lg rounded-t-none transition-all duration-200 py-4 px-4"
       >
         <div class="overflow-x-auto">
@@ -94,11 +58,11 @@
                 </td>
                 <td class="px-4 py-2 text-center">
                   <div
-                    (click)="showPopup()"
+                    (click)="showPopup(prescription)"
                     href="#"
                     class="text-blue-500 cursor-pointer"
                   >
-                    {{ prescription.results }}
+                    Voir les Résultats
                   </div>
                 </td>
                 <td class="text-center">
@@ -118,14 +82,15 @@
         </div>
       </div>
     </div>
+
+    <!-- Error Popup -->
     <div
       class="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center"
       *ngIf="isVisible"
-      (click)="closeErrorPopup()"
+      (click)="closeAllPopups()"
     >
       <div
         class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 py-4 gap-4 bg-white rounded-lg shadow-lg w-[90%] md:w-96 flex flex-col z-50 overflow-hidden px-4"
-        *ngIf="isVisible"
         (click)="$event.stopPropagation()"
       >
         <h2 class="text-xl font-bold text-custom-dark-blue">Alerte</h2>
@@ -135,9 +100,84 @@
         </p>
         <button
           class="w-36 ml-auto flex justify-center items-center justify-self-end py-3 text-white font-bold bg-custom-blue rounded hover:bg-custom-sky focus:outline-none"
-          (click)="closeErrorPopup()"
+          (click)="closeAllPopups()"
         >
           Retour
+        </button>
+      </div>
+    </div>
+
+    <!-- Image Popup -->
+    <div
+      class="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center"
+      *ngIf="showImagePopup"
+      (click)="closeAllPopups()"
+    >
+      <div
+        class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 py-4 bg-white rounded-lg shadow-lg w-[90%] md:w-[75%] flex flex-col z-50 overflow-hidden px-4"
+        (click)="$event.stopPropagation()"
+      >
+        <h2 class="text-xl font-bold text-custom-dark-blue">
+          Résultats d'Imagerie
+        </h2>
+        <div
+          class="flex flex-col md:flex-row justify-between px-6 py-4 items-center"
+        >
+          <div>
+            <h2>Compte rendu</h2>
+            <p class="text-lg text-custom-dark-blue">
+              {{ selectedExam?.report }}
+            </p>
+          </div>
+          <img
+            *ngIf="selectedExam?.url"
+            [src]="selectedExam.url"
+            alt="Imagerie Médicale"
+            class="rounded-lg w-64 h-64 bg-custom-gray-light/40 mt-4"
+          />
+        </div>
+        <button
+          class="w-36 ml-auto flex justify-center items-center py-3 text-white font-bold bg-custom-blue rounded hover:bg-custom-sky focus:outline-none mt-4"
+          (click)="closeAllPopups()"
+        >
+          Fermer
+        </button>
+      </div>
+    </div>
+
+    <!-- Graph Popup -->
+    <div
+      class="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center"
+      *ngIf="showGraphPopup"
+      (click)="closeAllPopups()"
+    >
+      <div
+        class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 py-4 bg-white rounded-lg shadow-lg w-[90%] md:w-[75%] flex flex-col z-50 overflow-hidden px-4"
+        (click)="$event.stopPropagation()"
+      >
+        <h2 class="text-xl font-bold text-custom-dark-blue">
+          Paramètres Graphiques
+        </h2>
+        <div> type : {{ selectedExam.examType }}</div>
+        <div
+          id="graphContainer"
+          class="w-full h-64 mt-4 flex justify-center items-center"
+        >
+          <ng-container *ngIf="showGraphPopup">
+            <canvas
+              baseChart
+              [data]="barChartData"
+              [options]="barChartOptions"
+              [type]="barChartType"
+              class="w-full h-full"
+            ></canvas>
+          </ng-container>
+        </div>
+        <button
+          class="w-36 ml-auto flex justify-center items-center py-3 text-white font-bold bg-custom-blue rounded hover:bg-custom-sky focus:outline-none mt-4"
+          (click)="closeAllPopups()"
+        >
+          Fermer
         </button>
       </div>
     </div>

@@ -37,6 +37,7 @@ export class DpiComponent implements OnInit {
   @Input() qrCodeValue: string = '1234567890';
   @Input() HistoriqueMedical: any;
   @Input() prescriptions: any = [];
+  @Input() bilans: any = [];
   ngOnInit() {
     console.log('DPI component initialized:', this.HistoriqueMedical);
   }

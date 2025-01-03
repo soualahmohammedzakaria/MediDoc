@@ -1,13 +1,29 @@
-import { animate, state, style, transition, trigger } from '@angular/animations';
+import { trigger, state, style, transition, animate } from '@angular/animations';
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import {
+  Chart,
+  BarController,
+  BarElement,
+  CategoryScale,
+  LinearScale,
+  Tooltip,
+  Legend,
+  ChartData,
+  ChartOptions,
+  ChartType,
+} from 'chart.js';
+import { BaseChartDirective } from 'ng2-charts';
+
+// Register Chart.js components
+Chart.register(BarController, BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 
 @Component({
   selector: 'ResultatExamDpi',
-  standalone: true, // If this is a standalone component
-  imports: [CommonModule], // Add CommonModule to imports
+  standalone: true,
+  imports: [CommonModule, BaseChartDirective],
   templateUrl: './resultat-exam.component.html',
-  styleUrl: './resultat-exam.component.css',
+  styleUrls: ['./resultat-exam.component.css'],
   animations: [
     trigger('toggleContent', [
       state(
@@ -32,13 +48,18 @@ import { Component } from '@angular/core';
 export class ResultatExamComponent {
   title: string = 'Résultats des Examens';
   isOpen: boolean = false;
-  prescriptions = [
+  isVisible: boolean = false;
+  showImagePopup: boolean = false;
+  showGraphPopup: boolean = false;
+  selectedExam: any = null;
+
+  @Input() prescriptions = [
     {
       id: '00001',
       date: '14 Feb 2019',
       category: 'Analyses Biologiques',
       examType: 'Bilan sanguin',
-      results: 'Voir Résultats',
+      results: { url: '', report: 'Rapport Bilan sanguin' },
       status: 'Terminé',
     },
     {
@@ -46,71 +67,41 @@ export class ResultatExamComponent {
       date: '14 Feb 2019',
       category: 'Analyses Biologiques',
       examType: 'Numération Formule Sanguine (NFS)',
-      results: 'Voir Résultats',
+      results: '',
       status: 'Pas terminé',
     },
-    {
-      id: '00003',
-      date: '14 Feb 2019',
-      category: 'Analyses Biologiques',
-      examType: 'Bilan Hépatique',
-      results: 'Voir Résultats',
-      status: 'Terminé',
-    },
-    {
-      id: '00004',
-      date: '14 Feb 2019',
-      category: 'Examens d’Imagerie Médicale',
-      examType: 'Radiographie',
-      results: 'Voir Résultats',
-      status: 'Terminé',
-    },
-    {
-      id: '00005',
-      date: '14 Feb 2019',
-      category: 'Examens d’Imagerie Médicale',
-      examType: 'Échographie cardiaque',
-      results: 'Voir Résultats',
-      status: 'Pas terminé',
-    },
-    {
-      id: '00006',
-      date: '14 Feb 2019',
-      category: 'Analyses Biologiques',
-      examType: 'Bilan Lipidique',
-      results: 'Voir Résultats',
-      status: 'Terminé',
-    },
+    // Add other prescriptions here...
   ];
 
-  timeButtons = [
-    { label: "Aujourd'hui", type: 'today' },
-    { label: 'Semaine', type: 'week' },
-    { label: 'Mois', type: 'month' },
-    { label: 'Année', type: 'year' },
-  ];
-  typeButtons = [
-    { label: 'Tout', type: 'all' },
-    { label: 'Ridiologique', type: 'radio' },
-    { label: 'Biologique', type: 'biolo' },
-  ];
-  activeTimeFilter = 'year';
-  activeTypeFilter = 'all';
-  // Time Filter Selection
-  selectTimeFilter(timeType: string) {
-    this.activeTimeFilter = timeType;
-    // Logic for time filtering can be added here
+  public barChartOptions: ChartOptions = {
+    responsive: true,
+  };
+  public barChartLabels: string[] = ['Paramètre 1', 'Paramètre 2', 'Paramètre 3'];
+  public barChartData: ChartData<'bar'> = {
+    labels: this.barChartLabels,
+    datasets: [{ data: [10, 20, 30], label: 'Valeurs' }],
+  };
+  public barChartType: ChartType = 'bar';
+
+  showPopup(prescription: any) {
+    if (prescription.status === 'Pas terminé') {
+      this.isVisible = true;
+    } else if (prescription.category === 'Examens d’Imagerie Médicale') {
+      this.selectedExam = prescription.results;
+      this.showImagePopup = true;
+    } else {
+      this.selectedExam = prescription;
+      this.barChartData = {
+        labels: [...prescription.results.map((result: any) => result.parametre)],
+        datasets: [{ data: [...prescription.results.map((result: any) => result.valeur)], label: "valeurs" }],
+      };
+      this.showGraphPopup = true;
+    }
   }
-  selectTypeFilter(type: string) {
-    this.activeTypeFilter = type;
-    // Logic for time filtering can be added here
-  }
-  isVisible = false;
-  showPopup() {
-    this.isVisible = true;
-    // this.prescription = prescription;
-  }
-  closeErrorPopup() {
+
+  closeAllPopups() {
     this.isVisible = false;
+    this.showImagePopup = false;
+    this.showGraphPopup = false;
   }
 }
