@@ -20,10 +20,14 @@ export class Authentication {
   buttonText: string = 'Connectez-vous en tant que patient';
   isLoading: boolean = false;
 
-  constructor(private toastr: ToastrService, private router: Router) {}
+  constructor(private toastr: ToastrService, private router: Router) { }
 
   http = inject(HttpClient);
-
+  private setUserCookie(data: any) {
+    const expirationDate = new Date();
+    expirationDate.setDate(expirationDate.getDate() + 1); // 1 day expiration
+    document.cookie = `user_data=${JSON.stringify(data)}; expires=${expirationDate.toUTCString()}; path=/; secure; samesite=strict`;
+  }
   toggleRole() {
     this.role = this.role === 'patient' ? 'personnel' : 'patient';
     this.buttonText =
@@ -44,18 +48,19 @@ export class Authentication {
     this.http.post(`${environment.apiUrl}/accounts/login/`, formData).subscribe(
       (res: any) => {
         this.isLoading = false;
-        if(res.user.role === 'administratif') {
+        this.setUserCookie(res);
+        if (res.user.role === 'administratif') {
           this.router.navigate(['/administratif/creerdpi'], { queryParams: { data: btoa(JSON.stringify(res)) } });
         } else if (res.user.role === 'patient') {
-          this.router.navigate(['/patient/dpi'], { queryParams: { data: btoa(JSON.stringify(res)) } });
+          this.router.navigate(['/patient/dpi']);
         } else if (res.user.role === 'medecin') {
           this.router.navigate(['/medecin/rechercher'], { queryParams: { data: btoa(JSON.stringify(res)) } });
         } else if (res.user.role === 'infirmier') {
           this.router.navigate(['/infirmier/rechercher'], { queryParams: { data: btoa(JSON.stringify(res)) } });
         } else if (res.user.role === 'laborantin') {
-          this.router.navigate(['/landingpage']);
+          this.router.navigate(['/laborantin']);
         } else if (res.user.role === 'radiologue') {
-          this.router.navigate(['/landingpage']);
+          this.router.navigate(['/radiologue']);
         } else {
           this.router.navigate(['/landingpage']);
         }

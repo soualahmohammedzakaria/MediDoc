@@ -1,0 +1,185 @@
+<div class="w-full font-nunito">
+  <div
+    class="flex flex-col bg-white p-4 rounded-lg border border-custom-gray-light/25 transition-all duration-200"
+  >
+    <!-- Header -->
+    <div
+      (click)="isOpen = !isOpen"
+      class="flex px-4 bg-white py-4 justify-between rounded-lg cursor-pointer items-center transition-all duration-200"
+    >
+      <span class="text-custom-dark-blue font-semibold text-xl">{{
+        title
+      }}</span>
+      <svg
+        [ngClass]="{ 'rotate-180': isOpen }"
+        class="w-5 h-5 text-custom-dark-blue transition-transform duration-200"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M19 9l-7 7-7-7"
+        />
+      </svg>
+    </div>
+
+    <!-- Table Content -->
+    <div [@toggleContent]="isOpen ? 'open' : 'closed'">
+      <div
+        class="bg-white text-custom-gray-medium rounded-lg rounded-t-none transition-all duration-200 py-4 px-4"
+      >
+        <div class="overflow-x-auto">
+          <table class="w-full">
+            <thead>
+              <tr class="text-left font-bold text-xl">
+                <th class="border-0 pr-auto py-2">Date</th>
+                <th class="border-0 px-4 py-2">Catégorie</th>
+                <th class="border-0 px-4 py-2">Type d’Examen</th>
+                <th class="border-0 px-4 py-2 text-center">Résultats</th>
+                <th class="border-0 px-4 py-2 text-center">Statut</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                *ngFor="let prescription of prescriptions"
+                class="border-b border-b-custom-gray-light/30 text-lg"
+              >
+                <td class="py-8 text-left">
+                  {{ prescription.date }}
+                </td>
+                <td class="px-4 py-2 text-left">
+                  {{ prescription.category }}
+                </td>
+                <td class="px-4 py-2 text-left">
+                  {{ prescription.examType }}
+                </td>
+                <td class="px-4 py-2 text-center">
+                  <div
+                    (click)="showPopup(prescription)"
+                    href="#"
+                    class="text-blue-500 cursor-pointer"
+                  >
+                    Voir les Résultats
+                  </div>
+                </td>
+                <td class="text-center">
+                  <span
+                    class="flex justify-center w-full items-center py-1 border-b rounded bg-custom-green/10 text-custom-green"
+                    [ngClass]="{
+                      'bg-custom-red/10 text-custom-red':
+                        prescription.status === 'Pas terminé'
+                    }"
+                  >
+                    {{ prescription.status }}
+                  </span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Error Popup -->
+    <div
+      class="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center"
+      *ngIf="isVisible"
+      (click)="closeAllPopups()"
+    >
+      <div
+        class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 py-4 gap-4 bg-white rounded-lg shadow-lg w-[90%] md:w-96 flex flex-col z-50 overflow-hidden px-4"
+        (click)="$event.stopPropagation()"
+      >
+        <h2 class="text-xl font-bold text-custom-dark-blue">Alerte</h2>
+        <p class="text-lg text-custom-dark-blue">
+          Cet examen n'est pas encore terminé. Vous pouvez voir les résultats
+          une fois terminé
+        </p>
+        <button
+          class="w-36 ml-auto flex justify-center items-center justify-self-end py-3 text-white font-bold bg-custom-blue rounded hover:bg-custom-sky focus:outline-none"
+          (click)="closeAllPopups()"
+        >
+          Retour
+        </button>
+      </div>
+    </div>
+
+    <!-- Image Popup -->
+    <div
+      class="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center"
+      *ngIf="showImagePopup"
+      (click)="closeAllPopups()"
+    >
+      <div
+        class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 py-4 bg-white rounded-lg shadow-lg w-[90%] md:w-[75%] flex flex-col z-50 overflow-hidden px-4"
+        (click)="$event.stopPropagation()"
+      >
+        <h2 class="text-xl font-bold text-custom-dark-blue">
+          Résultats d'Imagerie
+        </h2>
+        <div
+          class="flex flex-col md:flex-row justify-between px-6 py-4 items-center"
+        >
+          <div>
+            <h2>Compte rendu</h2>
+            <p class="text-lg text-custom-dark-blue">
+              {{ selectedExam?.report }}
+            </p>
+          </div>
+          <img
+            *ngIf="selectedExam?.url"
+            [src]="selectedExam.url"
+            alt="Imagerie Médicale"
+            class="rounded-lg max-w-80 object-cover mt-4"
+          />
+        </div>
+        <button
+          class="w-36 ml-auto flex justify-center items-center py-3 text-white font-bold bg-custom-blue rounded hover:bg-custom-sky focus:outline-none mt-4"
+          (click)="closeAllPopups()"
+        >
+          Fermer
+        </button>
+      </div>
+    </div>
+
+    <!-- Graph Popup -->
+    <div
+      class="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center"
+      *ngIf="showGraphPopup"
+      (click)="closeAllPopups()"
+    >
+      <div
+        class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 py-4 bg-white rounded-lg shadow-lg w-[90%] md:w-[75%] flex flex-col z-50 overflow-hidden px-4"
+        (click)="$event.stopPropagation()"
+      >
+        <h2 class="text-xl font-bold text-custom-dark-blue">
+          Paramètres Graphiques
+        </h2>
+        <div> type : {{ selectedExam.examType }}</div>
+        <div
+          id="graphContainer"
+          class="w-full h-64 mt-4 flex justify-center items-center"
+        >
+          <ng-container *ngIf="showGraphPopup">
+            <canvas
+              baseChart
+              [data]="barChartData"
+              [options]="barChartOptions"
+              [type]="barChartType"
+              class="w-full h-full"
+            ></canvas>
+          </ng-container>
+        </div>
+        <button
+          class="w-36 ml-auto flex justify-center items-center py-3 text-white font-bold bg-custom-blue rounded hover:bg-custom-sky focus:outline-none mt-4"
+          (click)="closeAllPopups()"
+        >
+          Fermer
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

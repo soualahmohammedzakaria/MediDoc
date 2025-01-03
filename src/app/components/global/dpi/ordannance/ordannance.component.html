@@ -1,0 +1,197 @@
+<div class="w-full font-nunito">
+  <div
+    class="flex flex-col bg-white p-4 rounded-lg border border-custom-gray-light/25 transition-all duration-200"
+  >
+    <!-- Header -->
+    <div
+      (click)="isOpen = !isOpen"
+      class="flex px-4 bg-white py-4 justify-between rounded-lg cursor-pointer items-center transition-all duration-200"
+    >
+      <span class="text-custom-dark-blue font-semibold text-xl">{{
+        title
+      }}</span>
+      <svg
+        [ngClass]="{ 'rotate-180': isOpen }"
+        class="w-5 h-5 text-custom-dark-blue transition-transform duration-200"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M19 9l-7 7-7-7"
+        />
+      </svg>
+    </div>
+
+    <!-- Table Content -->
+    <div [@toggleContent]="isOpen ? 'open' : 'closed'">
+      <div
+        class="flex w-full items-center justify-between gap-4 flex-col md:flex-row py-8 border-t-custom-light-teal border-t"
+      >
+        <div
+          class="flex items-center border rounded-lg bg-custom-light-teal/50 px-3 py-1 w-full md:w-[40%]"
+        >
+          <svg
+            class="w-5 h-5 text-gray-500"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+            />
+          </svg>
+          <input
+          type="text"
+          placeholder="Rechercher une ordonnance par identifiant"
+          [(ngModel)]="idFilter"
+          (ngModelChange)="filterPrescriptions()"
+          class="ml-3 bg-transparent text-gray-700 placeholder-gray-500 focus:outline-none w-full"
+        />
+        </div>
+        <div class="flex border rounded-xl border-custom-gray-light/20 gap-0">
+          <button
+            *ngFor="let timeButton of timeButtons; let i = index"
+            (click)="selectTimeFilter(timeButton.type)"
+            [ngClass]="{
+              'bg-custom-blue text-white': activeTimeFilter === timeButton.type,
+              'bg-white text-custom-dark-blue':
+                activeTimeFilter !== timeButton.type,
+              'rounded-l-xl': i === 0,
+              'rounded-r-xl': i === timeButtons.length - 1
+            }"
+            class="px-4 py-1 flex items-center justify-center w-24 md:w-36 transition-all duration-200"
+          >
+            {{ timeButton.label }}
+          </button>
+        </div>
+      </div>
+      <div
+        class="bg-white text-custom-gray-medium rounded-lg rounded-t-none transition-all duration-200 py-4 px-4"
+      >
+        <div class="overflow-x-auto">
+          <table class="w-full">
+            <thead>
+              <tr class="text-left font-bold text-xl">
+                <th class="border-0 pr-auto py-2">ID</th>
+                <th class="border-0 px-4 py-2">Date</th>
+                <th class="border-0 px-4 py-2">Médecin</th>
+                <th class="border-0 px-4 py-2">Médicaments</th>
+                <th class="border-0 px-4 py-2 text-center">Statut</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                *ngFor="let prescription of filteredHistory"
+                class="border-b border-b-custom-gray-light/30 text-lg"
+              >
+                <td class="py-8 text-left">
+                  {{ prescription.id_ordonnance }}
+                </td>
+                <td class="px-4 py-2 text-left">
+                  {{ prescription.date }}
+                </td>
+                <td class="px-4 py-2 text-left">
+                  {{ prescription.nom_medecin }}
+                </td>
+                <td class="px-4 py-2 text-left">
+                  <div
+                    (click)="showPopup(prescription.id_ordonnance)"
+                    class="text-blue-500 cursor-pointer"
+                  >
+                    Afficher Médicaments
+                  </div>
+                </td>
+                <td class="text-center">
+                  <span
+                    class="flex justify-center w-full items-center py-1 border-b rounded bg-custom-green/10 text-custom-green"
+                    [ngClass]="{
+                      'bg-custom-red/10 text-custom-red':
+                        prescription.status === 'Non Valider'
+                    }"
+                  >
+                    {{ prescription.status }}
+                  </span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div
+      class="fixed inset-0 bg-black bg-opacity-50 z-40"
+      *ngIf="isVisible"
+      (click)="togglePopup()"
+    ></div>
+    <div
+      class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-lg shadow-lg w-3/4 lg:w-3/4 z-50 overflow-hidden px-4"
+      *ngIf="isVisible"
+      (click)="$event.stopPropagation()"
+    >
+      <div
+        class="flex items-center justify-between bg-white w-full text-custom-dark-blue px-4 py-6"
+      >
+        <h2 class="text-lg font-bold">Ordonnance {{ prescription.id_ordonnance }}</h2>
+        <span class="text-sm">{{ prescription.date }}</span>
+        <button
+          class="text-custom-dark-blue font-bold text-2xl focus:outline-none"
+          (click)="togglePopup()"
+        >
+          &times;
+        </button>
+      </div>
+
+      <table class="w-full">
+        <thead class="bg-custom-blue">
+          <tr class="bg-custom-blue text-white text-left rounded-lg mb-4">
+            <th class="px-4 rounded-l-lg py-4">Médicament</th>
+            <th class="px-4 py-4">Dosage</th>
+            <th class="px-4 py-4">Durée</th>
+            <th class="px-4 py-4 rounded-r-lg">Fréquence</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="let medic of prescription.medicaments; let last = last"
+            class="border-t border-t-custom-teal/30"
+          >
+            <td class="px-4 py-6">{{ medic.nom }}</td>
+            <td class="px-4 py-6">{{ medic.dose }}</td>
+            <td class="px-4 py-6">{{ medic.duree }} jours</td>
+            <td class="px-4 py-6">{{ medic.frequence }}</td>
+          </tr>
+          <tr *ngIf="prescription.medicaments.length === 0">
+            <td
+              colspan="4"
+              class="text-center text-gray-500 py-6"
+            >
+              Aucun médicament trouvé pour cette ordonnance.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="flex justify-end  gap-3 items-center px-4 py-3 border-t">
+        <button
+          class="flex items-center px-4 py-3 bg-custom-gray-light/10 rounded focus:outline-none"
+        >
+          <img src="/assets/images/common/ic-local-printshop-24px.svg" />
+        </button>
+        <button
+          class="w-36 flex justify-center items-center py-3 text-white font-bold bg-custom-blue rounded hover:bg-custom-sky focus:outline-none"
+          (click)="togglePopup()"
+        >
+          Retour
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

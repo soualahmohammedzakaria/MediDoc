@@ -5,6 +5,8 @@ import { AppComponent } from './app.component';
 import { Creerdpi } from './features/administratif/creerdpi/creerdpi.component';
 import { MedecinRechercherPatientComponent } from './features/medecin/rechercher/rechercher.component';
 import { PatientDpiComponent } from './features/patient/dpi/dpi.component';
+import { LaborantinComponent } from './features/laborantin/laborantin.component';
+import { RadiologueComponent } from './features/radiologue/radiologue.component';
 import { InfirmierRechercherPatientComponent } from './features/infirmier/rechercher/rechercher.component';
 import { SoinsComponent } from './features/infirmier/soins/soins.component';
 import { MedecinAccueilComponent } from './features/medecin/accueil/accueil.component';
@@ -19,4 +21,6 @@ export const routes: Routes = [
   { path: 'infirmier/rechercher', component: InfirmierRechercherPatientComponent },
   { path: 'infirmier/soins', component: SoinsComponent },
   { path: 'patient/dpi', component: PatientDpiComponent },
+  { path: 'laborantin', component: LaborantinComponent },
+  { path: 'radiologue', component: RadiologueComponent }
 ];

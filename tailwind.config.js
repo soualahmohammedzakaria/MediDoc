@@ -3,6 +3,9 @@ module.exports = {
   content: ["./src/**/*.{html,ts}"],
   theme: {
     extend: {
+      fontFamily: {
+        nunito: ['"Nunito Sans"', 'sans-serif'], // Add Nunito Sans to Tailwind's font stack
+      },
       colors: {
         "custom-blue": "#0B8FAC",
         "custom-teal": "#7BC1B7",

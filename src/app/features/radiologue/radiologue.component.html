@@ -1,0 +1,341 @@
+<div class="flex flex-col w-full h-full poppins-font">
+  <!-- nav bar -->
+  <div
+    class="bg-custom-light-teal w-full h-[10%] flex justify-between items-center p-4"
+  >
+    <img
+      src="/assets/images/common/logo.svg"
+      alt="MediDoc"
+      class="w-10 h-auto"
+    />
+    <div class="w-auto flex items-center space-x-4">
+      <a
+        class="flex items-center justify-center cursor-pointer hover:opacity-90"
+        routerLink="/landingpage"
+      >
+        <img src="/assets/images/common/logout.svg" alt="Logout" />
+      </a>
+      <div class="text-center">
+        <div class="font-semibold text-sm md:text-md">
+          {{ data.user.nom }}
+        </div>
+        <div class="font-medium text-xs md:text-sm">Radiologue</div>
+      </div>
+    </div>
+  </div>
+  <div class="relative flex-grow bg-[#F5F6FA]">
+    <div class="w-full mx-auto px-4 md:px-20 py-16">
+      <h1 class="text-4xl font-nunito font-semibold mb-4">Bilans</h1>
+      <div class="w-full font-nunito">
+        <div
+          class="flex flex-col bg-white p-4 rounded-lg border border-custom-gray-light/25 transition-all duration-200"
+        >
+          <!-- Header -->
+          <div
+            (click)="isOpen = !isOpen"
+            class="flex px-4 bg-white py-4 justify-between rounded-lg cursor-pointer items-center transition-all duration-200"
+          >
+            <span class="text-custom-dark-blue font-semibold text-xl">{{
+              title
+            }}</span>
+          </div>
+
+          <div *ngIf="isLoading" class="flex justify-center items-center py-4">
+            <div class="loader"></div>
+          </div>
+          <div
+            *ngIf="!isLoading && bilans.length === 0"
+            class="text-center text-gray-600 py-4"
+          >
+            Aucun bilan disponible.
+          </div>
+          <div *ngIf="!isLoading && bilans.length > 0" class="overflow-x-auto">
+            <div
+              class="flex w-full items-center justify-between gap-4 flex-col md:flex-row py-8 border-t-custom-light-teal border-t"
+            >
+              <div
+                class="flex items-center border rounded-lg bg-custom-light-teal/50 px-3 py-1 w-full md:w-[40%]"
+              >
+                <svg
+                  class="w-5 h-5 text-gray-500"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                  />
+                </svg>
+                <input
+                  type="text"
+                  placeholder="Rechercher bilan par NSS de patient"
+                  [(ngModel)]="searchQuery"
+                  class="ml-3 bg-transparent text-gray-700 placeholder-gray-500 focus:outline-none w-full"
+                />
+              </div>
+
+              <!-- Status Filter -->
+
+              <!-- Time Filter -->
+              <div
+                class="flex border rounded-xl border-custom-gray-light/20 gap-0"
+              >
+                <button
+                  *ngFor="let timeButton of timeButtons; let i = index"
+                  (click)="selectTimeFilter(timeButton.type)"
+                  [ngClass]="{
+                    'bg-custom-blue text-white':
+                      activeTimeFilter === timeButton.type,
+                    'bg-white text-custom-dark-blue':
+                      activeTimeFilter !== timeButton.type,
+                    'rounded-l-xl': i === 0,
+                    'rounded-r-xl': i === timeButtons.length - 1
+                  }"
+                  class="px-4 py-1 flex items-center justify-center w-24 md:w-36 transition-all duration-200"
+                >
+                  {{ timeButton.label }}
+                </button>
+              </div>
+            </div>
+            <div
+              class="flex border w-fit rounded-xl border-custom-gray-light/20 gap-0 mb-4 md:mb-0"
+            >
+              <button
+                (click)="setStatus('Terminé')"
+                [ngClass]="{
+                  'bg-custom-blue text-white': activeStatus === 'Terminé',
+                  'bg-white text-custom-dark-blue': activeStatus !== 'Terminé'
+                }"
+                class="px-4 py-1 rounded-l-xl transition-all duration-200"
+              >
+                Terminé
+              </button>
+              <button
+                (click)="setStatus('Pas Terminé')"
+                [ngClass]="{
+                  'bg-custom-blue text-white': activeStatus === 'Pas Terminé',
+                  'bg-white text-custom-dark-blue':
+                    activeStatus !== 'Pas Terminé'
+                }"
+                class="px-4 py-1 rounded-r-xl transition-all duration-200"
+              >
+                Pas Terminé
+              </button>
+            </div>
+            <!-- Table -->
+            <div
+              class="bg-white text-custom-gray-medium rounded-lg rounded-t-none transition-all duration-200 py-4 min-h-[500px] px-4"
+            >
+              <div class="overflow-x-auto">
+                <table class="w-full">
+                  <thead>
+                    <tr class="text-left font-bold text-xl">
+                      <th class="border-0 pr-auto py-2">Date</th>
+                      <th class="border-0 px-4 py-2">Type d'Examen</th>
+                      <th class="border-0 px-4 py-2">NSS de Patient</th>
+                      <th class="border-0 px-4 py-2 text-center">Résultats</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr
+                      *ngFor="let bilan of getFilteredBilans()"
+                      class="border-b border-b-custom-gray-light/30 text-lg"
+                    >
+                      <td class="py-8 text-left">{{ bilan.date }}</td>
+                      <td class="px-4 py-2 text-left">
+                        {{ bilan.typeExamen }}
+                      </td>
+                      <td class="px-4 py-2 text-left">
+                        {{ bilan.nssPatient }}
+                      </td>
+                      <td class="px-4 py-2 text-center">
+                        <a
+                          (click)="
+                            bilan.status === 'Terminé'
+                              ? showPopup(bilan)
+                              : fillBilan(bilan)
+                          "
+                          [ngClass]="
+                            bilan.status === 'Terminé'
+                              ? 'text-blue-500 cursor-pointer'
+                              : 'text-custom-orange underline cursor-pointer'
+                          "
+                        >
+                          {{
+                            bilan.status === "Terminé"
+                              ? "Voir Résultats"
+                              : "Remplir Bilan"
+                          }}
+                        </a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center"
+    *ngIf="showImagePopup"
+    (click)="closeAllPopups()"
+  >
+    <div
+      class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 py-4 bg-white rounded-lg shadow-lg w-[90%] md:w-[75%] flex flex-col z-50 overflow-hidden px-4"
+      (click)="$event.stopPropagation()"
+    >
+      <h2 class="text-xl font-bold text-custom-dark-blue">
+        Résultats d'Imagerie
+      </h2>
+      <div
+        class="flex flex-col md:flex-row justify-between px-6 py-4 items-center"
+      >
+        <div>
+          <h2 class="text-custom-dark-blue">Compte rendu</h2>
+          <p class="text-lg">
+            {{ selectedExam?.report }}
+          </p>
+        </div>
+        <img
+          *ngIf="selectedExam?.url"
+          [src]="selectedExam.url"
+          alt="Imagerie Médicale"
+          class="rounded-lg max-w-80 object-cover mt-4"
+        />
+      </div>
+      <button
+        class="w-36 ml-auto flex justify-center items-center py-3 text-white font-bold bg-custom-blue rounded hover:bg-custom-sky focus:outline-none mt-4"
+        (click)="closeAllPopups()"
+      >
+        Fermer
+      </button>
+    </div>
+  </div>
+  <div
+    class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50"
+    *ngIf="showfillPopup"
+    (click)="closeAllPopups()"
+  >
+    <div
+      (click)="$event.stopPropagation()"
+      class="bg-white w-full max-w-lg p-6 rounded-lg shadow-lg"
+    >
+      <h2 class="text-xl font-semibold text-gray-800 mb-4">
+        Remplir Bilan Radiologique
+      </h2>
+
+      <div class="mb-4">
+        <label class="block text-sm font-medium text-gray-600">
+          Type d’Examen:
+        </label>
+        <p class="font-semibold text-gray-800">
+          {{ currentBillanModif.typeExamen }}
+        </p>
+      </div>
+
+      <div class="mb-4">
+        <label for="report" class="block text-sm font-medium text-gray-600">
+          Compte Rendu
+        </label>
+        <textarea
+          id="report"
+          [(ngModel)]="report"
+          placeholder="Rédiger le compte rendu"
+          class="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:ring focus:ring-blue-200 focus:outline-none"
+          rows="4"
+        ></textarea>
+      </div>
+
+      <div class="mb-4">
+        <label
+          for="file-upload"
+          class="block text-sm font-medium text-gray-600"
+        >
+          Radio
+        </label>
+        <div
+          class="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center mt-1"
+        >
+          <input
+            type="file"
+            id="file-upload"
+            (change)="uploadImage($event)"
+            class="hidden"
+          />
+          <label
+            for="file-upload"
+            class="cursor-pointer text-blue-600 hover:text-blue-800"
+          >
+            Choisir un fichier
+          </label>
+
+          <div *ngIf="uploading" class="mt-4 text-sm text-gray-600">
+            <div class="flex items-center justify-center space-x-2">
+              <svg
+                class="animate-spin h-5 w-5 text-blue-600"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  class="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  stroke-width="4"
+                ></circle>
+                <path
+                  class="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8v8z"
+                ></path>
+              </svg>
+              <span>Uploading...</span>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="url.length !== 0" class="mt-4">
+          <a [href]="url" target="_blank" class="text-gray-800">{{
+            uploadedFileName
+          }}</a>
+        </div>
+      </div>
+
+      <div class="flex justify-end">
+        <button
+          (click)="submitForm()"
+          class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring focus:ring-blue-200"
+        >
+          Terminer
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<style>
+  .loader {
+    border: 8px solid #f3f3f3;
+    border-top: 8px solid #3498db;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+  }
+
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+</style>
