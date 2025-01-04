@@ -16,8 +16,8 @@
             <img src="/assets/images/common/logout.svg" alt="Logout" />
           </a>
           <div class="text-center">
-            <div class="font-semibold text-sm md:text-md">{{ data.user.nom || 'Utilisateur' }}</div>
-            <div class="font-medium text-xs md:text-sm">Administratif</div>
+            <div class="font-semibold text-sm md:text-md">{{ data.nom || data.user.nom }}</div>
+            <div class="font-medium text-xs md:text-sm">{{ data.specialite || "Administratif" }}</div>
           </div>
         </div>
       </div>

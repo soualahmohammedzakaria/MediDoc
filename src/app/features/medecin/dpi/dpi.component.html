@@ -1,0 +1,65 @@
+<div class="flex flex-col w-full h-full poppins-font">
+    <!-- nav bar -->
+    <div
+      class="bg-custom-light-teal w-full h-[10%] flex justify-between items-center p-4"
+    >
+      <img
+        src="/assets/images/common/logo.svg"
+        alt="MediDoc"
+        class="w-10 h-auto"
+      />
+      <div class="w-auto flex items-center space-x-4">
+        <a
+          class="flex items-center justify-center cursor-pointer hover:opacity-90"
+          routerLink="/landingpage"
+        >
+          <img src="/assets/images/common/logout.svg" alt="Logout" />
+        </a>
+        <div class="text-center">
+          <div class="font-semibold text-sm md:text-md">
+            {{ data?.user?.nom }}
+          </div>
+          <div class="font-medium text-xs md:text-sm">{{ data?.user?.specialite }}</div>
+        </div>
+      </div>
+    </div>
+  
+    <!-- main content -->
+    <div class="relative flex-grow bg-[#F5F6FA]">
+      <!-- Loading spinner -->
+      <div *ngIf="loading" class="flex justify-center items-center h-full">
+        <div class="loader"></div>
+      </div>
+  
+      <!-- Content -->
+      <dpi
+        *ngIf="!loading"
+        [HistoriqueMedical]="historiqueMedical"
+        [qrCodeValue]="nss"
+        [patientData]="patientData"
+        [prescriptions]="ordonnances"
+        [bilans]="bilans"
+      ></dpi>
+    </div>
+  </div>
+  
+  <!-- Add this loader style to your global or component styles -->
+  <style>
+    .loader {
+      border: 8px solid #f3f3f3;
+      border-top: 8px solid #3498db;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      animation: spin 1s linear infinite;
+    }
+  
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+  </style>  

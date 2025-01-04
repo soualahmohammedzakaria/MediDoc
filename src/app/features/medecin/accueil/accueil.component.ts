@@ -37,10 +37,15 @@ export class MedecinAccueilComponent implements OnInit {
 
     handleClick(action: string): void {
       if(action === "Consulter Dossier Patient"){
-        // Redirect to the Consulter DPI screen with medecin name, specialite, the patient's NSS and access token.
+        this.router.navigate(['/medecin/dpi'], { queryParams: { nss: this.data.patient_nss } });
       } else if(action === "Ajouter Une Consultation"){
-        // Redirect to the Ajouter Consultation screen with medecin name, specialite, the patient's NSS and access token.
-      } else if (action === 'Délivrer Certificat Médical') {
+        this.router.navigate(['/medecin/ajouterconsultation'], { queryParams: { data: btoa(JSON.stringify({
+          nss: this.data.patient_nss,
+          nom: this.data.patient_nom,
+        })) } });
+      } else if (action === "Créer Un Dossier Patient"){
+        this.router.navigate(['/medecin/creerdpi'], { queryParams: { data: btoa(JSON.stringify(this.data)) } });
+      } else if (action === 'Délivrer Certificat Médical'){
         const data = {
           patient_nss: this.data.patient_nss,
           patient_nom: this.data.patient_nom,
