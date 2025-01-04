@@ -63,6 +63,8 @@ export class AjouterConsultationComponent implements OnInit {
       this.typeRadio = '';
       return;
     }
+    this.typeBio = type === 'Rédiger Bilan Biologique' ? 'FNS' : this.typeBio;
+    this.typeRadio = type === 'Rédiger Bilan Radiologique' ? 'IRM' : this.typeRadio;
     this.modalTitle = type;
     this.selectOptions =
       type === 'Rédiger Bilan Biologique'
