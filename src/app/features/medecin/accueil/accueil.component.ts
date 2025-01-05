@@ -5,7 +5,7 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { CertificatMedicalModalComponent } from '../../../components/medecin/certificat-medical-modal/certificat-medical-modal.component';
 import { MatDialog } from '@angular/material/dialog';
-import { spec } from 'node:test/reporters';
+import { QRCodeComponent } from 'angularx-qrcode';
 
 @Component({
   selector: 'medecin-accueil',
@@ -14,6 +14,7 @@ import { spec } from 'node:test/reporters';
     CommonModule,
     HttpClientModule,
     RouterModule,
+    QRCodeComponent,
   ],
   templateUrl: './accueil.component.html',
 })
@@ -43,8 +44,6 @@ export class MedecinAccueilComponent implements OnInit {
           nss: this.data.patient_nss,
           nom: this.data.patient_nom,
         })) } });
-      } else if (action === "Créer Un Dossier Patient"){
-        this.router.navigate(['/medecin/creerdpi'], { queryParams: { data: btoa(JSON.stringify(this.data)) } });
       } else if (action === 'Délivrer Certificat Médical'){
         const data = {
           patient_nss: this.data.patient_nss,

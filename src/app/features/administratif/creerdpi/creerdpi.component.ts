@@ -86,6 +86,7 @@ export class Creerdpi implements OnInit {
       if (!this.data) {
         this.router.navigate(['/landingpage']);
       }
+      console.log(this.data);
     });
 
     // Get list of medecins

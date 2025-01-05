@@ -34,4 +34,9 @@ export class MedecinRechercherPatientComponent implements OnInit {
         }
       });
     }
+
+    creerDPI() {
+      this.router.navigate(['/medecin/creerdpi'], { queryParams: { data: btoa(JSON.stringify(this.data)) } });
+      console.log(this.data);
+    }
 }

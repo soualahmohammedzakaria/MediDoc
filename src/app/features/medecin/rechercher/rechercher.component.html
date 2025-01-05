@@ -9,6 +9,20 @@
       class="w-10 h-auto"
     />
     <div class="w-auto flex items-center space-x-4">
+      <button
+        class="bg-custom-blue rounded-2xl my-auto text-white py-2 px-2 md:px-4 flex justify-between items-center hover:opacity-90 max-md:hidden"
+        (click)="creerDPI()"
+      >
+        <span class="font-semibold text-center">
+          Créer Un Dossier Patient
+        </span>
+      </button>
+      <button
+        class="flex items-center justify-center cursor-pointer hover:opacity-90 md:hidden"
+        (click)="creerDPI()"
+      >
+        <img src="/assets/images/common/file_add.svg" alt="Créer DPI" />
+      </button>
       <a
         class="flex items-center justify-center cursor-pointer hover:opacity-90"
         routerLink="/landingpage"
@@ -28,8 +42,6 @@
 
   <!-- main content -->
   <div class="relative flex-grow bg-[#F5F6FA]">
-    <rechercher-patient
-      [data]="data"
-    ></rechercher-patient>
+    <rechercher-patient [data]="data"></rechercher-patient>
   </div>
 </div>
