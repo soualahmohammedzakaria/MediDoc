@@ -69,9 +69,8 @@ export class PatientDpiComponent implements OnInit {
                       ...(consultation.analyses_biologiques || []).map((a: any) => `Analyse biologique: ${a}`),
                       ...(consultation.images_radiologiques || []).map((r: any) => `Image radiologique: ${r}`)
                     ].join(', '),
-                    tools: '', // Add relevant tools if applicable
                     type: 'consultation',
-                    medecin: consultation.medecin || '', // Add relevant doctor information if available
+                    medecin: consultation.medecin || '',
                   }));
                 this.historiqueMedical = [...this.historiqueMedical, ...data2.map((soin: any) => ({
                   id: soin.id_soin,
@@ -79,9 +78,8 @@ export class PatientDpiComponent implements OnInit {
                   date: soin.date,
                   summary: soin.resume || '',
                   prescription: soin.prescription || '',
-                  tools: '', // Add relevant tools if applicable
                   type: 'care',
-                  medecin: soin.medecin || '', // Add relevant doctor information if available
+                  medecin: soin.medecin || '',
                 }))];
                 this.loading = false;
                 console.log('Patient soins loaded successfully:', data);
@@ -122,8 +120,7 @@ export class PatientDpiComponent implements OnInit {
               (data2: any) => {
                 const transformedData = [
                   ...data.map((item: any) => ({
-                    id: `0000${item.id_image_radiologique}`,
-                    date: item.date, // Update with actual date if available
+                    id: item.id_image_radiologique,
                     category: 'Examens d’Imagerie Médicale',
                     examType: item.type,
                     results: {
@@ -133,8 +130,7 @@ export class PatientDpiComponent implements OnInit {
                     status: item.statut === 'terminé' ? 'Terminé' : 'Pas terminé',
                   })),
                   ...data2.map((item: any) => ({
-                    id: `0000${item.id_analyse_biologique}`,
-                    date: item.date, // Update with actual date if available
+                    id: item.id_analyse_biologique,
                     category: 'Analyses Biologiques',
                     examType: item.type,
                     results: item.parametres,

@@ -39,6 +39,6 @@ export class DpiComponent implements OnInit {
   @Input() prescriptions: any = [];
   @Input() bilans: any = [];
   ngOnInit() {
-    console.log('DPI component initialized:', this.HistoriqueMedical);
+    console.log('DPI component initialized:', this.bilans);
   }
 }

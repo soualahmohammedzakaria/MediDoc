@@ -70,7 +70,6 @@ export class ResultatExamComponent {
       results: '',
       status: 'Pas terminé',
     },
-    // Add other prescriptions here...
   ];
 
   public barChartOptions: ChartOptions = {
@@ -100,6 +99,7 @@ export class ResultatExamComponent {
   }
 
   closeAllPopups() {
+    console.log(this.prescriptions);
     this.isVisible = false;
     this.showImagePopup = false;
     this.showGraphPopup = false;

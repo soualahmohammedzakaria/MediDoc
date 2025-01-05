@@ -112,12 +112,8 @@
                 <td class="text-center">
                   <span
                     class="flex justify-center w-full items-center py-1 border-b rounded bg-custom-green/10 text-custom-green"
-                    [ngClass]="{
-                      'bg-custom-red/10 text-custom-red':
-                        prescription.status === 'Non Valider'
-                    }"
                   >
-                    {{ prescription.status }}
+                    Valide
                   </span>
                 </td>
               </tr>
@@ -155,7 +151,6 @@
             <th class="px-4 rounded-l-lg py-4">Médicament</th>
             <th class="px-4 py-4">Dosage</th>
             <th class="px-4 py-4">Durée</th>
-            <th class="px-4 py-4 rounded-r-lg">Fréquence</th>
           </tr>
         </thead>
         <tbody>
@@ -166,7 +161,6 @@
             <td class="px-4 py-6">{{ medic.nom }}</td>
             <td class="px-4 py-6">{{ medic.dose }}</td>
             <td class="px-4 py-6">{{ medic.duree }} jours</td>
-            <td class="px-4 py-6">{{ medic.frequence }}</td>
           </tr>
           <tr *ngIf="prescription.medicaments.length === 0">
             <td

@@ -52,9 +52,89 @@
       <div class="mb-4">
         <button
           class="bg-white border border-custom-blue text-custom-blue font-semibold py-2 px-4 rounded-lg hover:opacity-90"
+          (click)="openOrdonnanceModal()"
         >
           Rédiger Ordonnance
         </button>
+      </div>
+      
+      <!-- Ordonnance Modal -->
+      <div
+        *ngIf="isOrdonnanceModalVisible"
+        class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
+      >
+        <div class="bg-white w-[90%] md:w-[70%] rounded-lg shadow-lg p-6">
+          <h2 class="text-lg font-semibold mb-4">Ordonnance</h2>
+      
+          <!-- Table -->
+          <table class="w-full border-collapse border border-gray-300 mb-4">
+            <thead>
+              <tr class="bg-custom-blue rounded-2xl">
+                <th class="border text-white p-2">Nom</th>
+                <th class="border text-white p-2">Dose</th>
+                <th class="border text-white p-2">Durée</th>
+                <th class="border text-white p-2">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let med of ordonnance; let i = index">
+                <td class="border border-gray-300 p-2">{{ med.nom }}</td>
+                <td class="border border-gray-300 p-2">{{ med.dose }}</td>
+                <td class="border border-gray-300 p-2">{{ med.duree }}</td>
+                <td class="border border-gray-300 p-2 text-center">
+                  <button
+                    class="bg-red-500 text-white py-1 px-3 rounded-lg hover:opacity-90"
+                    (click)="deleteOrdonnance(i)"
+                  >
+                    Supprimer
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+      
+          <!-- Form -->
+          <div class="mb-4">
+            <h3 class="text-md font-semibold mb-2">Ajouter Médicament</h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <select
+                [(ngModel)]="newOrdonnance.nom"
+                class="p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-custom-light-teal"
+              >
+                <option value="" disabled selected>Sélectionner un médicament</option>
+                <option *ngFor="let medicament of medicaments" [value]="medicament.nom">
+                  {{ medicament.nom }}
+                </option>
+              </select>
+              <input
+                [(ngModel)]="newOrdonnance.dose"
+                class="p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-custom-light-teal"
+                placeholder="Dose"
+              />
+              <input
+                [(ngModel)]="newOrdonnance.duree"
+                class="p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-custom-light-teal"
+                placeholder="Durée"
+              />
+            </div>
+          </div>
+      
+          <!-- Buttons -->
+          <div class="flex justify-end space-x-4">
+            <button
+              class="bg-gray-300 text-gray-700 font-semibold py-2 px-4 rounded-lg hover:opacity-90"
+              (click)="closeOrdonnanceModal()"
+            >
+              Retour
+            </button>
+            <button
+              class="bg-custom-blue text-white font-semibold py-2 px-4 rounded-lg hover:opacity-90"
+              (click)="addOrdonnance()"
+            >
+              Ajouter
+            </button>
+          </div>
+        </div>
       </div>
 
       <div class="mb-4">
@@ -78,6 +158,7 @@
       <div class="mb-4">
         <div class="text-lg font-semibold mb-1">Résumé</div>
         <textarea
+          [(ngModel)]="resume"
           rows="5"
           class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-custom-light-teal bg-[#F0FAF4]"
           placeholder="Rédiger le résumé de la consultation"
@@ -88,6 +169,7 @@
       <div class="flex justify-end">
         <button
           class="bg-custom-blue text-white font-semibold py-3 px-7 rounded-lg hover:opacity-90"
+          (click)="submit()"
         >
           Terminer
         </button>
