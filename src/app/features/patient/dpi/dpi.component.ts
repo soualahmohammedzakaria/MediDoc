@@ -58,6 +58,7 @@ export class PatientDpiComponent implements OnInit {
             apiUrl = `${environment.apiUrl}/soins/dpi/${this.nss}/`;
             this.http.get(apiUrl, { headers }).subscribe(
               (data2: any) => {
+                console.log('Patient soins loaded successfully:', data);
                 this.historiqueMedical =
                   data.map((consultation: any) => ({
                     id: consultation.id_consultation,
@@ -81,15 +82,71 @@ export class PatientDpiComponent implements OnInit {
                   type: 'care',
                   medecin: soin.medecin || '',
                 }))];
-                this.loading = false;
                 console.log('Patient soins loaded successfully:', data);
+
+                apiUrl = `${environment.apiUrl}/bilans/images-radiologiques/?nss=${this.nss}`;
+                this.http.get(apiUrl, { headers }).subscribe(
+                  (data: any) => {
+                    apiUrl = `${environment.apiUrl}/bilans/analyses-biologiques/?nss=${this.nss}`;
+                    this.http.get(apiUrl, { headers }).subscribe(
+                      (data2: any) => {
+                        const transformedData = [
+                          ...data.map((item: any) => ({
+                            id: item.id_image_radiologique,
+                            consultation_id: item.consultation_id,
+                            category: 'Examens d’Imagerie Médicale',
+                            examType: item.type,
+                            results: {
+                              url: item.url,
+                              report: item.compte_rendu,
+                            },
+                            status: item.statut === 'terminé' ? 'Terminé' : 'Pas terminé',
+                          })),
+                          ...data2.map((item: any) => ({
+                            consultation_id: item.consultation_id,
+                            id: item.id_analyse_biologique,
+                            category: 'Analyses Biologiques',
+                            examType: item.type,
+                            results: item.parametres,
+                            status: item.statut === 'terminé' ? 'Terminé' : 'Pas terminé',
+                          })),
+                        ];
+
+                        this.bilans = transformedData;
+                        console.log('Patient bilans loaded successfully:', transformedData);
+                        // make sure the historiqueMedical is updated with tests
+                        this.historiqueMedical = this.historiqueMedical.map((consultation: any) => {
+                          const tests = transformedData.filter((test: any) => test.consultation_id === consultation.id);
+                          if (tests.length > 0) {
+                            const testsString = tests.map((test: any) => `${test.category}: ${test.examType} - ${test.id}`).join(', ');
+                            return {
+                              ...consultation,
+                              tests: testsString
+                            };
+                          }
+                          return consultation;
+                        });
+                        this.loading = false;
+                      },
+                      (error) => {
+                        console.log('Error loading patient bilans:', error.message);
+                        this.toastr.error('Failed to load patient bilans.');
+                      }
+                    );
+
+                    console.log('Patient ordonnances loaded successfully:', data);
+                  },
+                  (error) => {
+                    console.log('Error loading patient ordonnances:', error.message);
+                    this.toastr.error('Failed to load patient ordonnances.');
+                  }
+                );
               },
               (error) => {
                 console.log('Error loading patient soins:', error.message);
                 this.toastr.error('Failed to load patient soins.');
               }
             );
-
             console.log('Patient consultation loaded successfully:', data);
           },
           (error) => {
@@ -112,47 +169,7 @@ export class PatientDpiComponent implements OnInit {
             this.toastr.error('Failed to load patient ordonnances.');
           }
         );
-        apiUrl = `${environment.apiUrl}/bilans/images-radiologiques/?nss=1234`;
-        this.http.get(apiUrl, { headers }).subscribe(
-          (data: any) => {
-            apiUrl = `${environment.apiUrl}/bilans/analyses-biologiques/?nss=1234`;
-            this.http.get(apiUrl, { headers }).subscribe(
-              (data2: any) => {
-                const transformedData = [
-                  ...data.map((item: any) => ({
-                    id: item.id_image_radiologique,
-                    category: 'Examens d’Imagerie Médicale',
-                    examType: item.type,
-                    results: {
-                      url: item.url,
-                      report: item.compte_rendu,
-                    },
-                    status: item.statut === 'terminé' ? 'Terminé' : 'Pas terminé',
-                  })),
-                  ...data2.map((item: any) => ({
-                    id: item.id_analyse_biologique,
-                    category: 'Analyses Biologiques',
-                    examType: item.type,
-                    results: item.parametres,
-                    status: item.statut === 'terminé' ? 'Terminé' : 'Pas terminé',
-                  })),
-                ];
 
-                this.bilans = transformedData;
-                console.log('Patient bilans loaded successfully:', transformedData);
-              },
-              (error) => {
-                console.log('Error loading patient bilans:', error.message);
-                this.toastr.error('Failed to load patient bilans.');
-              }
-            );
-            console.log('Patient ordonnances loaded successfully:', data);
-          },
-          (error) => {
-            console.log('Error loading patient ordonnances:', error.message);
-            this.toastr.error('Failed to load patient ordonnances.');
-          }
-        );
 
       },
       (error) => {

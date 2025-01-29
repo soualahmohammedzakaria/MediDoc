@@ -24,7 +24,7 @@
         />
       </svg>
     </div>
-    <div [@toggleContent]="isOpen ? 'open' : 'closed'" >
+    <div [@toggleContent]="isOpen ? 'open' : 'closed'">
       <div
         class="bg-white text-custom-gray-medium rounded-lg border-t transition-all duration-200 py-4 px-4"
       >
@@ -118,20 +118,9 @@
         <div class="mt-4">
           <p class="font-semibold text-gray-700">Tests Demandés:</p>
           <p class="text-gray-600">
-            {{ consultation.tests ? consultation.tests : 'Aucun test fait' }}
+            {{ consultation.tests ? consultation.tests : "Aucun test fait" }}
           </p>
         </div>
-
-        <div class="mt-4">
-          <p class="font-semibold text-gray-700">Ordonnance Émise:</p>
-          <p class="text-gray-600">
-            Ordonnance:
-            <a href="#" class="text-blue-500">{{
-              consultation.prescription ? consultation.prescription : 'Aucune ordonnance émise'
-            }}</a>
-          </p>
-        </div>
-
         <div class="mt-4">
           <p class="font-semibold text-gray-700">Résumé:</p>
           <p class="text-gray-600 whitespace-pre-line">
