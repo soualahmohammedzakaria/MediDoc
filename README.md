@@ -66,8 +66,8 @@ The **Digital Patient Record (DPI)** is designed to make patient data management
 ### Installation
 1. **Clone the Repository**  
    ```bash
-   git clone https://github.com/your-username/digital-patient-record-frontend.git
-   cd digital-patient-record-frontend
+   git clone https://github.com/soualahmohammedzakaria/MediDoc.git
+   cd MediDoc
    ```
 2. **Install Dependencies**  
    ```bash
@@ -122,6 +122,8 @@ By default, the build artifacts are stored in the `dist/` folder. For more detai
 
 ## Further Reading & References
 
+- [MediDoc Backend](https://github.com/soualahmohammedzakaria/MediDoc-Backend)
+- [MediDoc SGPH](https://github.com/soualahmohammedzakaria/MediDoc-SGPH)
 - [Angular Official Documentation](https://angular.io/docs)  
 - [TypeScript Handbook](https://www.typescriptlang.org/docs/handbook/intro.html)  
 - [Angular CLI Overview](https://angular.dev/tools/cli)  
