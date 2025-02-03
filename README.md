@@ -31,6 +31,7 @@ The **Digital Patient Record (DPI)** is designed to make patient data management
   <img src="githubutils/soins.png" alt="Soins Page" width="48%"/>
   <img src="githubutils/radio.png" alt="Radiologue Page" width="48%"/>
 </div>
+
 ---
 
 ## Key Features
