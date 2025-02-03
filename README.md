@@ -23,7 +23,14 @@ The **Digital Patient Record (DPI)** is designed to make patient data management
 - **Improved Coordination**: Enables different departments to share updates, results, and prescriptions in real time.
 - **Reduced Errors**: Minimizes duplicated tests, missing information, and prescription errors.
   
-
+<div style="display: flex; flex-wrap: wrap; justify-content: space-around;">
+  <img src="githubutils/landing.png" alt="Landing Page" width="48%"/>
+  <img src="githubutils/auth.png" alt="Authentication Page" width="48%"/>
+  <img src="githubutils/rech.png" alt="Recherche Page" width="48%"/>
+  <img src="githubutils/consult.png" alt="Consultation Page" width="48%"/>
+  <img src="githubutils/soins.png" alt="Soins Page" width="48%"/>
+  <img src="githubutils/radio.png" alt="Radiologue Page" width="48%"/>
+</div>
 ---
 
 ## Key Features
